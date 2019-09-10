@@ -1,6 +1,6 @@
 ---
-date: "2019-09-01"
-title: "Inside minikube ISO (Work in progress)"
+date: "2019-09-10"
+title: "Inside minikube ISO"
 ---
 
 Minikube uses a generated .iso file that is used to bootstrap the VM with it's own [kernel](https://en.wikipedia.org/wiki/Linux_kernel) and  [rootfs](https://en.wikipedia.org/wiki/Initial_ramdisk). Once the VM has been initialized properly it will use the .iso to bootstrap the Linux kernel allowing all the different applications to be installed and run. This means that pretty much minikube is running on it's own operating system and does not use any dependencies from the host system (except through the VM)
@@ -102,13 +102,30 @@ gcr.io/k8s-minikube/buildroot-image successfully built
 
 
 {{< highlight html >}}
-
+docker run --rm --workdir /mnt --volume /home/nanik/Downloads/temp/packages/src/k8s.io/minikube:/mnt  \
+	--user 1000:1000 --env HOME=/tmp --env IN_DOCKER=1 \
+	gcr.io/k8s-minikube/buildroot-image /usr/bin/make out/minikube.iso
+/usr/bin/make minikube_iso
+make[1]: Entering directory '/mnt'
+echo v1.4.0-beta.0 > deploy/iso/minikube-iso/board/coreos/minikube/rootfs-overlay/etc/VERSION
+if [ ! -d ./out/buildroot ]; then \
+	mkdir -p ./out; \
+	git clone --depth=1 --branch=2018.05.3 https://github.com/buildroot/buildroot ./out/buildroot; \
+fi;
+Cloning into './out/buildroot'...
+Note: checking out '717309783755a883974896ea822675a7bf46da3a'.
+....
+/usr/bin/make BR2_EXTERNAL=../../deploy/iso/minikube-iso minikube_defconfig -C ./out/buildroot
+....
+....
+....
+....
 
 {{< /highlight >}}
 
 <h1>Using Virtualbox</h1>
 
-Let's try to run the .iso file by ourself using the VirtualBox, just for fun. 
+Just for fun let's try to run the .iso file by ourself using the VirtualBox. 
 
 Start the VirtualBox UI from your local machine
 
@@ -130,26 +147,133 @@ When the kernel startup properly the screen will show the prompt as shown the fo
 
 ![BuildingISOLoginScreen](/media/buildingiso/building_iso_minikube_login.png)
 
-One thing to note even though you are able to use the .iso file the VM is still in it's raw form where there are no Kubernetes app or configuration,  so this is just an empty OS running inside the VM.
+Even though you are able to run the .iso file the VM is still in it's raw form as there are no Kubernetes app or configuration installed. So pretty much this is just an empty OS wihtout Kubernetes.
 
 By going through through this exercise you now have a better idea the gaps that minikube try to fill in. Minikube fills in the gap by automating the whole process until the whole thing is up and running.
 
 <h1>Dissecting minikube .iso file</h1>
 
-Let's take a look at what does the generated .iso file contains. Below is 
+Now that we have successfully generate and use the freshly build iso file, it's time to dissect and take a look inside it. The iso file is a ISO9660 file which means it can be mounted to a local directory. 
 
-* unpacking the .iso file
-	- what tools to use 	
-* look inside the .iso file
-	- the different files inside the .iso file and what is it's usage
-	- directory structure of the .iso file
-* chrooting the .iso file
-	- show how to chroot to take a look at the inside of the .iso file
-* talk a bit about the buildroot and rootfs
-	- provide link to buildroot
-	- the buildroot version minikube is using
-	- kernel version it is using
+You can create any directory anywhere you like and mount the iso file, in my case I have created a directory /home/nanik/Downloads/playwithiso/mountiso and used the following command to mount the file 
+
+{{< highlight go >}}
+sudo mount -o loop ./minikube.iso /home/nanik/Downloads/playwithiso/mountiso/
+{{< /highlight >}}
+
+After the mount command successfully executed you will see the following tree structure 
+
+{{< highlight html >}}
+
+├── boot
+│   ├── bzImage
+│   └── initrd
+├── boot.catalog
+└── isolinux
+    ├── isolinux.bin
+    ├── isolinux.cfg
+    └── ldlinux.c32
+
+{{< /highlight >}}
+
+as can be see the iso file contain the rootfs (initrd) and kernel (bzImage) along with the the [ISOLINUX bootloader](https://wiki.syslinux.org/wiki/index.php?title=Doc/isolinux) files
 	
+
+<h1>Chroot</h1>
+
+To further having fun with the iso file let's use the rootfs to boot into it using [chroot](https://en.wikipedia.org/wiki/Chroot). Copy the initrd file from the mounted directory described on the previous section and use the following command to unzip it
+
+{{< highlight go >}}
+bunzip2 ./initrd
+{{< /highlight >}}
+
+the initrd will be unzipped to a file called initrd.out, use the following command to unpack the file
+
+{{< highlight go >}}
+cpio -idv < initrd.out 
+{{< /highlight >}}
+
+the file will be unpacked to the following tree structure
+
+{{< highlight html >}}
+├── bin -> usr/bin
+├── dev
+├── etc
+│   ├── cni
+│   ├── containerd
+│   ├── containers
+│   ├── crio
+│   ├── dbus-1
+│   ├── docker
+│   ├── glusterfs
+│   ├── init.d
+│   ├── iproute2
+│   ├── kernel
+│   ├── lvm
+│   ├── modules-load.d
+│   ├── pam.d
+│   ├── profile.d
+│   ├── ssh
+│   ├── ssl
+│   ├── sudoers.d
+│   ├── sysconfig
+│   ├── sysctl.d
+│   ├── systemd
+│   ├── tmpfiles.d
+│   ├── udev
+│   ├── vmware-tools
+│   ├── X11
+│   └── xdg
+├── home
+│   └── docker
+├── lib -> usr/lib
+├── lib64 -> lib
+├── media
+├── mnt
+├── opt
+│   └── cni
+├── proc
+├── root
+├── run
+│   ├── crio
+│   ├── dbus
+│   ├── gluster
+│   ├── nfs
+│   └── sudo
+├── sbin -> usr/sbin
+├── srv
+├── sys
+├── tmp
+├── usr
+│   ├── bin
+│   ├── etc
+│   ├── lib
+│   ├── lib64 -> lib
+│   ├── libexec
+│   ├── sbin
+│   └── share
+└── var
+    ├── empty
+    ├── lib
+    ├── log
+    └── run -> ../run
+{{< /highlight >}}
+
+
+Make sure you are inside the extracted directory and use the following command to chroot into it
+
+{{< highlight go >}}
+sudo chroot .
+{{< /highlight >}}
+
+you will get bash prompt as follows
+
+{{< highlight go >}}
+bash-4.4# 
+{{< /highlight >}}
+
+To come out from the bash just type exit.
+
 	
 <h1>Using local build .iso file</h1>
 
