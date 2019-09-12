@@ -1,6 +1,8 @@
 ---
 date: "2019-09-05"
 title: "Building and hacking minikube"
+author : "Nanik Tolaram (nanikjava@gmail.com)" 
+
 ---
 This document will outline the internals on minikube. It will outline how minikube works and what are the steps involved in running it inside an IDE. Having the ability to run inside the IDE will give the power of more better understanding by stepping through the code.
 

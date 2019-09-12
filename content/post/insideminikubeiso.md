@@ -1,6 +1,7 @@
 ---
 date: "2019-09-10"
 title: "Inside minikube ISO"
+author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
 
 Minikube uses a generated .iso file that is used to bootstrap the VM with it's own [kernel](https://en.wikipedia.org/wiki/Linux_kernel) and  [rootfs](https://en.wikipedia.org/wiki/Initial_ramdisk). Once the VM has been initialized properly it will use the .iso to bootstrap the Linux kernel allowing all the different applications to be installed and run. This means that pretty much minikube is running on it's own operating system and does not use any dependencies from the host system (except through the VM)

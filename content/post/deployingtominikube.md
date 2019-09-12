@@ -1,7 +1,19 @@
 ---
 date: "2019-09-01"
 title: "Deploying to Minikube(Work in progress)"
+author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
+
+
+<h1>Launching minikube</h1>
+
+
+<h1>Deployment</h1>
+
+* deploying via IDE
+* deploying via CLI
+
+
 ---------------------
 Deploying hello-world
 ---------------------

@@ -1,6 +1,8 @@
 ---
 date: "2019-09-01"
 title: "Minikube parameters (Work in progress)"
+author : "Nanik Tolaram (nanikjava@gmail.com)" 
+
 ---
 
 
