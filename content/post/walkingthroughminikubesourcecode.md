@@ -1,6 +1,6 @@
 ---
-date: "2019-09-18"
-title: "Walking through minikube source code"
+date: "2019-09-01"
+title: "Inside minikube source code"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
 **NOTE: The source code discussed in this article is based on _master_ branch**
