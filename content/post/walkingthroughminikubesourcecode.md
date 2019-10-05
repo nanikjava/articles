@@ -27,7 +27,7 @@ Open the minikube inside the IDE and set the GOPATH to the new GOPATH directory 
 
 ![MinikubeSourceCodeSettingGoPath](/media/minikubesourcecode/minikubesourcecode_setupgopath_ide.png)
 
-Select the the *main.go* file that reside in cmd/minikube directory and hit the run button. YYou will get an error output as shown below, this is because there are some files that need to be generated and this can be done using the *make* command
+Select the the *main.go* file that reside in cmd/minikube directory and hit the run button. You will get an error output as shown below, this is because there are some files that need to be generated and this can be done using the *make* command
 
 ![MinikubeSourceCodeHitRun](/media/minikubesourcecode/minikubesourcecode_hitrun.png)
 
@@ -36,44 +36,19 @@ Select the the *main.go* file that reside in cmd/minikube directory and hit the 
 go: downloading github.com/mattn/go-isatty v0.0.8
 go: downloading github.com/pkg/profile v0.0.0-20161223203901-3a8809bd8a80
 go: downloading github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-go: downloading github.com/pkg/errors v0.8.1
-go: downloading github.com/machine-drivers/machine v0.7.1-0.20190910053320-21bd2f51b8ea
-go: downloading k8s.io/kubernetes/staging/src/k8s.io/client-go v0.0.0-20190623232353-8c3b7d7679cc
-go: extracting github.com/pkg/profile v0.0.0-20161223203901-3a8809bd8a80
-go: extracting github.com/mattn/go-isatty v0.0.8
-go: extracting github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-....
-go: downloading github.com/docker/docker v1.13.1
-go: downloading github.com/imdario/mergo v0.3.5
-go: downloading github.com/spf13/viper v1.3.2
-go: extracting k8s.io/klog v0.3.1
-go: extracting github.com/imdario/mergo v0.3.5
-go: extracting k8s.io/kubernetes/staging/src/k8s.io/api v0.0.0-20190623232353-8c3b7d7679cc
-go: extracting golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb
-go: extracting gopkg.in/cheggaaa/pb.v1 v1.0.27
-go: downloading github.com/hashicorp/go-cleanhttp v0.5.0
-....
-....
-....
-go: downloading github.com/google/go-cmp v0.3.0
-go: extracting sigs.k8s.io/yaml v1.1.0
-go: extracting github.com/google/go-cmp v0.3.0
-go: extracting github.com/docker/distribution v0.0.0-20170726174610-edc3ab29cdff
-....
-....
-....
-go: extracting k8s.io/kubernetes v1.15.2
-go: downloading k8s.io/kubernetes/staging/src/k8s.io/component-base v0.0.0-20190623232353-8c3b7d7679cc
-go: downloading k8s.io/kubernetes/staging/src/k8s.io/cluster-bootstrap v0.0.0-20190623232353-8c3b7d7679cc
-go: extracting k8s.io/kubernetes/staging/src/k8s.io/cluster-bootstrap v0.0.0-20190623232353-8c3b7d7679cc
-go: extracting k8s.io/kubernetes/staging/src/k8s.io/component-base v0.0.0-20190623232353-8c3b7d7679cc
+
+.....
+.....
+.....
+
+
 # k8s.io/minikube/pkg/minikube/translate
 ../../pkg/minikube/translate/translate.go:77:12: undefined: Asset
 
 Compilation finished with exit code 2
 {{< /highlight >}}
 
-Use the following *make* command to generate the files (in my case I'm using Linux)
+Use the following *make* command to generate the files needed
 
 {{< highlight text >}}
 make pkg/minikube/assets/assets.go pkg/minikube/translate/translations.go
@@ -89,8 +64,6 @@ gofmt -s -w pkg/minikube/assets/assets.go
 GOOS="linux" GOARCH="amd64" go build -tags "container_image_ostree_stub containers_image_openpgp" -ldflags="-X k8s.io/minikube/pkg/version.version=v1.4.0-beta.2 -X k8s.io/minikube/pkg/version.isoVersion=v1.4.0-beta.2 -X k8s.io/minikube/pkg/version.isoPath=minikube/iso -X k8s.io/minikube/pkg/version.gitCommitID="d1e468085d9af12e5d130a6cb3b2186a5db87a0e-dirty"" -a -o out/minikube-linux-amd64 k8s.io/minikube/cmd/minikube
 {{< /highlight >}}
 
-
-If you are using other OS you can replace *linux* with *darwin* (MacOS) or *windows* (Windows)
 
 Following are the generated files
 
@@ -328,7 +301,7 @@ Following table explains some of the available tasks:
 
 {{< /highlight >}}
 
-Following table outlined description of the different directories of the source code. This is by no means a complete list of the minikube source directory structure.
+Following table are description of the different directories of minikube's source code. **Note: This is by no means a complete list of the source directory structure as master branch do change from time to time**
 
 {{< bootstrap-table "table table-responsive table-dark table-striped table-bordered" >}}
 |Directory Name    |Description                                      |

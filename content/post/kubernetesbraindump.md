@@ -14,29 +14,50 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 	- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/ --> weavenet is network plugin for docker for variety of things (service discovery, etc), this website outlined how to use it as inside kubernetes 
 
 - Key points
-	* A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
-	* Each node has a Kubelet, which is an agent for managing the node and communicating with the Kubernetes master. The node should also have tools for handling container operations, such as Docker or rkt.
-	* A Kubernetes cluster that handles production traffic should have a minimum of three nodes.
-	* The nodes communicate with the master using the Kubernetes API. End users can also use the Kubernetes API directly to interact with the cluster.
 	* A Kubernetes cluster can be deployed on either physical or virtual machines.
 	* Once you've created a Deployment, the Kubernetes master schedules mentioned application instances onto individual Nodes in the cluster.
 	* Once the application instances are created, a Kubernetes Deployment Controller continuously monitors those instances. If the Node hosting an instance goes down or is deleted, the Deployment controller replaces the instance with an instance on another Node in the cluster. This provides a self-healing mechanism to address machine failure or maintenance.
-	* A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as Docker or rkt), and some shared resources for those containers. Those resources include:
-		- Shared storage, as Volumes
-		- Networking, as a unique cluster IP address
-		- Information about how to run each container, such as the container image version or specific ports to use
-		- The containers in a Pod share an IP Address and port space, are always co-located and co-scheduled, and run in a shared context on the same Node.
-	* A Pod always runs on a Node
-		- A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster. 
-		- Each Node is managed by the Master. 
-		- A Node can have multiple pods, and the Kubernetes master automatically handles scheduling the pods across the Nodes in the cluster. 
-		- The Master's automatic scheduling takes into account the available resources on each Node.
-		- Every Kubernetes Node runs at least:
-			** Kubelet, a process responsible for communication between the Kubernetes Master and the Node; it manages the Pods and the containers running on a machine.
-			** A container runtime (like Docker, rkt) responsible for pulling the container image from a registry, unpacking the container, and running the application.
-			** Containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
-		
-			![ContainersPods](https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg)
+    * Node
+        * A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
+        * Each node has a Kubelet, which is an agent for managing the node and communicating with the Kubernetes master. The node should also have tools for handling container operations, such as Docker or rkt.
+        * A Kubernetes cluster that handles production traffic should have a minimum of three nodes.
+        * The nodes communicate with the master using the Kubernetes API. End users can also use the Kubernetes API directly to interact with the cluster.    
+        * Node Components
+            - Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+
+                * kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
+
+                * kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
+
+                * Container Runtime - The container runtime is the software that is responsible for running containers.
+                
+            - A node is a worker machine in Kubernetes, previously known as a minion. A node may be a VM or physical machine, depending on the cluster. Each node contains the services necessary to run pods and is managed by the master components.
+            
+            - A node’s status contains the following information:
+                * Addresses
+                * Conditions
+                * Capacity and Allocatable
+                * Info
+	* Pod
+        * Pod is something logical and not physical. It is just a logical wrapper for a set of containers with it's resources.  In terms of Docker constructs, a Pod is modelled as a group of Docker containers with shared namespaces and shared filesystem volumes.
+        * Containers within a Pod share an IP address and port space, and can find each other via localhost. They can also communicate with each other using standard inter-process communications like SystemV semaphores or POSIX shared memory. Containers in different Pods have distinct IP addresses and can not communicate by IPC without special configuration. These containers usually communicate with each other via Pod IP addresses.
+        * A Pod is a group of one or more containers (such as Docker containers), with shared storage/network, and a specification for how to run the containers.
+        * A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as Docker or rkt), and some shared resources for those containers. Those resources include:
+            - Shared storage, as Volumes
+            - Networking, as a unique cluster IP address
+            - Information about how to run each container, such as the container image version or specific ports to use
+            - The containers in a Pod share an IP Address and port space, are always co-located and co-scheduled, and run in a shared context on the same Node.
+        * A Pod always runs on a Node
+            - A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster. 
+            - Each Node is managed by the Master. 
+            - A Node can have multiple pods, and the Kubernetes master automatically handles scheduling the pods across the Nodes in the cluster. 
+            - The Master's automatic scheduling takes into account the available resources on each Node.
+            - Every Kubernetes Node runs at least:
+                ** Kubelet, a process responsible for communication between the Kubernetes Master and the Node; it manages the Pods and the containers running on a machine.
+                ** A container runtime (like Docker, rkt) responsible for pulling the container image from a registry, unpacking the container, and running the application.
+                ** Containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
+            
+                ![ContainersPods](https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg)
 
 	* The Kubernetes Master is a collection of three processes that run on a single node in your cluster, which is designated as the master node. Those processes are: kube-apiserver, kube-controller-manager and kube-scheduler.
 		- Each individual non-master node in your cluster runs two processes:
@@ -70,18 +91,20 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 			* kube-apiserver - Component on the master that exposes the Kubernetes API. It is the front-end for the Kubernetes control plane.
 
-			* ecd - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+			* etcd - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
 
 			* kube-scheduler - Component on the master that watches newly created pods that have no node assigned, and selects a node for them to run on.
 
 			* kube-controller-manager - Component on the master that runs controllers.
+            
+              ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/e298a92e2454520dddefc3b4df28ad68f9b91c6f/70d52/images/docs/pre-ccm-arch.png)
+          
 		
 			* Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process. These controllers include:
 				- Node Controller: Responsible for noticing and responding when nodes go down.
 				- Replication Controller: Responsible for maintaining the correct number of pods for every replication controller object in the system.
 				- Endpoints Controller: Populates the Endpoints object (that is, joins Services & Pods).
 				- Service Account & Token Controllers: Create default accounts and API access tokens for new namespaces.
-
 
 			* cloud-controller-manager - cloud-controller-manager runs controllers that interact with the underlying cloud providers. The cloud-controller-manager binary is an alpha feature introduced in Kubernetes release 1.6.
 
@@ -93,16 +116,9 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 					[x] Route Controller: For setting up routes in the underlying cloud infrastructure
 					[x] Service Controller: For creating, updating and deleting cloud provider load balancers
 					[x] Volume Controller: For creating, attaching, and mounting volumes, and interacting with the cloud provider to orchestrate volumes
-
-
-	* Node Components
-		- Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
-
-			* kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
-
-			* kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
-
-			* Container Runtime - The container runtime is the software that is responsible for running containers.
+                    
+                    ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/518e18713c865fe67a5f23fc64260806d72b38f5/61d75/images/docs/post-ccm-arch.png)
+ 
 
 	* Addons
 		- Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluster features. Because these are providing cluster-level features, namespaced resources for addons belong within the kube-system namespace.
@@ -115,21 +131,17 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 			* Cluster-level Logging - Cluster-level logging mechanism is responsible for saving container logs to a central log store with search/browsing interface.
 
-
-
 	* The basic Kubernetes objects include:
-
-		- Pod
+        - Pod
 		- Service
 		- Volume
 		- Namespace
 
-
-* etcd
+* etcd inside minikube
 	- To communicate to etcd that are running inside minikube we need to do the following
 		* minikube ssh 
-		* /hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdctl/etcdctl --cacert=/var/lib/minikube/certs/etcd/ca.crt --key=/var/lib/minikube/certs/etcd/ca.key --cert=/var/lib/minikube/certs/etcd/ca.crt get  --prefix=true ""
-		* /hostname --> default mount volume created by minikube to access host directory.
+		* /hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdctl/etcdctl --cacert=/var/lib/minikube/certs/etcd/ca.crt --key=/var/lib/minikube/certs/etcd/ca.key --cert=/var/lib/minikube/certs/etcd/ca.crt get  --prefix=true ""--> the ca.crt and ca.key resides inside minikube VM
+		* /hostname --> is the default mount volume created by minikube to access host directory.
 		* ETCDCTL_API=3  /hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdctl/etcdctl --cacert=/var/lib/minikube/certs/etcd/ca.crt --key=/var/lib/minikube/certs/etcd/ca.key --cert=/var/lib/minikube/certs/etcd/ca.crt get  --from-key '' --keys-only --> will get all the keys stored inside
 
 
@@ -667,5 +679,17 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 					/registry/storageclasses/standard
 
+* Experimenting with Kubernetes 
+	* A good guide on cloud provider --> https://github.com/hobby-kube/guide
+    * Kubernetes on ARM (ODROID, RPi, Upboard combo) --> https://github.com/luxas/kubernetes-on-arm
+    * Kubernetes on ODROID N2 --> https://www.trion.de/news/2019/05/06/kubernetes-odroid-n2.html
+    * Setting up a Multi-Arch, Multi OS cluster --> https://gist.github.com/PatrickLang/28a05cfd6cf4322d519d04cff0996585
+    * Kubernetes on Raspberry Pi: Challenges & Advantages --> https://www.weave.works/blog/kubernetes-raspberry-pi/
+    * Intalling kubernetes using kubeadm --> https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
+    * Kubernetes HA control plane --> https://octetz.com/posts/ha-control-plane-k8s-kubeadm
 
 
+* Books
+    * Programming Kubernetes - OReilly
+    * Kubernetes Patterns    - OReilly
+    * Managing Kubernetes    - OReilly

@@ -1,6 +1,6 @@
 ---
 date: "2019-09-01"
-title: "Minikube parameters (Work in progress)"
+title: "Minikube commands (Work in progress)"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 
 ---
@@ -88,27 +88,11 @@ import (
 	"log"
 	"os"
 	"regexp"
-	"strconv"
-
-	// initflag must be imported before any other minikube pkg.
-	// Fix for https://github.com/kubernetes/minikube/issues/4866
-	_ "k8s.io/minikube/pkg/initflag"
-
-	mlog "github.com/docker/machine/libmachine/log"
-
-	....
-	....
-	....
-	....
-	_ "k8s.io/minikube/pkg/provision"
+	......
+    ......
 )
 
-const minikubeEnableProfile = "MINIKUBE_ENABLE_PROFILING"
-
-var (
-	machineLogErrorRe   = regexp.MustCompile(`(?i) (failed|error|fatal)`)
-	machineLogWarningRe = regexp.MustCompile(`(?i)warning`)
-)
+    ......
 
 func main() {
 	bridgeLogMessages()
@@ -117,31 +101,20 @@ func main() {
 	if os.Getenv(minikubeEnableProfile) == "1" {
 		defer profile.Start(profile.TraceProfile).Stop()
 	}
-	if os.Getenv(constants.IsMinikubeChildProcess) == "" {
-		machine.StartDriver()
-	}
-	out.SetOutFile(os.Stdout)
-	out.SetErrFile(os.Stderr)
+    ......
+
 	cmd.Execute()
 }
-
-....
-....
-....
-....
-
+    ......
+    ......
+    ......
 {{< /highlight  >}}
-
-
-
 
 
 
 <h1>start</h1>
 
-Command to trigger the minikube starting process. There are a variety of options that you can pass into minikube
-
---cache-images=true --> cache docker images that will be used by minikube
+Command to trigger the minikube starting process. There are varieties of options that you can pass into minikube, most of the parameters are self described.
 
 {{< highlight html >}}
       --apiserver-ips=[]: A set of apiserver IP Addresses which are used in the generated certificate for kubernetes.  This can be used if you want to make the apiserver available from outside the machine
@@ -198,7 +171,7 @@ Command to trigger the minikube starting process. There are a variety of options
       --wait-timeout=6m0s: max time to wait per Kubernetes core services to be healthy.
 {{< /highlight  >}}
 
-The *start* option source code detecting the different options pass resides inside **cmd/minikube/cmd/start.go**
+The *start* option source code detecting the different options pass resides inside **cmd/minikube/cmd/start.go**. Following tables outline some of the commands that require bit more explanation of it's usage
 
 {{< bootstrap-table "table table-responsive table-dark table-danger" >}}
 |      |
@@ -209,6 +182,43 @@ The *start* option source code detecting the different options pass resides insi
 {{< /bootstrap-table >}}
 
 
+Enabling cache **--cache-images=true** when starting up minikube helps in deployment process by caching the images used inside the VM. Following is what local cache looks like. Most files are docker image files.
+
+{{< highlight html >}}
+
+├── images
+│   ├── gcr.io
+│   │   └── k8s-minikube
+│   │       ├── storage-provisioner_v1.8.1
+│   │       └── storage-provisioner_v1.8.1.823687817.tmp
+│   └── k8s.gcr.io
+│       ├── coredns_1.3.1
+│       ├── coredns_1.6.2
+│       ├── etcd_3.3.10.801406343.tmp
+│       ├── etcd_3.3.15-0
+│       ├── k8s-dns-dnsmasq-nanny-amd64_1.14.13
+│       ├── k8s-dns-kube-dns-amd64_1.14.13
+│       ├── k8s-dns-kube-dns-amd64_1.14.13.681617407.tmp
+│       ├── k8s-dns-sidecar-amd64_1.14.13
+│       ├── kube-addon-manager_v9.0
+│       ├── kube-addon-manager_v9.0.682111654.tmp
+│       ├── kube-apiserver_v1.16.0
+│       ├── kube-apiserver_v1.16.0-rc.2.869485211.tmp
+│       ├── kube-controller-manager_v1.16.0
+│       ├── kube-controller-manager_v1.16.0-rc.2
+│       ├── kube-proxy_v1.16.0
+│       ├── kube-proxy_v1.16.0-rc.2
+│       ├── kubernetes-dashboard-amd64_v1.10.1
+│       ├── kubernetes-dashboard-amd64_v1.10.1.460043582.tmp
+│       ├── kube-scheduler_v1.16.0
+│       ├── kube-scheduler_v1.16.0-rc.2
+│       └── pause_3.1
+├── iso
+│   └── minikube-v1.4.0.iso
+└── v1.16.0
+    ├── kubeadm
+    └── kubelet
+{{< /highlight  >}}
 
 
 <h1>status</h1>
@@ -234,7 +244,6 @@ https://godoc.org/k8s.io/minikube/cmd/minikube/cmd#Status
 
 <h1>cache</h1>
 
-
 {{< highlight html >}}
 
 Add or delete an image from the local cache.
@@ -247,12 +256,30 @@ Available Commands:
 {{< /highlight  >}}
 
 
-<h1>addons</h1>
+<h1>docker-env</h1>
+
+This command will outputs the necessary environment variable that you need to set to point your local docker to minikube. Following is the output of the command when ran locally
 
 {{< highlight html >}}
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.127:2376"
+export DOCKER_CERT_PATH="/home/nanik/.minikube/certs"
+{{< /highlight  >}}
 
-addons modifies minikube addons files using subcommands like "minikube addons enable heapster"
+To use the output settings use the following command
 
+{{< highlight html >}}
+eval $(minikube docker-env)
+{{< /highlight  >}}
+
+Once the above command is ran everytime you run docker CLI it will communicate with the docker inside minikube.
+
+
+<h1>addons</h1>
+
+The addons command allow you to enable, disable, etc addons inside minikube
+
+{{< highlight html >}}
 Available Commands:
   configure   Configures the addon w/ADDON_NAME within minikube (example: minikube addons configure registry-creds). For
 a list of available addons use: minikube addons list 
@@ -276,6 +303,8 @@ https://godoc.org/k8s.io/minikube/cmd/minikube/cmd/config#AddonListTemplate
 
 
 <h1>config</h1>
+
+The below configuration are relevant to the parameter that you specified when you use the 'start' command.
 
 {{< highlight html >}}
 
@@ -334,8 +363,6 @@ Available Commands:
   view        Display values currently set in the minikube config file
 {{< /highlight  >}}
 
-
-
 <h1>service</h1>
 
 
@@ -372,8 +399,6 @@ Options:
       --type='9p': Specify the mount filesystem type (supported types: 9p)
 {{< /highlight  >}}
 
-
-<h1>mount</h1>
 
 
 
