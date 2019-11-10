@@ -1,0 +1,3487 @@
+This log is the full log generated when running 'minikube start'. The hacky way to start the log is to add the following 
+
+	logging.toStderr = true
+	logging.alsoToStderr=true
+	logging.verbosity=7
+
+inside glog.go file inside the pkg/mod/github.com/golang/glogXXXXXX folder. Make sure the pkg/mod/github/golang folder is given full access 
+
+    sudo chmod -R 666 pkg/mod/github.com/golang/
+
+
+***********************************************************************************************************************************************
+
+I1005 08:43:39.205799   21915 translate.go:92] Setting Language to en-AU ...
+I1005 08:43:39.206272   21915 translate.go:79] Failed to load translation file for en-AU: Asset translations/en-AU.json not found
+I1005 08:43:39.206580   21915 out.go:131] Setting OutFile to fd 1 ...
+I1005 08:43:39.206610   21915 out.go:171] isatty.IsTerminal(1) = false
+I1005 08:43:39.206621   21915 out.go:138] Setting ErrFile to fd 2...
+I1005 08:43:39.206635   21915 out.go:171] isatty.IsTerminal(2) = false
+I1005 08:43:39.206782   21915 root.go:282] Updating PATH: /home/nanik/.minikube/bin
+W1005 08:43:39.206926   21915 root.go:240] Error reading config file at /home/nanik/.minikube/config/config.json: open /home/nanik/.minikube/config/config.json: no such file or directory
+I1005 08:43:39.208547   21915 notify.go:125] Checking for updates...
+I1005 08:43:39.553282   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/last_update_check" with filemode -rw-r--r--
+* minikube 1.4.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.4.0
+* To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+I1005 08:43:39.576920   21915 start.go:244] hostinfo: {"hostname":"pop-os","uptime":313548,"bootTime":1569915471,"procs":511,"os":"linux","platform":"ubuntu","platformFamily":"debian","platformVersion":"19.04","kernelVersion":"5.0.0-29-generic","virtualizationSystem":"kvm","virtualizationRole":"host","hostid":"92ee54d9-a9b6-5383-1e03-0bdb5d3eccaa"}
+I1005 08:43:39.578725   21915 start.go:254] virtualization: kvm host
+! minikube v0.0.0-unset on Ubuntu 19.04
+I1005 08:43:39.579231   21915 downloader.go:81] full url: https://storage.googleapis.com/minikube/iso/minikube-v1.4.0.iso?checksum=file:https://storage.googleapis.com/minikube/iso/minikube-v1.4.0.iso.sha256
+* Downloading VM boot image ...
+    > minikube-v1.4.0.iso.sha256: 65 B / 65 B [--------------] 100.00% ? 
+1915 profile.go:66] Saving config to /home/nanik/.minikube/profiles/minikube/config.json ...
+
+
+
+
+I1005 08:44:54.491664   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kube-scheduler:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0
+I1005 08:44:54.491674   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kube-controller-manager:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0
+I1005 08:44:54.491712   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kube-proxy:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0
+I1005 08:44:54.491725   21915 cache_images.go:296] CacheImage: k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:44:54.491735   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/profiles/minikube/config.json" with filemode -rw-------
+I1005 08:44:54.491748   21915 cache_images.go:296] CacheImage: k8s.gcr.io/coredns:1.6.2 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2
+I1005 08:44:54.491757   21915 cache_images.go:351] retrieving image: k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.13
+I1005 08:44:54.491762   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:44:54.491745   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kube-proxy:v1.16.0
+I1005 08:44:54.491734   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kube-scheduler:v1.16.0
+I1005 08:44:54.491774   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kube-apiserver:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0
+I1005 08:44:54.491778   21915 cache_images.go:351] retrieving image: k8s.gcr.io/coredns:1.6.2
+I1005 08:44:54.491789   21915 cache_images.go:296] CacheImage: k8s.gcr.io/kube-addon-manager:v9.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0
+I1005 08:44:54.491801   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kube-apiserver:v1.16.0
+I1005 08:44:54.491804   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kube-addon-manager:v9.0
+I1005 08:44:54.492075   21915 cluster.go:94] Machine does not exist... provisioning new machine
+I1005 08:44:54.491762   21915 cache_images.go:296] CacheImage: k8s.gcr.io/pause:3.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1
+I1005 08:44:54.491665   21915 cache_images.go:296] CacheImage: gcr.io/k8s-minikube/storage-provisioner:v1.8.1 -> /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1
+I1005 08:44:54.492150   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.492160   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.492119   21915 cluster.go:95] Provisioning machine with config: {KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.4.0.iso Memory:2000 CPUs:2 DiskSize:20000 VMDriver:virtualbox ContainerRuntime:docker HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.99.1/24 HypervVirtualSwitch: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false Downloader:{} DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true}
+I1005 08:44:54.492216   21915 cache_images.go:296] CacheImage: k8s.gcr.io/etcd:3.3.15-0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+I1005 08:44:54.492128   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.492254   21915 cache_images.go:351] retrieving image: k8s.gcr.io/pause:3.1
+I1005 08:44:54.492215   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.492276   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.492303   21915 cache_images.go:296] CacheImage: k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:44:54.492298   21915 cache_images.go:351] retrieving image: k8s.gcr.io/etcd:3.3.15-0
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+I1005 08:44:54.492340   21915 cache_images.go:296] CacheImage: k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13
+* Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...
+I1005 08:44:54.492407   21915 cache_images.go:351] retrieving image: gcr.io/k8s-minikube/storage-provisioner:v1.8.1
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+I1005 08:44:54.492439   21915 cache_images.go:351] retrieving image: k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.13
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.492658   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.492733   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.493043   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.493047   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+Creating CA: /home/nanik/.minikube/certs/ca.pem
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+I1005 08:44:54.491734   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kube-controller-manager:v1.16.0
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.492417   21915 cache_images.go:351] retrieving image: k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.13
+I1005 08:44:54.491781   21915 cache_images.go:351] retrieving image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+I1005 08:44:54.493742   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.493758   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.492771   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+I1005 08:44:54.493773   21915 cache_images.go:357] daemon image for <nil>: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+2019/10/05 08:44:54 Unable to read "/home/nanik/.docker/config.json": open /home/nanik/.docker/config.json: no such file or directory
+2019/10/05 08:44:54 No matching credentials were found, falling back on anonymous
+Creating client certificate: /home/nanik/.minikube/certs/cert.pem
+COMMAND: /usr/bin/VBoxManage --version
+STDOUT:
+{
+6.0.6_Ubuntur129722
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage list hostonlyifs
+STDOUT:
+{
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+STDERR:
+{
+}
+Downloading /home/nanik/.minikube/cache/boot2docker.iso from file:///home/nanik/.minikube/cache/iso/minikube-v1.4.0.iso...
+Creating VirtualBox VM...
+Creating SSH key...
+Creating disk image...
+Creating 20000 MB hard disk image...
+Writing magic tar header
+Writing SSH key tar header
+Calling inner createDiskImage
+&{/usr/bin/VBoxManage [/usr/bin/VBoxManage convertfromraw stdin /home/nanik/.minikube/machines/minikube/disk.vmdk 20971520000 --format VMDK] []  <nil> <nil> <nil> [] <nil> <nil> <nil> <nil> <nil> false [] [] [] [] <nil> <nil>}
+Starting command
+Copying to stdin
+Filling zeroes
+I1005 08:44:55.315309   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0
+I1005 08:44:55.315328   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0
+I1005 08:44:55.330416   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:44:55.330521   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0
+I1005 08:44:55.330563   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:44:55.334484   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:44:55.334568   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0
+I1005 08:44:55.337408   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1
+I1005 08:44:55.337473   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0
+I1005 08:44:55.337525   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0
+I1005 08:44:55.386325   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13
+I1005 08:44:55.386947   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2
+I1005 08:44:55.533907   21915 cache_images.go:325] OPENING:  /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1
+I1005 08:44:59.378981   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1 exists
+I1005 08:44:59.379087   21915 cache_images.go:298] CacheImage: k8s.gcr.io/pause:3.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1 completed in 4.887334268s
+I1005 08:44:59.379131   21915 cache_images.go:83] CacheImage k8s.gcr.io/pause:3.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1 succeeded
+Closing STDIN
+Waiting on cmd
+COMMAND: /usr/bin/VBoxManage createvm --basefolder /home/nanik/.minikube/machines/minikube --name minikube --register
+STDOUT:
+{
+Virtual machine 'minikube' is created and registered.
+UUID: 64eab3dc-001a-4804-be2e-2b1c78d350b1
+Settings file: '/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox'
+}
+STDERR:
+{
+}
+VM CPUS: 2
+VM Memory: 2000
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --firmware bios --bioslogofadein off --bioslogofadeout off --bioslogodisplaytime 0 --biosbootmenu disabled --ostype Linux26_64 --cpus 2 --memory 2000 --acpi on --ioapic on --rtcuseutc on --natdnshostresolver1 on --natdnsproxy1 off --cpuhotplug off --pae on --hpet on --hwvirtex on --nestedpaging on --largepages on --vtxvpid on --accelerate3d off --boot1 dvd
+STDOUT:
+{
+}
+STDERR:
+{
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 527 of file VBoxManageModifyVM.cpp
+}
+* Retriable failure: create: creating: /usr/bin/VBoxManage modifyvm minikube --firmware bios --bioslogofadein off --bioslogofadeout off --bioslogodisplaytime 0 --biosbootmenu disabled --ostype Linux26_64 --cpus 2 --memory 2000 --acpi on --ioapic on --rtcuseutc on --natdnshostresolver1 on --natdnsproxy1 off --cpuhotplug off --pae on --hpet on --hwvirtex on --nestedpaging on --largepages on --vtxvpid on --accelerate3d off --boot1 dvd failed:
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 527 of file VBoxManageModifyVM.cpp
+
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="37f0dc4f-eee7-45ec-a886-1fb4a640247b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="37f0dc4f-eee7-45ec-a886-1fb4a640247b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:42:53.299000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="e405c18d-0105-4a51-a43a-5fbdbf9b4330"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="7ae9d3bc-39d8-40dc-85b6-b9f3474fc9d5"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="080027E2F2DE"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,42279,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800279A79D4"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens="0"
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229003962
+GuestAdditionsFacility_VirtualBox System Service=50,1570229004179
+GuestAdditionsFacility_Seamless Mode=0,1570229003961
+GuestAdditionsFacility_Graphics Mode=0,1570229003961
+}
+STDERR:
+{
+}
+* Deleting "minikube" in virtualbox ...
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="37f0dc4f-eee7-45ec-a886-1fb4a640247b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="37f0dc4f-eee7-45ec-a886-1fb4a640247b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:42:53.299000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="e405c18d-0105-4a51-a43a-5fbdbf9b4330"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="7ae9d3bc-39d8-40dc-85b6-b9f3474fc9d5"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="080027E2F2DE"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,42279,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800279A79D4"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens="0"
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229003962
+GuestAdditionsFacility_VirtualBox System Service=50,1570229004179
+GuestAdditionsFacility_Seamless Mode=0,1570229003961
+GuestAdditionsFacility_Graphics Mode=0,1570229003961
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage controlvm minikube poweroff
+STDOUT:
+{
+}
+STDERR:
+{
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+}
+COMMAND: /usr/bin/VBoxManage unregistervm --delete minikube
+STDOUT:
+{
+}
+STDERR:
+{
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+}
+I1005 08:45:10.212454   21915 cluster.go:94] Machine does not exist... provisioning new machine
+I1005 08:45:10.212503   21915 cluster.go:95] Provisioning machine with config: {KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.4.0.iso Memory:2000 CPUs:2 DiskSize:20000 VMDriver:virtualbox ContainerRuntime:docker HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.99.1/24 HypervVirtualSwitch: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false Downloader:{} DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true}
+* Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...
+Reading certificate data from /home/nanik/.minikube/certs/ca.pem
+Decoding PEM data...
+Parsing certificate...
+Reading certificate data from /home/nanik/.minikube/certs/cert.pem
+Decoding PEM data...
+Parsing certificate...
+COMMAND: /usr/bin/VBoxManage --version
+STDOUT:
+{
+6.0.6_Ubuntur129722
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage list hostonlyifs
+STDOUT:
+{
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+STDERR:
+{
+}
+Downloading /home/nanik/.minikube/cache/boot2docker.iso from file:///home/nanik/.minikube/cache/iso/minikube-v1.4.0.iso...
+Creating VirtualBox VM...
+Creating SSH key...
+I1005 08:45:15.367370   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13 exists
+I1005 08:45:15.367380   21915 cache_images.go:298] CacheImage: k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13 completed in 20.875066519s
+I1005 08:45:15.367386   21915 cache_images.go:83] CacheImage k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13 succeeded
+Creating disk image...
+Creating 20000 MB hard disk image...
+Writing magic tar header
+Writing SSH key tar header
+Calling inner createDiskImage
+&{/usr/bin/VBoxManage [/usr/bin/VBoxManage convertfromraw stdin /home/nanik/.minikube/machines/minikube/disk.vmdk 20971520000 --format VMDK] []  <nil> <nil> <nil> [] <nil> <nil> <nil> <nil> <nil> false [] [] [] [] <nil> <nil>}
+Starting command
+Copying to stdin
+Filling zeroes
+Closing STDIN
+Waiting on cmd
+COMMAND: /usr/bin/VBoxManage createvm --basefolder /home/nanik/.minikube/machines/minikube --name minikube --register
+STDOUT:
+{
+Virtual machine 'minikube' is created and registered.
+UUID: e99507ff-47ae-418b-963b-7399d971660b
+Settings file: '/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox'
+}
+STDERR:
+{
+}
+VM CPUS: 2
+VM Memory: 2000
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --firmware bios --bioslogofadein off --bioslogofadeout off --bioslogodisplaytime 0 --biosbootmenu disabled --ostype Linux26_64 --cpus 2 --memory 2000 --acpi on --ioapic on --rtcuseutc on --natdnshostresolver1 on --natdnsproxy1 off --cpuhotplug off --pae on --hpet on --hwvirtex on --nestedpaging on --largepages on --vtxvpid on --accelerate3d off --boot1 dvd
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --nic1 nat --nictype1 virtio --cableconnected1 on
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage storagectl minikube --name SATA --add sata --hostiocache on
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage storageattach minikube --storagectl SATA --port 0 --device 0 --type dvddrive --medium /home/nanik/.minikube/machines/minikube/boot2docker.iso
+I1005 08:45:25.540457   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1 exists
+I1005 08:45:25.540489   21915 cache_images.go:298] CacheImage: gcr.io/k8s-minikube/storage-provisioner:v1.8.1 -> /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1 completed in 31.048823548s
+I1005 08:45:25.540515   21915 cache_images.go:83] CacheImage gcr.io/k8s-minikube/storage-provisioner:v1.8.1 -> /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1 succeeded
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage storageattach minikube --storagectl SATA --port 1 --device 0 --type hdd --medium /home/nanik/.minikube/machines/minikube/disk.vmdk
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage guestproperty set minikube /VirtualBox/GuestAdd/SharedFolders/MountPrefix /
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage guestproperty set minikube /VirtualBox/GuestAdd/SharedFolders/MountDir /
+STDOUT:
+{
+}
+STDERR:
+{
+}
+setting up shareDir '/home' -> 'hosthome'
+COMMAND: /usr/bin/VBoxManage sharedfolder add minikube --name hosthome --hostpath /home --automount
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage setextradata minikube VBoxInternal2/SharedFoldersEnableSymlinksCreate/hosthome 1
+STDOUT:
+{
+}
+STDERR:
+{
+}
+Starting the VM...
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="poweroff"
+VMStateChangeTime="2019-10-04T22:45:25.109000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+nic2="none"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+}
+STDERR:
+{
+}
+Check network to re-create if needed...
+COMMAND: /usr/bin/VBoxManage list hostonlyifs
+STDOUT:
+{
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+STDERR:
+{
+}
+Searching for hostonly interface for IPv4: 192.168.99.1 and Mask: ffffff00
+Found: vboxnet0
+COMMAND: /usr/bin/VBoxManage list dhcpservers
+STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+IP:             192.168.99.17
+NetworkMask:    255.255.255.0
+lowerIPAddress: 192.168.99.100
+upperIPAddress: 192.168.99.254
+Enabled:        Yes
+Global options:
+   1:255.255.255.0
+
+}
+STDERR:
+{
+}
+Removing orphan DHCP servers...
+COMMAND: /usr/bin/VBoxManage list hostonlyifs
+STDOUT:
+{
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+STDERR:
+{
+}
+Adding/Modifying DHCP server "192.168.99.10" with address range "192.168.99.100" - "192.168.99.254"...
+COMMAND: /usr/bin/VBoxManage list dhcpservers
+STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+IP:             192.168.99.17
+NetworkMask:    255.255.255.0
+lowerIPAddress: 192.168.99.100
+upperIPAddress: 192.168.99.254
+Enabled:        Yes
+Global options:
+   1:255.255.255.0
+
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage dhcpserver modify --netname HostInterfaceNetworking-vboxnet0 --ip 192.168.99.10 --netmask 255.255.255.0 --lowerip 192.168.99.100 --upperip 192.168.99.254 --enable
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --nic2 hostonly --nictype2 virtio --nicpromisc2 deny --hostonlyadapter2 vboxnet0 --cableconnected2 on
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 delete ssh
+STDOUT:
+{
+}
+STDERR:
+{
+VBoxManage: error: Code NS_ERROR_INVALID_ARG (0x80070057) - Invalid argument value (extended info not available)
+VBoxManage: error: Context: "RemoveRedirect(Bstr(ValueUnion.psz).raw())" at line 1866 of file VBoxManageModifyVM.cpp
+}
+COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,39749,,22
+STDOUT:
+{
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage startvm minikube --type headless
+STDOUT:
+{
+Waiting for VM "minikube" to power on...
+VM "minikube" has been successfully started.
+}
+STDERR:
+{
+}
+Checking vm logs: /home/nanik/.minikube/machines/minikube/minikube/Logs/VBox.log
+Waiting for an IP...
+Getting to WaitForSSH function...
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+exit 0
+I1005 08:45:27.396569   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2 exists
+I1005 08:45:27.396600   21915 cache_images.go:298] CacheImage: k8s.gcr.io/coredns:1.6.2 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2 completed in 32.904860334s
+I1005 08:45:27.396621   21915 cache_images.go:83] CacheImage k8s.gcr.io/coredns:1.6.2 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2 succeeded
+I1005 08:45:55.340019   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0 exists
+I1005 08:45:55.340043   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kube-scheduler:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0 completed in 1m0.848398438s
+I1005 08:45:55.340070   21915 cache_images.go:83] CacheImage k8s.gcr.io/kube-scheduler:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0 succeeded
+SSH cmd err, output: <nil>: 
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+Host-only MAC: 0800272a0a8c
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+ip addr show
+SSH cmd err, output: <nil>: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86388sec preferred_lft 86388sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1188sec preferred_lft 1188sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+SSH returned: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86388sec preferred_lft 86388sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1188sec preferred_lft 1188sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+END SSH
+
+IP is 192.168.99.134
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+Host-only MAC: 0800272a0a8c
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+ip addr show
+SSH cmd err, output: <nil>: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86388sec preferred_lft 86388sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1188sec preferred_lft 1188sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+SSH returned: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86388sec preferred_lft 86388sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1188sec preferred_lft 1188sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+END SSH
+
+COMMAND: /usr/bin/VBoxManage list hostonlyifs
+STDOUT:
+{
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+STDERR:
+{
+}
+Found: vboxnet0
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+setting hostname "minikube"
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+sudo hostname minikube && echo "minikube" | sudo tee /etc/hostname
+SSH cmd err, output: <nil>: minikube
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+
+		if ! grep -xq '.*\sminikube' /etc/hosts; then
+			if grep -xq '127.0.1.1\s.*' /etc/hosts; then
+				sudo sed -i 's/^127.0.1.1\s.*/127.0.1.1 minikube/g' /etc/hosts;
+			else 
+				echo '127.0.1.1 minikube' | sudo tee -a /etc/hosts; 
+			fi
+		fi
+SSH cmd err, output: <nil>: 
+set auth options {CertDir:/home/nanik/.minikube CaCertPath:/home/nanik/.minikube/certs/ca.pem CaPrivateKeyPath:/home/nanik/.minikube/certs/ca-key.pem CaCertRemotePath:/etc/docker/ca.pem ServerCertPath:/home/nanik/.minikube/machines/server.pem ServerKeyPath:/home/nanik/.minikube/machines/server-key.pem ClientKeyPath:/home/nanik/.minikube/certs/key.pem ServerCertRemotePath:/etc/docker/server.pem ServerKeyRemotePath:/etc/docker/server-key.pem ClientCertPath:/home/nanik/.minikube/certs/cert.pem ServerCertSANs:[] StorePath:/home/nanik/.minikube}
+setting up certificates
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+Host-only MAC: 0800272a0a8c
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+ip addr show
+SSH cmd err, output: <nil>: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86387sec preferred_lft 86387sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1187sec preferred_lft 1187sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+SSH returned: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86387sec preferred_lft 86387sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1187sec preferred_lft 1187sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+END SSH
+
+generating server cert: /home/nanik/.minikube/machines/server.pem ca-key=/home/nanik/.minikube/certs/ca.pem private-key=/home/nanik/.minikube/certs/ca-key.pem org=nanik.minikube san=[192.168.99.134 localhost]
+I1005 08:46:11.533658   21915 ssh_runner.go:170] Transferring 1034 bytes to /etc/docker/ca.pem
+I1005 08:46:11.534302   21915 ssh_runner.go:189] ca.pem: copied 1034 bytes
+I1005 08:46:11.540735   21915 ssh_runner.go:170] Transferring 1107 bytes to /etc/docker/server.pem
+I1005 08:46:11.541174   21915 ssh_runner.go:189] server.pem: copied 1107 bytes
+I1005 08:46:11.546978   21915 ssh_runner.go:170] Transferring 1679 bytes to /etc/docker/server-key.pem
+I1005 08:46:11.547496   21915 ssh_runner.go:189] server-key.pem: copied 1679 bytes
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+df --output=fstype / | tail -n 1
+SSH cmd err, output: <nil>: tmpfs
+
+root file system type: tmpfs
+Setting Docker configuration on the remote daemon...
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+sudo mkdir -p /lib/systemd/system && printf %s "[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network.target  minikube-automount.service docker.socket
+Requires= minikube-automount.service docker.socket 
+
+[Service]
+Type=notify
+
+
+
+
+# This file is a systemd drop-in unit that inherits from the base dockerd configuration.
+# The base configuration already specifies an 'ExecStart=...' command. The first directive
+# here is to clear out that command inherited from the base configuration. Without this,
+# the command from the base configuration and the command specified here are treated as
+# a sequence of commands, which is not the desired behavior, nor is it valid -- systemd
+# will catch this invalid input and refuse to start the service with an error like:
+#  Service has more than one ExecStart= setting, which is only allowed for Type=oneshot services.
+ExecStart=
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label provider=virtualbox --insecure-registry 10.96.0.0/12 
+ExecReload=/bin/kill -s HUP $MAINPID
+
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+TasksMax=infinity
+TimeoutStartSec=0
+
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+" | sudo tee /lib/systemd/system/docker.service
+SSH cmd err, output: <nil>: [Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network.target  minikube-automount.service docker.socket
+Requires= minikube-automount.service docker.socket 
+
+[Service]
+Type=notify
+
+
+
+
+# This file is a systemd drop-in unit that inherits from the base dockerd configuration.
+# The base configuration already specifies an 'ExecStart=...' command. The first directive
+# here is to clear out that command inherited from the base configuration. Without this,
+# the command from the base configuration and the command specified here are treated as
+# a sequence of commands, which is not the desired behavior, nor is it valid -- systemd
+# will catch this invalid input and refuse to start the service with an error like:
+#  Service has more than one ExecStart= setting, which is only allowed for Type=oneshot services.
+ExecStart=
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label provider=virtualbox --insecure-registry 10.96.0.0/12 
+ExecReload=/bin/kill -s HUP 
+
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+TasksMax=infinity
+TimeoutStartSec=0
+
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
+setting minikube options for container-runtime
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+sudo mkdir -p /etc/sysconfig && printf %s "
+CRIO_MINIKUBE_OPTIONS='--insecure-registry 10.96.0.0/12 '
+" | sudo tee /etc/sysconfig/crio.minikube
+SSH cmd err, output: <nil>: 
+CRIO_MINIKUBE_OPTIONS='--insecure-registry 10.96.0.0/12 '
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+sudo systemctl daemon-reload
+SSH cmd err, output: <nil>: 
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+sudo systemctl -f restart crio
+SSH cmd err, output: <nil>: 
+Waiting for SSH to be available...
+Getting to WaitForSSH function...
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+exit 0
+SSH cmd err, output: <nil>: 
+Detecting the provisioner...
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+cat /etc/os-release
+SSH cmd err, output: <nil>: NAME=Buildroot
+VERSION=2018.05.3
+ID=buildroot
+VERSION_ID=2018.05.3
+PRETTY_NAME="Buildroot 2018.05.3"
+
+found compatible host: buildroot
+I1005 08:46:12.509341   21915 cluster.go:420] Provisioned with Buildroot 2018.05.3
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+date +%s.%N
+SSH cmd err, output: <nil>: 1570229172.600628498
+
+I1005 08:46:12.602265   21915 cluster.go:203] guest clock: 1570229172.600628498
+I1005 08:46:12.602278   21915 cluster.go:216] Guest: 2019-10-05 08:46:12.600628498 +1000 AEST Remote: 2019-10-05 08:46:12.509352492 +1000 AEST m=+153.352438435 (delta=91.276006ms)
+I1005 08:46:12.602300   21915 cluster.go:187] guest clock delta is within tolerance: 91.276006ms
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+Host-only MAC: 0800272a0a8c
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+ip addr show
+SSH cmd err, output: <nil>: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86386sec preferred_lft 86386sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1186sec preferred_lft 1186sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+SSH returned: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86386sec preferred_lft 86386sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 1186sec preferred_lft 1186sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+
+END SSH
+
+I1005 08:46:12.891677   21915 profile.go:66] Saving config to /home/nanik/.minikube/profiles/minikube/config.json ...
+I1005 08:46:12.891864   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/profiles/minikube/config.json.tmp335779524" with filemode -rw-------
+I1005 08:46:12.943329   21915 ssh_runner.go:102] SSH: systemctl is-active --quiet service containerd
+I1005 08:46:12.962301   21915 ssh_runner.go:102] SSH: systemctl is-active --quiet service crio
+I1005 08:46:12.978134   21915 ssh_runner.go:102] SSH: sudo systemctl stop crio
+I1005 08:46:13.013065   21915 ssh_runner.go:102] SSH: systemctl is-active --quiet service crio
+I1005 08:46:13.018010   21915 ssh_runner.go:102] SSH: sudo systemctl start docker
+I1005 08:46:13.485148   21915 ssh_runner.go:138] Run with output: docker version --format '{{.Server.Version}}'
+* Preparing Kubernetes v1.16.0 on Docker 18.09.9 ...
+I1005 08:46:49.614413   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0 exists
+I1005 08:46:49.614443   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kube-apiserver:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0 completed in 1m55.122667304s
+I1005 08:46:49.614463   21915 cache_images.go:83] CacheImage k8s.gcr.io/kube-apiserver:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0 succeeded
+I1005 08:47:37.658562   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0 exists
+I1005 08:47:37.658592   21915 cache_images.go:298] CacheImage: k8s.gcr.io/etcd:3.3.15-0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0 completed in 2m43.166400921s
+I1005 08:47:37.658611   21915 cache_images.go:83] CacheImage k8s.gcr.io/etcd:3.3.15-0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0 succeeded
+I1005 08:48:12.214662   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0 exists
+I1005 08:48:12.214691   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kube-proxy:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0 completed in 3m17.722985072s
+I1005 08:48:12.214710   21915 cache_images.go:83] CacheImage k8s.gcr.io/kube-proxy:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0 succeeded
+I1005 08:48:15.712036   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13 exists
+I1005 08:48:15.712076   21915 cache_images.go:298] CacheImage: k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13 completed in 3m21.219783679s
+I1005 08:48:15.712096   21915 cache_images.go:83] CacheImage k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13 succeeded
+I1005 08:48:16.435938   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13 exists
+I1005 08:48:16.435997   21915 cache_images.go:298] CacheImage: k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13 completed in 3m21.944275146s
+I1005 08:48:16.436024   21915 cache_images.go:83] CacheImage k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.13 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13 succeeded
+I1005 08:48:32.596060   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0 exists
+I1005 08:48:32.596090   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kube-controller-manager:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0 completed in 3m38.104412836s
+I1005 08:48:32.596109   21915 cache_images.go:83] CacheImage k8s.gcr.io/kube-controller-manager:v1.16.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0 succeeded
+I1005 08:49:16.858250   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1 exists
+I1005 08:49:16.858279   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1 completed in 4m22.366516761s
+I1005 08:49:16.858298   21915 cache_images.go:83] CacheImage k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1 succeeded
+I1005 08:49:24.901565   21915 cache_images.go:346] /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0 exists
+I1005 08:49:24.901603   21915 cache_images.go:298] CacheImage: k8s.gcr.io/kube-addon-manager:v9.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0 completed in 4m30.40980361s
+I1005 08:49:24.901623   21915 cache_images.go:83] CacheImage k8s.gcr.io/kube-addon-manager:v9.0 -> /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0 succeeded
+I1005 08:49:24.901649   21915 cache_images.go:90] Successfully cached all images.
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+STDOUT:
+{
+name="minikube"
+groups="/"
+ostype="Linux 2.6 / 3.x / 4.x (64-bit)"
+UUID="e99507ff-47ae-418b-963b-7399d971660b"
+CfgFile="/home/nanik/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/nanik/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/nanik/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="e99507ff-47ae-418b-963b-7399d971660b"
+memory=2000
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+hpet="on"
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=2
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+cpuid-portability-level=0
+bootmenu="disabled"
+boot1="dvd"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+rtcuseutc="on"
+hwvirtex="on"
+nestedpaging="on"
+largepages="on"
+vtxvpid="on"
+vtxux="on"
+paravirtprovider="default"
+effparavirtprovider="kvm"
+VMState="running"
+VMStateChangeTime="2019-10-04T22:45:27.187000000"
+monitorcount=1
+accelerate3d="off"
+accelerate2dvideo="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+storagecontrollername0="SATA"
+storagecontrollertype0="IntelAhci"
+storagecontrollerinstance0="0"
+storagecontrollermaxportcount0="30"
+storagecontrollerportcount0="30"
+storagecontrollerbootable0="on"
+"SATA-0-0"="/home/nanik/.minikube/machines/minikube/boot2docker.iso"
+"SATA-ImageUUID-0-0"="b069f80a-e1c2-4352-82de-5a646bef3d8b"
+"SATA-tempeject"="off"
+"SATA-IsEjected"="off"
+"SATA-1-0"="/home/nanik/.minikube/machines/minikube/disk.vmdk"
+"SATA-ImageUUID-1-0"="60cbb20f-2298-4745-b38b-ab659d8844b4"
+"SATA-2-0"="none"
+"SATA-3-0"="none"
+"SATA-4-0"="none"
+"SATA-5-0"="none"
+"SATA-6-0"="none"
+"SATA-7-0"="none"
+"SATA-8-0"="none"
+"SATA-9-0"="none"
+"SATA-10-0"="none"
+"SATA-11-0"="none"
+"SATA-12-0"="none"
+"SATA-13-0"="none"
+"SATA-14-0"="none"
+"SATA-15-0"="none"
+"SATA-16-0"="none"
+"SATA-17-0"="none"
+"SATA-18-0"="none"
+"SATA-19-0"="none"
+"SATA-20-0"="none"
+"SATA-21-0"="none"
+"SATA-22-0"="none"
+"SATA-23-0"="none"
+"SATA-24-0"="none"
+"SATA-25-0"="none"
+"SATA-26-0"="none"
+"SATA-27-0"="none"
+"SATA-28-0"="none"
+"SATA-29-0"="none"
+natnet1="nat"
+macaddress1="0800276F7634"
+cableconnected1="on"
+nic1="nat"
+nictype1="virtio"
+nicspeed1="0"
+mtu="0"
+sockSnd="64"
+sockRcv="64"
+tcpWndSnd="64"
+tcpWndRcv="64"
+Forwarding(0)="ssh,tcp,127.0.0.1,39749,,22"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800272A0A8C"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="pulse"
+audio_in="off"
+audio_out="off"
+clipboard="disabled"
+draganddrop="disabled"
+SessionName="headless"
+VideoMode="720,400,0"@0,0 1
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+SharedFolderNameMachineMapping1="hosthome"
+SharedFolderPathMachineMapping1="/home"
+VRDEActiveConnection="off"
+VRDEClients==0
+videocap="off"
+videocapaudio="off"
+capturescreens=""
+capturefilename="/home/nanik/.minikube/machines/minikube/minikube/minikube.webm"
+captureres="1024x768"
+capturevideorate=512
+capturevideofps=25
+captureopts=""
+GuestMemoryBalloon=0
+GuestOSType="Linux26_64"
+GuestAdditionsRunLevel=2
+GuestAdditionsVersion="5.1.38 r122592"
+GuestAdditionsFacility_VirtualBox Base Driver=50,1570229158115
+GuestAdditionsFacility_VirtualBox System Service=50,1570229158339
+GuestAdditionsFacility_Seamless Mode=0,1570229158115
+GuestAdditionsFacility_Graphics Mode=0,1570229158115
+}
+STDERR:
+{
+}
+Host-only MAC: 0800272a0a8c
+
+Using SSH client type: native
+&{{{<nil> 0 [] [] []} docker [0xecf5a0] 0xecf570 <nil>  [] 0s} 127.0.0.1 39749 <nil> <nil>}
+About to run SSH command:
+ip addr show
+SSH cmd err, output: <nil>: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86193sec preferred_lft 86193sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 993sec preferred_lft 993sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:ce:ca:96:1b brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+
+SSH returned: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:6f:76:34 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86193sec preferred_lft 86193sec
+    inet6 fe80::a00:27ff:fe6f:7634/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:2a:0a:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.134/24 brd 192.168.99.255 scope global dynamic eth1
+       valid_lft 993sec preferred_lft 993sec
+    inet6 fe80::a00:27ff:fe2a:a8c/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:ce:ca:96:1b brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+
+END SSH
+
+I1005 08:49:25.169616   21915 settings.go:124] acquiring lock: {Name:kubeconfigUpdate Clock:{} Delay:10s Timeout:0s Cancel:<nil>}
+I1005 08:49:25.169715   21915 settings.go:132] Updating kubeconfig:  /home/nanik/.kube/config
+I1005 08:49:25.172463   21915 lock.go:41] attempting to write to file "/home/nanik/.kube/config" with filemode -rw-------
+I1005 08:49:25.202434   21915 cache_images.go:96] LoadImages start: [k8s.gcr.io/kube-proxy:v1.16.0 k8s.gcr.io/kube-scheduler:v1.16.0 k8s.gcr.io/kube-controller-manager:v1.16.0 k8s.gcr.io/kube-apiserver:v1.16.0 k8s.gcr.io/pause:3.1 k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.13 k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.13 k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.13 k8s.gcr.io/etcd:3.3.15-0 k8s.gcr.io/coredns:1.6.2 k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 k8s.gcr.io/kube-addon-manager:v9.0 gcr.io/k8s-minikube/storage-provisioner:v1.8.1]
+I1005 08:49:25.202641   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1
+I1005 08:49:25.202646   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13
+I1005 08:49:25.202660   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0
+I1005 08:49:25.202669   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0
+I1005 08:49:25.202683   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0
+I1005 08:49:25.202711   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:49:25.202722   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0
+I1005 08:49:25.202728   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0
+I1005 08:49:25.202739   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0
+I1005 08:49:25.202752   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:49:25.202763   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1
+I1005 08:49:25.202784   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:49:25.202805   21915 cache_images.go:211] Loading image from cache: /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2
+I1005 08:49:25.203814   21915 ssh_runner.go:170] Transferring 44910592 bytes to /var/lib/minikube/images/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:49:25.203841   21915 ssh_runner.go:170] Transferring 318976 bytes to /var/lib/minikube/images/pause_3.1
+I1005 08:49:25.203866   21915 ssh_runner.go:170] Transferring 50498560 bytes to /var/lib/minikube/images/kube-apiserver_v1.16.0
+I1005 08:49:25.203870   21915 ssh_runner.go:170] Transferring 14267904 bytes to /var/lib/minikube/images/k8s-dns-kube-dns-amd64_1.14.13
+I1005 08:49:25.203889   21915 ssh_runner.go:170] Transferring 30522368 bytes to /var/lib/minikube/images/kube-addon-manager_v9.0
+I1005 08:49:25.203890   21915 ssh_runner.go:170] Transferring 11769344 bytes to /var/lib/minikube/images/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:49:25.203911   21915 ssh_runner.go:170] Transferring 85501440 bytes to /var/lib/minikube/images/etcd_3.3.15-0
+I1005 08:49:25.203914   21915 ssh_runner.go:170] Transferring 31408640 bytes to /var/lib/minikube/images/kube-scheduler_v1.16.0
+I1005 08:49:25.203917   21915 ssh_runner.go:170] Transferring 30888448 bytes to /var/lib/minikube/images/kube-proxy_v1.16.0
+I1005 08:49:25.203917   21915 ssh_runner.go:170] Transferring 12207616 bytes to /var/lib/minikube/images/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:49:25.203898   21915 ssh_runner.go:170] Transferring 48862720 bytes to /var/lib/minikube/images/kube-controller-manager_v1.16.0
+I1005 08:49:25.203911   21915 ssh_runner.go:170] Transferring 14125568 bytes to /var/lib/minikube/images/coredns_1.6.2
+I1005 08:49:25.203897   21915 ssh_runner.go:170] Transferring 20683776 bytes to /var/lib/minikube/images/storage-provisioner_v1.8.1
+I1005 08:49:25.205003   21915 ssh_runner.go:189] pause_3.1: copied 318976 bytes
+I1005 08:49:25.311633   21915 docker.go:97] Loading image: /var/lib/minikube/images/pause_3.1
+I1005 08:49:25.311649   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/pause_3.1
+I1005 08:49:25.733790   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/pause_3.1 from cache
+I1005 08:49:26.906078   21915 ssh_runner.go:189] k8s-dns-sidecar-amd64_1.14.13: copied 12207616 bytes
+I1005 08:49:26.937137   21915 ssh_runner.go:189] k8s-dns-dnsmasq-nanny-amd64_1.14.13: copied 11769344 bytes
+I1005 08:49:27.005179   21915 docker.go:97] Loading image: /var/lib/minikube/images/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:49:27.005214   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/k8s-dns-sidecar-amd64_1.14.13
+I1005 08:49:27.180562   21915 ssh_runner.go:189] coredns_1.6.2: copied 14125568 bytes
+I1005 08:49:27.252823   21915 ssh_runner.go:189] k8s-dns-kube-dns-amd64_1.14.13: copied 14267904 bytes
+I1005 08:49:28.063681   21915 ssh_runner.go:189] storage-provisioner_v1.8.1: copied 20683776 bytes
+I1005 08:49:28.960248   21915 ssh_runner.go:189] kube-addon-manager_v9.0: copied 30522368 bytes
+I1005 08:49:29.169615   21915 ssh_runner.go:189] kube-proxy_v1.16.0: copied 30888448 bytes
+I1005 08:49:29.183304   21915 ssh_runner.go:189] kube-scheduler_v1.16.0: copied 31408640 bytes
+I1005 08:49:29.562128   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-sidecar-amd64_1.14.13 from cache
+I1005 08:49:29.562172   21915 docker.go:97] Loading image: /var/lib/minikube/images/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:49:29.562193   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/k8s-dns-dnsmasq-nanny-amd64_1.14.13
+I1005 08:49:29.748763   21915 ssh_runner.go:189] kubernetes-dashboard-amd64_v1.10.1: copied 44910592 bytes
+I1005 08:49:30.007210   21915 ssh_runner.go:189] kube-controller-manager_v1.16.0: copied 48862720 bytes
+I1005 08:49:30.022954   21915 ssh_runner.go:189] kube-apiserver_v1.16.0: copied 50498560 bytes
+I1005 08:49:30.701028   21915 ssh_runner.go:189] etcd_3.3.15-0: copied 85501440 bytes
+I1005 08:49:31.428025   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64_1.14.13 from cache
+I1005 08:49:31.428057   21915 docker.go:97] Loading image: /var/lib/minikube/images/coredns_1.6.2
+I1005 08:49:31.428075   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/coredns_1.6.2
+I1005 08:49:32.827654   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/coredns_1.6.2 from cache
+I1005 08:49:32.827681   21915 docker.go:97] Loading image: /var/lib/minikube/images/k8s-dns-kube-dns-amd64_1.14.13
+I1005 08:49:32.827705   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/k8s-dns-kube-dns-amd64_1.14.13
+I1005 08:49:33.753018   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/k8s-dns-kube-dns-amd64_1.14.13 from cache
+I1005 08:49:33.753032   21915 docker.go:97] Loading image: /var/lib/minikube/images/storage-provisioner_v1.8.1
+I1005 08:49:33.753037   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/storage-provisioner_v1.8.1
+I1005 08:49:35.302032   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/gcr.io/k8s-minikube/storage-provisioner_v1.8.1 from cache
+I1005 08:49:35.302071   21915 docker.go:97] Loading image: /var/lib/minikube/images/kube-addon-manager_v9.0
+I1005 08:49:35.302082   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kube-addon-manager_v9.0
+I1005 08:49:37.835100   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-addon-manager_v9.0 from cache
+I1005 08:49:37.835145   21915 docker.go:97] Loading image: /var/lib/minikube/images/kube-proxy_v1.16.0
+I1005 08:49:37.835165   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kube-proxy_v1.16.0
+I1005 08:49:40.626732   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-proxy_v1.16.0 from cache
+I1005 08:49:40.626747   21915 docker.go:97] Loading image: /var/lib/minikube/images/kube-scheduler_v1.16.0
+I1005 08:49:40.626751   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kube-scheduler_v1.16.0
+I1005 08:49:41.570023   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-scheduler_v1.16.0 from cache
+I1005 08:49:41.570068   21915 docker.go:97] Loading image: /var/lib/minikube/images/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:49:41.570073   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kubernetes-dashboard-amd64_v1.10.1
+I1005 08:49:43.855641   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kubernetes-dashboard-amd64_v1.10.1 from cache
+I1005 08:49:43.855662   21915 docker.go:97] Loading image: /var/lib/minikube/images/kube-controller-manager_v1.16.0
+I1005 08:49:43.855668   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kube-controller-manager_v1.16.0
+I1005 08:49:45.965706   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-controller-manager_v1.16.0 from cache
+I1005 08:49:45.965739   21915 docker.go:97] Loading image: /var/lib/minikube/images/kube-apiserver_v1.16.0
+I1005 08:49:45.965747   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/kube-apiserver_v1.16.0
+I1005 08:49:51.152792   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/kube-apiserver_v1.16.0 from cache
+I1005 08:49:51.152808   21915 docker.go:97] Loading image: /var/lib/minikube/images/etcd_3.3.15-0
+I1005 08:49:51.152813   21915 ssh_runner.go:102] SSH: docker load -i /var/lib/minikube/images/etcd_3.3.15-0
+I1005 08:49:55.412647   21915 cache_images.go:237] Successfully loaded image /home/nanik/.minikube/cache/images/k8s.gcr.io/etcd_3.3.15-0 from cache
+I1005 08:49:55.412664   21915 cache_images.go:120] Successfully loaded all cached images.
+I1005 08:49:55.412682   21915 cache_images.go:121] LoadImages end
+
+
+Kubelet installation
+----------------------
+I1005 08:49:55.412869   21915 kubeadm.go:618] kubelet v1.16.0 config:
+[Unit]
+Wants=docker.socket
+
+[Service]
+ExecStart=
+ExecStart=/var/lib/minikube/binaries/v1.16.0/kubelet --authorization-mode=Webhook --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --cgroup-driver=cgroupfs --client-ca-file=/var/lib/minikube/certs/ca.crt --cluster-dns=10.96.0.10 --cluster-domain=cluster.local --container-runtime=docker --fail-swap-on=false --hostname-override=minikube --kubeconfig=/etc/kubernetes/kubelet.conf --node-ip=192.168.99.134 --pod-manifest-path=/etc/kubernetes/manifests
+
+[Install]
+I1005 08:49:55.412896   21915 ssh_runner.go:102] SSH: pgrep kubelet && sudo systemctl stop kubelet
+W1005 08:49:55.418010   21915 kubeadm.go:623] unable to stop kubelet: command failed: pgrep kubelet && sudo systemctl stop kubelet
+stdout: 
+stderr: : Process exited with status 1
+* Downloading kubeadm v1.16.0
+* Downloading kubelet v1.16.0
+I1005 08:50:28.470664   21915 ssh_runner.go:170] Transferring 44244800 bytes to /var/lib/minikube/binaries/v1.16.0/kubeadm
+I1005 08:50:29.029650   21915 ssh_runner.go:189] kubeadm: copied 44244800 bytes
+I1005 08:50:57.201757   21915 ssh_runner.go:170] Transferring 123120976 bytes to /var/lib/minikube/binaries/v1.16.0/kubelet
+I1005 08:50:58.565867   21915 ssh_runner.go:189] kubelet: copied 123120976 bytes
+I1005 08:50:58.581716   21915 ssh_runner.go:170] Transferring 1146 bytes to /var/tmp/minikube/kubeadm.yaml
+I1005 08:50:58.582276   21915 ssh_runner.go:189] kubeadm.yaml: copied 1146 bytes
+I1005 08:50:58.592622   21915 ssh_runner.go:170] Transferring 523 bytes to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+I1005 08:50:58.594440   21915 ssh_runner.go:189] 10-kubeadm.conf: copied 523 bytes
+I1005 08:50:58.609746   21915 ssh_runner.go:170] Transferring 349 bytes to /lib/systemd/system/kubelet.service
+I1005 08:50:58.610569   21915 ssh_runner.go:189] kubelet.service: copied 349 bytes
+I1005 08:50:58.619803   21915 ssh_runner.go:170] Transferring 271 bytes to /etc/kubernetes/addons/storageclass.yaml
+I1005 08:50:58.620427   21915 ssh_runner.go:189] storageclass.yaml: copied 271 bytes
+I1005 08:50:58.629487   21915 ssh_runner.go:170] Transferring 1709 bytes to /etc/kubernetes/addons/storage-provisioner.yaml
+I1005 08:50:58.630096   21915 ssh_runner.go:189] storage-provisioner.yaml: copied 1709 bytes
+I1005 08:50:58.638347   21915 ssh_runner.go:170] Transferring 1532 bytes to /etc/kubernetes/manifests/addon-manager.yaml.tmpl
+I1005 08:50:58.639028   21915 ssh_runner.go:189] addon-manager.yaml.tmpl: copied 1532 bytes
+I1005 08:50:58.648037   21915 ssh_runner.go:102] SSH: sudo systemctl daemon-reload && sudo systemctl start kubelet
+
+
+
+I1005 08:50:58.715458   21915 certs.go:74] acquiring lock: {Name:setupCerts Clock:{} Delay:15s Timeout:0s Cancel:<nil>}
+I1005 08:50:58.715591   21915 certs.go:82] Setting up /home/nanik/.minikube for IP: 192.168.99.134
+I1005 08:50:59.033099   21915 crypto.go:157] Writing cert to /home/nanik/.minikube/ca.crt ...
+I1005 08:50:59.033112   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/ca.crt" with filemode -rw-r--r--
+I1005 08:50:59.033237   21915 crypto.go:165] Writing key to /home/nanik/.minikube/ca.key ...
+I1005 08:50:59.033245   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/ca.key" with filemode -rw-------
+I1005 08:50:59.354092   21915 crypto.go:157] Writing cert to /home/nanik/.minikube/proxy-client-ca.crt ...
+I1005 08:50:59.354108   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/proxy-client-ca.crt" with filemode -rw-r--r--
+I1005 08:50:59.354232   21915 crypto.go:165] Writing key to /home/nanik/.minikube/proxy-client-ca.key ...
+I1005 08:50:59.354258   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/proxy-client-ca.key" with filemode -rw-------
+I1005 08:50:59.354364   21915 crypto.go:69] Generating cert /home/nanik/.minikube/client.crt with IP's: []
+I1005 08:50:59.501181   21915 crypto.go:157] Writing cert to /home/nanik/.minikube/client.crt ...
+I1005 08:50:59.501234   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/client.crt" with filemode -rw-r--r--
+I1005 08:50:59.508945   21915 crypto.go:165] Writing key to /home/nanik/.minikube/client.key ...
+I1005 08:50:59.508973   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/client.key" with filemode -rw-------
+I1005 08:50:59.509134   21915 crypto.go:69] Generating cert /home/nanik/.minikube/apiserver.crt with IP's: [192.168.99.134 10.96.0.1 10.0.0.1]
+I1005 08:50:59.653883   21915 crypto.go:157] Writing cert to /home/nanik/.minikube/apiserver.crt ...
+I1005 08:50:59.653896   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/apiserver.crt" with filemode -rw-r--r--
+I1005 08:50:59.653993   21915 crypto.go:165] Writing key to /home/nanik/.minikube/apiserver.key ...
+I1005 08:50:59.654000   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/apiserver.key" with filemode -rw-------
+I1005 08:50:59.654079   21915 crypto.go:69] Generating cert /home/nanik/.minikube/proxy-client.crt with IP's: []
+I1005 08:50:59.806144   21915 crypto.go:157] Writing cert to /home/nanik/.minikube/proxy-client.crt ...
+I1005 08:50:59.806253   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/proxy-client.crt" with filemode -rw-r--r--
+I1005 08:50:59.806726   21915 crypto.go:165] Writing key to /home/nanik/.minikube/proxy-client.key ...
+I1005 08:50:59.806761   21915 lock.go:41] attempting to write to file "/home/nanik/.minikube/proxy-client.key" with filemode -rw-------
+I1005 08:50:59.810130   21915 ssh_runner.go:170] Transferring 1066 bytes to /var/lib/minikube/certs/ca.crt
+I1005 08:50:59.811894   21915 ssh_runner.go:189] ca.crt: copied 1066 bytes
+I1005 08:50:59.839183   21915 ssh_runner.go:170] Transferring 1679 bytes to /var/lib/minikube/certs/ca.key
+I1005 08:50:59.839925   21915 ssh_runner.go:189] ca.key: copied 1679 bytes
+I1005 08:50:59.849795   21915 ssh_runner.go:170] Transferring 1298 bytes to /var/lib/minikube/certs/apiserver.crt
+I1005 08:50:59.850406   21915 ssh_runner.go:189] apiserver.crt: copied 1298 bytes
+I1005 08:50:59.865515   21915 ssh_runner.go:170] Transferring 1679 bytes to /var/lib/minikube/certs/apiserver.key
+I1005 08:50:59.866843   21915 ssh_runner.go:189] apiserver.key: copied 1679 bytes
+I1005 08:50:59.879118   21915 ssh_runner.go:170] Transferring 1074 bytes to /var/lib/minikube/certs/proxy-client-ca.crt
+I1005 08:50:59.879856   21915 ssh_runner.go:189] proxy-client-ca.crt: copied 1074 bytes
+I1005 08:50:59.889826   21915 ssh_runner.go:170] Transferring 1679 bytes to /var/lib/minikube/certs/proxy-client-ca.key
+I1005 08:50:59.891717   21915 ssh_runner.go:189] proxy-client-ca.key: copied 1679 bytes
+I1005 08:50:59.911132   21915 ssh_runner.go:170] Transferring 1103 bytes to /var/lib/minikube/certs/proxy-client.crt
+I1005 08:50:59.911927   21915 ssh_runner.go:189] proxy-client.crt: copied 1103 bytes
+I1005 08:50:59.919347   21915 ssh_runner.go:170] Transferring 1675 bytes to /var/lib/minikube/certs/proxy-client.key
+I1005 08:50:59.919838   21915 ssh_runner.go:189] proxy-client.key: copied 1675 bytes
+I1005 08:50:59.926246   21915 ssh_runner.go:170] Transferring 1066 bytes to /usr/share/ca-certificates/minikubeCA.pem
+I1005 08:50:59.929065   21915 ssh_runner.go:189] minikubeCA.pem: copied 1066 bytes
+I1005 08:50:59.948536   21915 ssh_runner.go:170] Transferring 428 bytes to /var/lib/minikube/kubeconfig
+I1005 08:50:59.949143   21915 ssh_runner.go:189] kubeconfig: copied 428 bytes
+I1005 08:50:59.960284   21915 ssh_runner.go:102] SSH: which openssl
+I1005 08:50:59.963787   21915 ssh_runner.go:102] SSH: sudo test -f '/etc/ssl/certs/minikubeCA.pem'
+I1005 08:50:59.967832   21915 ssh_runner.go:102] SSH: sudo ln -s '/usr/share/ca-certificates/minikubeCA.pem' '/etc/ssl/certs/minikubeCA.pem'
+I1005 08:50:59.977667   21915 ssh_runner.go:138] Run with output: openssl x509 -hash -noout -in '/usr/share/ca-certificates/minikubeCA.pem'
+I1005 08:50:59.994936   21915 ssh_runner.go:102] SSH: sudo test -f '/etc/ssl/certs/b5213941.0'
+I1005 08:50:59.999784   21915 ssh_runner.go:102] SSH: sudo ln -s '/etc/ssl/certs/minikubeCA.pem' '/etc/ssl/certs/b5213941.0'
+* Pulling images ...
+I1005 08:51:00.003855   21915 ssh_runner.go:102] SSH: sudo env PATH=/var/lib/minikube/binaries/v1.16.0:$PATH kubeadm config images pull --config /var/tmp/minikube/kubeadm.yaml
+* Launching Kubernetes ... 
+I1005 08:51:27.350136   21915 kubeadm.go:237] StartCluster: {KubernetesVersion:v1.16.0 NodeIP:192.168.99.134 NodePort:8443 NodeName:minikube APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:docker CRISocket: NetworkPlugin: FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false}
+I1005 08:51:27.350202   21915 ssh_runner.go:138] Run with output: sudo env PATH=/var/lib/minikube/binaries/v1.16.0:$PATH kubeadm init --config /var/tmp/minikube/kubeadm.yaml  --ignore-preflight-errors=DirAvailable--etc-kubernetes-manifests,DirAvailable--var-lib-minikube,FileAvailable--etc-kubernetes-manifests-kube-scheduler.yaml,FileAvailable--etc-kubernetes-manifests-kube-apiserver.yaml,FileAvailable--etc-kubernetes-manifests-kube-controller-manager.yaml,FileAvailable--etc-kubernetes-manifests-etcd.yaml,Port-10250,Swap
+I1005 08:51:43.084624   21915 kubeadm.go:278] Configuring cluster permissions ...
+I1005 08:51:43.099229   21915 util.go:67] duration metric: took 12.941786ms to wait for elevateKubeSystemPrivileges.
+I1005 08:51:43.099245   21915 ssh_runner.go:138] Run with output: cat /proc/$(pgrep kube-apiserver)/oom_adj
+I1005 08:51:43.107072   21915 kubeadm.go:304] apiserver oom_adj: -16
+I1005 08:51:43.107083   21915 kubeadm.go:239] StartCluster complete in 15.756951656s
+* Waiting for: apiserverI1005 08:51:43.107170   21915 kubeadm.go:459] Waiting for apiserver process ...
+I1005 08:51:43.107174   21915 ssh_runner.go:102] SSH: sudo pgrep kube-apiserver
+I1005 08:51:43.113825   21915 kubeadm.go:474] Waiting for apiserver to port healthy status ...
+I1005 08:51:43.118981   21915 kubeadm.go:161] https://192.168.99.134:8443/healthz response: <nil> &{Status:200 OK StatusCode:200 Proto:HTTP/1.1 ProtoMajor:1 ProtoMinor:1 Header:map[Cache-Control:[no-cache, private] Content-Length:[2] Content-Type:[text/plain; charset=utf-8] Date:[Fri, 04 Oct 2019 22:51:43 GMT] X-Content-Type-Options:[nosniff]] Body:0xc0005aff00 ContentLength:2 TransferEncoding:[] Close:false Uncompressed:false Trailer:map[] Request:0xc000505000 TLS:0xc00082e840}
+I1005 08:51:43.119014   21915 kubeadm.go:477] apiserver status: Running, err: <nil>
+I1005 08:51:43.119018   21915 kubeadm.go:456] duration metric: took 11.848844ms to wait for apiserver status ...
+ proxyI1005 08:51:43.121233   21915 kapi.go:74] Waiting for pod with label "kube-system" in ns "k8s-app=kube-proxy" ...
+I1005 08:51:43.127105   21915 kapi.go:85] Found 0 Pods for label selector k8s-app=kube-proxy
+I1005 08:51:49.633157   21915 kapi.go:85] Found 1 Pods for label selector k8s-app=kube-proxy
+I1005 08:51:49.633173   21915 kapi.go:95] waiting for pod "k8s-app=kube-proxy", current state: Pending: [<nil>]
+I1005 08:51:50.135215   21915 kapi.go:95] waiting for pod "k8s-app=kube-proxy", current state: Pending: [<nil>]
+I1005 08:51:50.635165   21915 kapi.go:107] duration metric: took 7.513919902s to wait for k8s-app=kube-proxy ...
+ etcdI1005 08:51:50.635349   21915 kapi.go:74] Waiting for pod with label "kube-system" in ns "component=etcd" ...
+I1005 08:51:50.641299   21915 kapi.go:85] Found 0 Pods for label selector component=etcd
+I1005 08:53:00.649792   21915 kapi.go:85] Found 1 Pods for label selector component=etcd
+I1005 08:53:00.649830   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:01.148040   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:01.649036   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:02.149653   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:02.643512   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:03.150363   21915 kapi.go:95] waiting for pod "component=etcd", current state: Pending: [<nil>]
+I1005 08:53:03.649069   21915 kapi.go:107] duration metric: took 1m13.013712995s to wait for component=etcd ...
+ schedulerI1005 08:53:03.649150   21915 kapi.go:74] Waiting for pod with label "kube-system" in ns "component=kube-scheduler" ...
+I1005 08:53:03.660540   21915 kapi.go:85] Found 1 Pods for label selector component=kube-scheduler
+I1005 08:53:03.660562   21915 kapi.go:107] duration metric: took 11.414548ms to wait for component=kube-scheduler ...
+ controllerI1005 08:53:03.660588   21915 kapi.go:74] Waiting for pod with label "kube-system" in ns "component=kube-controller-manager" ...
+I1005 08:53:03.664754   21915 kapi.go:85] Found 1 Pods for label selector component=kube-controller-manager
+I1005 08:53:03.664773   21915 kapi.go:107] duration metric: took 4.184983ms to wait for component=kube-controller-manager ...
+ dnsI1005 08:53:03.664792   21915 kapi.go:74] Waiting for pod with label "kube-system" in ns "k8s-app=kube-dns" ...
+I1005 08:53:03.669634   21915 kapi.go:85] Found 2 Pods for label selector k8s-app=kube-dns
+I1005 08:53:03.669649   21915 kapi.go:107] duration metric: took 4.855944ms to wait for k8s-app=kube-dns ...
+
+* Done! kubectl is now configured to use "minikube"
+* For best results, install kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl/

@@ -18,46 +18,46 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 	* Once you've created a Deployment, the Kubernetes master schedules mentioned application instances onto individual Nodes in the cluster.
 	* Once the application instances are created, a Kubernetes Deployment Controller continuously monitors those instances. If the Node hosting an instance goes down or is deleted, the Deployment controller replaces the instance with an instance on another Node in the cluster. This provides a self-healing mechanism to address machine failure or maintenance.
     * Node
-        * A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
-        * Each node has a Kubelet, which is an agent for managing the node and communicating with the Kubernetes master. The node should also have tools for handling container operations, such as Docker or rkt.
-        * A Kubernetes cluster that handles production traffic should have a minimum of three nodes.
-        * The nodes communicate with the master using the Kubernetes API. End users can also use the Kubernetes API directly to interact with the cluster.    
-        * Node Components
-            - Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+	* A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
+	* Each node has a Kubelet, which is an agent for managing the node and communicating with the Kubernetes master. The node should also have tools for handling container operations, such as Docker or rkt.
+	* A Kubernetes cluster that handles production traffic should have a minimum of three nodes.
+	* The nodes communicate with the master using the Kubernetes API. End users can also use the Kubernetes API directly to interact with the cluster.    
+	* Node Components
+	    - Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
 
-                * kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
+		* kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
 
-                * kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
+		* kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
 
-                * Container Runtime - The container runtime is the software that is responsible for running containers.
-                
-            - A node is a worker machine in Kubernetes, previously known as a minion. A node may be a VM or physical machine, depending on the cluster. Each node contains the services necessary to run pods and is managed by the master components.
-            
-            - A node’s status contains the following information:
-                * Addresses
-                * Conditions
-                * Capacity and Allocatable
-                * Info
+		* Container Runtime - The container runtime is the software that is responsible for running containers.
+		
+	    - A node is a worker machine in Kubernetes, previously known as a minion. A node may be a VM or physical machine, depending on the cluster. Each node contains the services necessary to run pods and is managed by the master components.
+	    
+	    - A node’s status contains the following information:
+		* Addresses
+		* Conditions
+		* Capacity and Allocatable
+		* Info
 	* Pod
-        * Pod is something logical and not physical. It is just a logical wrapper for a set of containers with it's resources.  In terms of Docker constructs, a Pod is modelled as a group of Docker containers with shared namespaces and shared filesystem volumes.
-        * Containers within a Pod share an IP address and port space, and can find each other via localhost. They can also communicate with each other using standard inter-process communications like SystemV semaphores or POSIX shared memory. Containers in different Pods have distinct IP addresses and can not communicate by IPC without special configuration. These containers usually communicate with each other via Pod IP addresses.
-        * A Pod is a group of one or more containers (such as Docker containers), with shared storage/network, and a specification for how to run the containers.
-        * A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as Docker or rkt), and some shared resources for those containers. Those resources include:
-            - Shared storage, as Volumes
-            - Networking, as a unique cluster IP address
-            - Information about how to run each container, such as the container image version or specific ports to use
-            - The containers in a Pod share an IP Address and port space, are always co-located and co-scheduled, and run in a shared context on the same Node.
-        * A Pod always runs on a Node
-            - A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster. 
-            - Each Node is managed by the Master. 
-            - A Node can have multiple pods, and the Kubernetes master automatically handles scheduling the pods across the Nodes in the cluster. 
-            - The Master's automatic scheduling takes into account the available resources on each Node.
-            - Every Kubernetes Node runs at least:
-                ** Kubelet, a process responsible for communication between the Kubernetes Master and the Node; it manages the Pods and the containers running on a machine.
-                ** A container runtime (like Docker, rkt) responsible for pulling the container image from a registry, unpacking the container, and running the application.
-                ** Containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
-            
-                ![ContainersPods](https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg)
+		* Pod is something logical and not physical. It is just a logical wrapper for a set of containers with it's resources.  In terms of Docker constructs, a Pod is modelled as a group of Docker containers with shared namespaces and shared filesystem volumes.
+		* Containers within a Pod share an IP address and port space, and can find each other via localhost. They can also communicate with each other using standard inter-process communications like SystemV semaphores or POSIX shared memory. Containers in different Pods have distinct IP addresses and can not communicate by IPC without special configuration. These containers usually communicate with each other via Pod IP addresses.
+		* A Pod is a group of one or more containers (such as Docker containers), with shared storage/network, and a specification for how to run the containers.
+		* A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as Docker or rkt), and some shared resources for those containers. Those resources include:
+		    - Shared storage, as Volumes
+		    - Networking, as a unique cluster IP address
+		    - Information about how to run each container, such as the container image version or specific ports to use
+		    - The containers in a Pod share an IP Address and port space, are always co-located and co-scheduled, and run in a shared context on the same Node.
+		* A Pod always runs on a Node
+		    - A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster. 
+		    - Each Node is managed by the Master. 
+		    - A Node can have multiple pods, and the Kubernetes master automatically handles scheduling the pods across the Nodes in the cluster. 
+		    - The Master's automatic scheduling takes into account the available resources on each Node.
+		    - Every Kubernetes Node runs at least:
+			** Kubelet, a process responsible for communication between the Kubernetes Master and the Node; it manages the Pods and the containers running on a machine.
+			** A container runtime (like Docker, rkt) responsible for pulling the container image from a registry, unpacking the container, and running the application.
+			** Containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
+		    
+			![ContainersPods](https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg)
 
 	* The Kubernetes Master is a collection of three processes that run on a single node in your cluster, which is designated as the master node. Those processes are: kube-apiserver, kube-controller-manager and kube-scheduler.
 		- Each individual non-master node in your cluster runs two processes:
@@ -155,538 +155,65 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 					/registry/apiregistration.k8s.io/apiservices/v1.authentication.k8s.io
 
-					/registry/apiregistration.k8s.io/apiservices/v1.authorization.k8s.io
+* kubeadm
+    * Running 'kubeadm init' will run phases of initialization to setup Kubernetes cluster. The code that break down these steps reside inside app/cmd/phases/init
+        * preflight step reside inside app/preflight
+        * app/preflight/checks.go --> contains lots of checking related to preflight (check port availability, check existence of directory, check app availability in PATH, etc)
+        * app/cmd/phases --> these directory contains code that is tied to the different command line function in kubeadm (eg: phases/init --> has code that link to 'kubeadm init'
+            * /init --> directory contains code for all the phases when executing 'kubeadm init'
+            * /join --> directory contains code for the 'kubeadm join' command
+            * /reset --> directory contains code for the 'kubeadm reset' command
+            * /upgrade --> directory contains code for the 'kubeadm upgrade' command
+        * app/phases --> contains code used as part of the kubeadm phases 
+        * app/util/system
+            * cgroup_validator --> validator for cgroups
+            * docker_validator --> docker validator
+            * kernel_validator --> kernel validator
+            * os_validator --> OS validator (version)
+            * package_validator --> package manager validator
+					
+* Minikube
+	* Minikube supports lxc. LXC has it's own Go bindings called libvirt-go
+	* Internally libvirt-go provides Go binding for different containers as virtualbox, kvm, etc
+	* Minikube uses different way to interact with different containers as outlined below:
+		- virtualbox ==> Calling executeable /usr/bin/VboxManage
+		- kvm2       ==> it is calling docker-machine-driver-kvm2 which is part of minikube, can be found under cmd/drivers/kvm/main.go. The code is using the libvirt to communicate with kvm
+		- gvisor     ==> there is some sort of dependencies with containerd and rpc-statd.service as this both service is restarted when gvisor has been download and successfully copy over (https://github.com/kubernetes/minikube/blob/master/deploy/addons/gvisor/README.md)
+		- .... and others
+
+* CSI (Container Storage Interface) 
+	* Interfacing K8 with storage implementation		
+		* Node: A host where a workload (such as Pods in Kubernetes) will be running.
+		* Plugin: In the CSI world, this points to a service that exposes gRPC endpoints
+		* ![CSIPicture](https://arslan.io/images/how-to-write-a-container-storage-interface-%28csi%29-plugin-2.jpg) 
+	* Specification defines the boundary between the CO and the CSI plugin. 
+	* Plugin part actually is separated into two individual plugins.
+		* Node Plugin
+			* The Node plugin is a gRPC server that needs to run on the Node where the volume will be provisioned. So suppose you have a Kubernetes cluster with three nodes where your Pod’s are scheduled, you would deploy this to all three nodes.
+		* Controller Plugin
+			* The Controller plugin is a gRPC server that can run anywhere. In terms of a Kubernetes cluster, it can run on any node (even on the master node).
+	  These two entities can live in a single binary or you can separate them.
+		* ![CSIPicture](https://arslan.io/images/how-to-write-a-container-storage-interface-%28csi%29-plugin-3.jpg) 
+	* References
+		* https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/ --> good example and explanation on how to implement CSI
+        * https://www.youtube.com/watch?v=_qfSzrPn9Cs
+
+
+* Golang
+	* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
+    * Lesson learned from contributing minikube
+        * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
+            - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
 
-					/registry/apiregistration.k8s.io/apiservices/v1.autoscaling
-
-					/registry/apiregistration.k8s.io/apiservices/v1.batch
-
-					/registry/apiregistration.k8s.io/apiservices/v1.coordination.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1.networking.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1.rbac.authorization.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1.scheduling.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1.storage.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.admissionregistration.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.apiextensions.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.authentication.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.authorization.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.batch
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.certificates.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.coordination.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.events.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.extensions
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.networking.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.node.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.policy
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.rbac.authorization.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.scheduling.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v1beta1.storage.k8s.io
-
-					/registry/apiregistration.k8s.io/apiservices/v2beta1.autoscaling
-
-					/registry/apiregistration.k8s.io/apiservices/v2beta2.autoscaling
-
-					/registry/clusterrolebindings/cluster-admin
-
-					/registry/clusterrolebindings/kubeadm:kubelet-bootstrap
-
-					/registry/clusterrolebindings/kubeadm:node-autoapprove-bootstrap
-
-					/registry/clusterrolebindings/kubeadm:node-autoapprove-certificate-rotation
-
-					/registry/clusterrolebindings/kubeadm:node-proxier
-
-					/registry/clusterrolebindings/minikube-rbac
-
-					/registry/clusterrolebindings/storage-provisioner
-
-					/registry/clusterrolebindings/system:basic-user
-
-					/registry/clusterrolebindings/system:controller:attachdetach-controller
-
-					/registry/clusterrolebindings/system:controller:certificate-controller
-
-					/registry/clusterrolebindings/system:controller:clusterrole-aggregation-controller
-
-					/registry/clusterrolebindings/system:controller:cronjob-controller
-
-					/registry/clusterrolebindings/system:controller:daemon-set-controller
-
-					/registry/clusterrolebindings/system:controller:deployment-controller
-
-					/registry/clusterrolebindings/system:controller:disruption-controller
-
-					/registry/clusterrolebindings/system:controller:endpoint-controller
-
-					/registry/clusterrolebindings/system:controller:expand-controller
-
-					/registry/clusterrolebindings/system:controller:generic-garbage-collector
-
-					/registry/clusterrolebindings/system:controller:horizontal-pod-autoscaler
-
-					/registry/clusterrolebindings/system:controller:job-controller
-
-					/registry/clusterrolebindings/system:controller:namespace-controller
-
-					/registry/clusterrolebindings/system:controller:node-controller
-
-					/registry/clusterrolebindings/system:controller:persistent-volume-binder
-
-					/registry/clusterrolebindings/system:controller:pod-garbage-collector
-
-					/registry/clusterrolebindings/system:controller:pv-protection-controller
-
-					/registry/clusterrolebindings/system:controller:pvc-protection-controller
-
-					/registry/clusterrolebindings/system:controller:replicaset-controller
-
-					/registry/clusterrolebindings/system:controller:replication-controller
-
-					/registry/clusterrolebindings/system:controller:resourcequota-controller
-
-					/registry/clusterrolebindings/system:controller:route-controller
-
-					/registry/clusterrolebindings/system:controller:service-account-controller
-
-					/registry/clusterrolebindings/system:controller:service-controller
-
-					/registry/clusterrolebindings/system:controller:statefulset-controller
-
-					/registry/clusterrolebindings/system:controller:ttl-controller
-
-					/registry/clusterrolebindings/system:coredns
-
-					/registry/clusterrolebindings/system:discovery
-
-					/registry/clusterrolebindings/system:kube-controller-manager
-
-					/registry/clusterrolebindings/system:kube-dns
-
-					/registry/clusterrolebindings/system:kube-scheduler
-
-					/registry/clusterrolebindings/system:node
-
-					/registry/clusterrolebindings/system:node-proxier
-
-					/registry/clusterrolebindings/system:public-info-viewer
-
-					/registry/clusterrolebindings/system:volume-scheduler
-
-					/registry/clusterroles/admin
-
-					/registry/clusterroles/cluster-admin
-
-					/registry/clusterroles/edit
-
-					/registry/clusterroles/system:aggregate-to-admin
-
-					/registry/clusterroles/system:aggregate-to-edit
-
-					/registry/clusterroles/system:aggregate-to-view
-
-					/registry/clusterroles/system:auth-delegator
-
-					/registry/clusterroles/system:basic-user
-
-					/registry/clusterroles/system:certificates.k8s.io:certificatesigningrequests:nodeclient
-
-					/registry/clusterroles/system:certificates.k8s.io:certificatesigningrequests:selfnodeclient
-
-					/registry/clusterroles/system:controller:attachdetach-controller
-
-					/registry/clusterroles/system:controller:certificate-controller
-
-					/registry/clusterroles/system:controller:clusterrole-aggregation-controller
-
-					/registry/clusterroles/system:controller:cronjob-controller
-
-					/registry/clusterroles/system:controller:daemon-set-controller
-
-					/registry/clusterroles/system:controller:deployment-controller
-
-					/registry/clusterroles/system:controller:disruption-controller
-
-					/registry/clusterroles/system:controller:endpoint-controller
-
-					/registry/clusterroles/system:controller:expand-controller
-
-					/registry/clusterroles/system:controller:generic-garbage-collector
-
-					/registry/clusterroles/system:controller:horizontal-pod-autoscaler
-
-					/registry/clusterroles/system:controller:job-controller
-
-					/registry/clusterroles/system:controller:namespace-controller
-
-					/registry/clusterroles/system:controller:node-controller
-
-					/registry/clusterroles/system:controller:persistent-volume-binder
-
-					/registry/clusterroles/system:controller:pod-garbage-collector
-
-					/registry/clusterroles/system:controller:pv-protection-controller
-
-					/registry/clusterroles/system:controller:pvc-protection-controller
-
-					/registry/clusterroles/system:controller:replicaset-controller
-
-					/registry/clusterroles/system:controller:replication-controller
-
-					/registry/clusterroles/system:controller:resourcequota-controller
-
-					/registry/clusterroles/system:controller:route-controller
-
-					/registry/clusterroles/system:controller:service-account-controller
-
-					/registry/clusterroles/system:controller:service-controller
-
-					/registry/clusterroles/system:controller:statefulset-controller
-
-					/registry/clusterroles/system:controller:ttl-controller
-
-					/registry/clusterroles/system:coredns
-
-					/registry/clusterroles/system:csi-external-attacher
-
-					/registry/clusterroles/system:csi-external-provisioner
-
-					/registry/clusterroles/system:discovery
-
-					/registry/clusterroles/system:heapster
-
-					/registry/clusterroles/system:kube-aggregator
-
-					/registry/clusterroles/system:kube-controller-manager
-
-					/registry/clusterroles/system:kube-dns
-
-					/registry/clusterroles/system:kube-scheduler
-
-					/registry/clusterroles/system:kubelet-api-admin
-
-					/registry/clusterroles/system:node
-
-					/registry/clusterroles/system:node-bootstrapper
-
-					/registry/clusterroles/system:node-problem-detector
-
-					/registry/clusterroles/system:node-proxier
-
-					/registry/clusterroles/system:persistent-volume-provisioner
-
-					/registry/clusterroles/system:public-info-viewer
-
-					/registry/clusterroles/system:volume-scheduler
-
-					/registry/clusterroles/view
-
-					/registry/configmaps/kube-public/cluster-info
-
-					/registry/configmaps/kube-system/coredns
-
-					/registry/configmaps/kube-system/extension-apiserver-authentication
-
-					/registry/configmaps/kube-system/kube-proxy
-
-					/registry/configmaps/kube-system/kubeadm-config
-
-					/registry/configmaps/kube-system/kubelet-config-1.16
-
-					/registry/controllerrevisions/kube-system/kube-proxy-68594d95c
-
-					/registry/daemonsets/kube-system/kube-proxy
-
-					/registry/deployments/default/hello-node
-
-					/registry/deployments/kube-system/coredns
-
-					/registry/events/default/hello-node-7676b5fb8d-m5286.15c75558016b01db
-
-					/registry/events/default/hello-node-7676b5fb8d-m5286.15c7555860a8a944
-
-					/registry/events/default/hello-node-7676b5fb8d-m5286.15c755660d32db77
-
-					/registry/events/default/hello-node-7676b5fb8d-m5286.15c7556615f7efc7
-
-					/registry/events/default/hello-node-7676b5fb8d-m5286.15c755661e3260a8
-
-					/registry/events/default/hello-node-7676b5fb8d.15c7555800602772
-
-					/registry/events/default/hello-node.15c75557ff3eff90
-
-					/registry/leases/kube-node-lease/minikube
-
-					/registry/masterleases/192.168.99.119
-
-					/registry/minions/minikube
-
-					/registry/namespaces/default
-
-					/registry/namespaces/kube-node-lease
-
-					/registry/namespaces/kube-public
-
-					/registry/namespaces/kube-system
-
-					/registry/pods/default/hello-node-7676b5fb8d-m5286
-
-					/registry/pods/kube-system/coredns-5644d7b6d9-2269l
-
-					/registry/pods/kube-system/coredns-5644d7b6d9-jlxpn
-
-					/registry/pods/kube-system/etcd-minikube
-
-					/registry/pods/kube-system/kube-addon-manager-minikube
-
-					/registry/pods/kube-system/kube-apiserver-minikube
-
-					/registry/pods/kube-system/kube-controller-manager-minikube
-
-					/registry/pods/kube-system/kube-proxy-phnsk
-
-					/registry/pods/kube-system/kube-scheduler-minikube
-
-					/registry/pods/kube-system/storage-provisioner
-
-					/registry/priorityclasses/system-cluster-critical
-
-					/registry/priorityclasses/system-node-critical
-
-					/registry/ranges/serviceips
-
-					/registry/ranges/servicenodeports
-
-					/registry/replicasets/default/hello-node-7676b5fb8d
-
-					/registry/replicasets/kube-system/coredns-5644d7b6d9
-
-					/registry/rolebindings/kube-public/kubeadm:bootstrap-signer-clusterinfo
-
-					/registry/rolebindings/kube-public/system:controller:bootstrap-signer
-
-					/registry/rolebindings/kube-system/kube-proxy
-
-					/registry/rolebindings/kube-system/kubeadm:kubelet-config-1.16
-
-					/registry/rolebindings/kube-system/kubeadm:nodes-kubeadm-config
-
-					/registry/rolebindings/kube-system/system::extension-apiserver-authentication-reader
-
-					/registry/rolebindings/kube-system/system::leader-locking-kube-controller-manager
-
-					/registry/rolebindings/kube-system/system::leader-locking-kube-scheduler
-
-					/registry/rolebindings/kube-system/system:controller:bootstrap-signer
-
-					/registry/rolebindings/kube-system/system:controller:cloud-provider
-
-					/registry/rolebindings/kube-system/system:controller:token-cleaner
-
-					/registry/roles/kube-public/kubeadm:bootstrap-signer-clusterinfo
-
-					/registry/roles/kube-public/system:controller:bootstrap-signer
-
-					/registry/roles/kube-system/extension-apiserver-authentication-reader
-
-					/registry/roles/kube-system/kube-proxy
-
-					/registry/roles/kube-system/kubeadm:kubelet-config-1.16
-
-					/registry/roles/kube-system/kubeadm:nodes-kubeadm-config
-
-					/registry/roles/kube-system/system::leader-locking-kube-controller-manager
-
-					/registry/roles/kube-system/system::leader-locking-kube-scheduler
-
-					/registry/roles/kube-system/system:controller:bootstrap-signer
-
-					/registry/roles/kube-system/system:controller:cloud-provider
-
-					/registry/roles/kube-system/system:controller:token-cleaner
-
-					/registry/secrets/default/default-token-p2tsg
-
-					/registry/secrets/kube-node-lease/default-token-d9v9t
-
-					/registry/secrets/kube-public/default-token-jm6qq
-
-					/registry/secrets/kube-system/attachdetach-controller-token-zplrk
-
-					/registry/secrets/kube-system/bootstrap-signer-token-7mljm
-
-					/registry/secrets/kube-system/bootstrap-token-u7t69o
-
-					/registry/secrets/kube-system/certificate-controller-token-cpqnf
-
-					/registry/secrets/kube-system/clusterrole-aggregation-controller-token-mz4xc
-
-					/registry/secrets/kube-system/coredns-token-qfsk7
-
-					/registry/secrets/kube-system/cronjob-controller-token-6nlcw
-
-					/registry/secrets/kube-system/daemon-set-controller-token-cglwc
-
-					/registry/secrets/kube-system/default-token-ntnd8
-
-					/registry/secrets/kube-system/deployment-controller-token-lzlgw
-
-					/registry/secrets/kube-system/disruption-controller-token-rgmxg
-
-					/registry/secrets/kube-system/endpoint-controller-token-c4khp
-
-					/registry/secrets/kube-system/expand-controller-token-mg9wd
-
-					/registry/secrets/kube-system/generic-garbage-collector-token-hjc5m
-
-					/registry/secrets/kube-system/horizontal-pod-autoscaler-token-rdj28
-
-					/registry/secrets/kube-system/job-controller-token-ztvnh
-
-					/registry/secrets/kube-system/kube-proxy-token-zf5nj
-
-					/registry/secrets/kube-system/namespace-controller-token-mhpzq
-
-					/registry/secrets/kube-system/node-controller-token-t4ls4
-
-					/registry/secrets/kube-system/persistent-volume-binder-token-js562
-
-					/registry/secrets/kube-system/pod-garbage-collector-token-dqdhw
-
-					/registry/secrets/kube-system/pv-protection-controller-token-p9r5b
-
-					/registry/secrets/kube-system/pvc-protection-controller-token-j6nqp
-
-					/registry/secrets/kube-system/replicaset-controller-token-8zsmg
-
-					/registry/secrets/kube-system/replication-controller-token-8sjb6
-
-					/registry/secrets/kube-system/resourcequota-controller-token-pr2sm
-
-					/registry/secrets/kube-system/service-account-controller-token-qnmrg
-
-					/registry/secrets/kube-system/service-controller-token-d6bz8
-
-					/registry/secrets/kube-system/statefulset-controller-token-7zdkw
-
-					/registry/secrets/kube-system/storage-provisioner-token-dkfxb
-
-					/registry/secrets/kube-system/token-cleaner-token-ppr8b
-
-					/registry/secrets/kube-system/ttl-controller-token-d5ddr
-
-					/registry/serviceaccounts/default/default
-
-					/registry/serviceaccounts/kube-node-lease/default
-
-					/registry/serviceaccounts/kube-public/default
-
-					/registry/serviceaccounts/kube-system/attachdetach-controller
-
-					/registry/serviceaccounts/kube-system/bootstrap-signer
-
-					/registry/serviceaccounts/kube-system/certificate-controller
-
-					/registry/serviceaccounts/kube-system/clusterrole-aggregation-controller
-
-					/registry/serviceaccounts/kube-system/coredns
-
-					/registry/serviceaccounts/kube-system/cronjob-controller
-
-					/registry/serviceaccounts/kube-system/daemon-set-controller
-
-					/registry/serviceaccounts/kube-system/default
-
-					/registry/serviceaccounts/kube-system/deployment-controller
-
-					/registry/serviceaccounts/kube-system/disruption-controller
-
-					/registry/serviceaccounts/kube-system/endpoint-controller
-
-					/registry/serviceaccounts/kube-system/expand-controller
-
-					/registry/serviceaccounts/kube-system/generic-garbage-collector
-
-					/registry/serviceaccounts/kube-system/horizontal-pod-autoscaler
-
-					/registry/serviceaccounts/kube-system/job-controller
-
-					/registry/serviceaccounts/kube-system/kube-proxy
-
-					/registry/serviceaccounts/kube-system/namespace-controller
-
-					/registry/serviceaccounts/kube-system/node-controller
-
-					/registry/serviceaccounts/kube-system/persistent-volume-binder
-
-					/registry/serviceaccounts/kube-system/pod-garbage-collector
-
-					/registry/serviceaccounts/kube-system/pv-protection-controller
-
-					/registry/serviceaccounts/kube-system/pvc-protection-controller
-
-					/registry/serviceaccounts/kube-system/replicaset-controller
-
-					/registry/serviceaccounts/kube-system/replication-controller
-
-					/registry/serviceaccounts/kube-system/resourcequota-controller
-
-					/registry/serviceaccounts/kube-system/service-account-controller
-
-					/registry/serviceaccounts/kube-system/service-controller
-
-					/registry/serviceaccounts/kube-system/statefulset-controller
-
-					/registry/serviceaccounts/kube-system/storage-provisioner
-
-					/registry/serviceaccounts/kube-system/token-cleaner
-
-					/registry/serviceaccounts/kube-system/ttl-controller
-
-					/registry/services/endpoints/default/hello-node
-
-					/registry/services/endpoints/default/kubernetes
-
-					/registry/services/endpoints/kube-system/kube-controller-manager
-
-					/registry/services/endpoints/kube-system/kube-dns
-
-					/registry/services/endpoints/kube-system/kube-scheduler
-
-					/registry/services/specs/default/hello-node
-
-					/registry/services/specs/default/kubernetes
-
-					/registry/services/specs/kube-system/kube-dns
-
-					/registry/storageclasses/standard
 
 * Experimenting with Kubernetes 
-	* A good guide on cloud provider --> https://github.com/hobby-kube/guide
-    * Kubernetes on ARM (ODROID, RPi, Upboard combo) --> https://github.com/luxas/kubernetes-on-arm
-    * Kubernetes on ODROID N2 --> https://www.trion.de/news/2019/05/06/kubernetes-odroid-n2.html
-    * Setting up a Multi-Arch, Multi OS cluster --> https://gist.github.com/PatrickLang/28a05cfd6cf4322d519d04cff0996585
-    * Kubernetes on Raspberry Pi: Challenges & Advantages --> https://www.weave.works/blog/kubernetes-raspberry-pi/
-    * Intalling kubernetes using kubeadm --> https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
-    * Kubernetes HA control plane --> https://octetz.com/posts/ha-control-plane-k8s-kubeadm
+    * A good guide on cloud provider 					        --> https://github.com/hobby-kube/guide
+    * Kubernetes on ARM (ODROID, RPi, Upboard combo) 			--> https://github.com/luxas/kubernetes-on-arm
+    * Kubernetes on ODROID N2 						            --> https://www.trion.de/news/2019/05/06/kubernetes-odroid-n2.html
+    * Setting up a Multi-Arch, Multi OS cluster 			    --> https://gist.github.com/PatrickLang/28a05cfd6cf4322d519d04cff0996585
+    * Kubernetes on Raspberry Pi: Challenges & Advantages 		--> https://www.weave.works/blog/kubernetes-raspberry-pi/
+    * Intalling kubernetes using kubeadm 				        --> https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
+    * Kubernetes HA control plane 					            --> https://octetz.com/posts/ha-control-plane-k8s-kubeadm
 
 
 * Books
