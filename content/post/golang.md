@@ -5,10 +5,9 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 ---
 Following are some of the thing that need to be remembered when programming in Golang. This information is taken from variety of sources.
 
--------------------
+
 <h1>Variables</h1>
 
--------------------
 
 *  For variable naming, omit words that are obvious given a variable's type declaration or otherwise clear from the surrounding context. Following is not a good example
 {{< highlight go >}}
@@ -89,8 +88,8 @@ t := []string{} (is non-nil but zero-length)
             * If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating, prefer a pointer receiver, as it will make the intention more clear to the reader.
             * Finally, when in doubt, use a pointer receiver.
 
+-------------------
 <h1>Testing</h1>
-
 
 -------------------
 
