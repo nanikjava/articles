@@ -4,6 +4,44 @@ title: "Minikube Brain Dump (ALWAYS WIP)"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 
 ---
+
+
+* ETCD inside minikube
+	- To communicate to etcd that are running inside minikube we need to do the following
+{{< highlight bash >}}
+minikube ssh
+{{< /highlight >}}
+{{< highlight bash >}}
+/hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdctl/etcdctl --cacert=/var/lib/minikube/certs/etcd/ca.crt --key=/var/lib/minikube/certs/etcd/ca.key --cert=/var/lib/minikube/certs/etcd/ca.crt get  --prefix=true ""--> the ca.crt and ca.key resides inside minikube VM
+{{< /highlight >}}
+{{< highlight bash >}}    
+ETCDCTL_API=3  /hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdctl/etcdctl --cacert=/var/lib/minikube/certs/etcd/ca.crt --key=/var/lib/minikube/certs/etcd/ca.key --cert=/var/lib/minikube/certs/etcd/ca.crt get  --from-key '' --keys-only --> will get all the keys stored inside
+{{< /highlight >}}
+**/hostname** -- is the default mount volume created by minikube to access host directory.        
+
+
+        >/registry/apiregistration.k8s.io/apiservices/v1
+        
+        >/apiregistration.k8s.io/apiservices/v1.admissionregistration.k8s.io
+        
+        >/apiregistration.k8s.io/apiservices/v1.apiextensions.k8s.io
+        
+        >/apiregistration.k8s.io/apiservices/v1.apps
+        
+        >/apiregistration.k8s.io/apiservices/v1.authentication.k8s.io
+
+
+					
+* Minikube
+	* Minikube supports lxc. LXC has it's own Go bindings called libvirt-go
+	* Internally libvirt-go provides Go binding for different containers as virtualbox, kvm, etc
+	* Minikube uses different way to interact with different containers as outlined below:
+		- **virtualbox** -- Calling executeable /usr/bin/VboxManage
+		- **kvm2**       -- it is calling docker-machine-driver-kvm2 which is part of minikube, can be found under cmd/drivers/kvm/main.go. The code is using the libvirt to communicate with kvm
+		- **gvisor** -- there is some sort of dependencies with containerd and rpc-statd.service as this both service is restarted when gvisor has been download and successfully copy over (https://github.com/kubernetes/minikube/blob/master/deploy/addons/gvisor/README.md)
+		- .... and others
+        
+
 * Running using the following command
 
     start --vm-driver=kvm2 --container-runtime=cri-o --v=8

@@ -519,3 +519,12 @@ func locale(ctx context.Context) (string, error) {
 
 <h3>Error Propagation</h3>
 
+
+
+<h1>References</h1>
+
+* Golang
+	* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
+    * Lesson learned from contributing minikube
+        * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
+            - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
