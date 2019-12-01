@@ -1,3 +1,10 @@
+---
+date: "2019-12-01"
+title: "Deploying k8guard (Work in progress)"
+author : "Nanik Tolaram (nanikjava@gmail.com)" 
+
+---
+
 Deploying k8guard
 -----------------
 * make sure minikube and kubectl is in PATH
