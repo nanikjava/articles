@@ -8,17 +8,17 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 * A Kubernetes cluster can be deployed on either physical or virtual machines.
 * Once you've created a Deployment, the Kubernetes master schedules mentioned application instances onto individual Nodes in the cluster.
 * Once the application instances are created, a Kubernetes Deployment Controller continuously monitors those instances. If the Node hosting an instance goes down or is deleted, the Deployment controller replaces the instance with an instance on another Node in the cluster. This provides a self-healing mechanism to address machine failure or maintenance.
-* Node - A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
+* **Node** - A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster. 
 * Each node has a Kubelet, which is an agent for managing the node and communicating with the Kubernetes master. The node should also have tools for handling container operations, such as Docker or rkt.
 * A Kubernetes cluster that handles production traffic should have a minimum of three nodes.
 * The nodes communicate with the master using the Kubernetes API. End users can also use the Kubernetes API directly to interact with the cluster.    
 * Node Components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
 
-    * kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
+    * **kubelet** - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.  The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
 
-    * kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
+    * **kube-proxy** - kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if there is one and it’s available. Otherwise, kube-proxy forwards the traffic itself.
 
-    * Container Runtime - The container runtime is the software that is responsible for running containers.
+    * **Container Runtime** - The container runtime is the software that is responsible for running containers.
     
     - A node is a worker machine in Kubernetes, previously known as a minion. A node may be a VM or physical machine, depending on the cluster. Each node contains the services necessary to run pods and is managed by the master components.
     
@@ -30,10 +30,10 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 <h2>Pod</h2>
     
-* Pod is something logical and not physical. It is just a logical wrapper for a set of containers with it's resources.  In terms of Docker constructs, a Pod is modelled as a group of Docker containers with shared namespaces and shared filesystem volumes.
+* **Pod** is something logical and not physical. It is just a logical wrapper for a set of containers with it's resources.  In terms of Docker constructs, a Pod is modelled as a group of Docker containers with shared namespaces and shared filesystem volumes.
 * Containers within a Pod share an IP address and port space, and can find each other via localhost. They can also communicate with each other using standard inter-process communications like SystemV semaphores or POSIX shared memory. Containers in different Pods have distinct IP addresses and can not communicate by IPC without special configuration. These containers usually communicate with each other via Pod IP addresses.
 * A Pod is a group of one or more containers (such as Docker containers), with shared storage/network, and a specification for how to run the containers.
-* A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as Docker or rkt), and some shared resources for those containers. Those resources include:
+* A Pod is a Kubernetes abstraction that represents a group of one or more application containers (such as _docker_ or _rkt_), and some shared resources for those containers. Those resources include:
     - Shared storage, as Volumes
     - Networking, as a unique cluster IP address
     - Information about how to run each container, such as the container image version or specific ports to use
@@ -59,10 +59,10 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 - A Service in Kubernetes is an abstraction which defines a logical set of Pods and a policy by which to access them. Services enable a loose coupling between dependent Pods. A Service is defined using YAML (preferred) or JSON, like all Kubernetes objects. The set of Pods targeted by a Service is usually determined by a LabelSelector (see below for why you might want a Service without including selector in the spec).
 - Services can be exposed in different ways by specifying a type in the ServiceSpec:
-    - ClusterIP (default) - Exposes the Service on an internal IP in the cluster. This type makes the Service only reachable from within the cluster.
-    - NodePort - Exposes the Service on the same port of each selected Node in the cluster using NAT. Makes a Service accessible from outside the cluster using <NodeIP>:<NodePort>. Superset of ClusterIP.
-    - LoadBalancer - Creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
-    - ExternalName - Exposes the Service using an arbitrary name (specified by externalName in the spec) by returning a CNAME record with the name. No proxy is used. This type requires v1.7 or higher of kube-dns.
+    - **ClusterIP** (default) - Exposes the Service on an internal IP in the cluster. This type makes the Service only reachable from within the cluster.
+    - **NodePort** - Exposes the Service on the same port of each selected Node in the cluster using NAT. Makes a Service accessible from outside the cluster using <NodeIP>:<NodePort>. Superset of ClusterIP.
+    - **LoadBalancer** - Creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
+    - **ExternalName** - Exposes the Service using an arbitrary name (specified by externalName in the spec) by returning a CNAME record with the name. No proxy is used. This type requires v1.7 or higher of kube-dns.
 
 - Services match a set of Pods using labels and selectors, a grouping primitive that allows logical operation on objects in Kubernetes. Labels are key/value pairs attached to objects and can be used in any number of ways:
 
@@ -79,13 +79,13 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 * Master Components
     -Master components provide the cluster’s control plane. Master components make global decisions about the cluster (for example, scheduling), and they detect and respond to cluster events (for example, starting up a new pod when a deployment’s replicas field is unsatisfied).  For simplicity, set up scripts typically start all master components on the same machine, and do not run user containers on this machine. See Building High-Availability Clusters for an example multi-master-VM setup.
 
-    * kube-apiserver - Component on the master that exposes the Kubernetes API. It is the front-end for the Kubernetes control plane.
+    * **kube-apiserver** - Component on the master that exposes the Kubernetes API. It is the front-end for the Kubernetes control plane.
 
-    * etcd - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+    * **etcd** - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
 
-    * kube-scheduler - Component on the master that watches newly created pods that have no node assigned, and selects a node for them to run on.
+    * **kube-scheduler** - Component on the master that watches newly created pods that have no node assigned, and selects a node for them to run on.
 
-    * kube-controller-manager - Component on the master that runs controllers.
+    * **kube-controller-manager** - Component on the master that runs controllers.
         
           ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/e298a92e2454520dddefc3b4df28ad68f9b91c6f/70d52/images/docs/pre-ccm-arch.png)
       
@@ -96,19 +96,19 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
         - Endpoints Controller: Populates the Endpoints object (that is, joins Services & Pods).
         - Service Account & Token Controllers: Create default accounts and API access tokens for new namespaces.
 
-    * cloud-controller-manager - cloud-controller-manager runs controllers that interact with the underlying cloud providers. The cloud-controller-manager binary is an alpha feature introduced in Kubernetes release 1.6.
+    * **cloud-controller-manager** - cloud-controller-manager runs controllers that interact with the underlying cloud providers. The cloud-controller-manager binary is an alpha feature introduced in Kubernetes release 1.6.
 
         - cloud-controller-manager runs cloud-provider-specific controller loops only. You must disable these controller loops in the kube-controller-manager. You can disable the controller loops by setting the --cloud-provider flag to external when starting the kube-controller-manager. cloud-controller-manager allows the cloud vendor’s code and the Kubernetes code to evolve independently of each other. In prior releases, the core Kubernetes code was dependent upon cloud-provider-specific code for functionality. In future releases, code specific to cloud vendors should be maintained by the cloud vendor themselves, and linked to cloud-controller-manager while running Kubernetes.
 
         - The following controllers have cloud provider dependencies:
 
-            [x] Node Controller: For checking the cloud provider to determine if a node has been deleted in the cloud after it stops responding
+            [x] **Node Controller** -- For checking the cloud provider to determine if a node has been deleted in the cloud after it stops responding
             
-            [x] Route Controller: For setting up routes in the underlying cloud infrastructure
+            [x] **Route Controller** -- For setting up routes in the underlying cloud infrastructure
             
-            [x] Service Controller: For creating, updating and deleting cloud provider load balancers
+            [x] **Service Controller** - For creating, updating and deleting cloud provider load balancers
             
-            [x] Volume Controller: For creating, attaching, and mounting volumes, and interacting with the cloud provider to orchestrate volumes
+            [x] **Volume Controller** - For creating, attaching, and mounting volumes, and interacting with the cloud provider to orchestrate volumes
                 
     ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/518e18713c865fe67a5f23fc64260806d72b38f5/61d75/images/docs/post-ccm-arch.png)
 
@@ -117,19 +117,19 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluster features. Because these are providing cluster-level features, namespaced resources for addons belong within the kube-system namespace.
 
-* DNS - While the other addons are not strictly required, all Kubernetes clusters should have cluster DNS, as many examples rely on it. Cluster DNS is a DNS server, in addition to the other DNS server(s) in your environment, which serves DNS records for Kubernetes services. Containers started by Kubernetes automatically include this DNS server in their DNS searches.
+* **DNS** - While the other addons are not strictly required, all Kubernetes clusters should have cluster DNS, as many examples rely on it. Cluster DNS is a DNS server, in addition to the other DNS server(s) in your environment, which serves DNS records for Kubernetes services. Containers started by Kubernetes automatically include this DNS server in their DNS searches.
 
-* Web UI (Dashboard) - Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage and troubleshoot applications running in the cluster, as well as the cluster itself.
+* **Web UI (Dashboard)** - Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage and troubleshoot applications running in the cluster, as well as the cluster itself.
 
-* Container Resource Monitoring - Container Resource Monitoring records generic time-series metrics about containers in a central database, and provides a UI for browsing that data.
+* **Container Resource Monitoring** - Container Resource Monitoring records generic time-series metrics about containers in a central database, and provides a UI for browsing that data.
 
-* Cluster-level Logging - Cluster-level logging mechanism is responsible for saving container logs to a central log store with search/browsing interface.
+* **Cluster-level Logging** - Cluster-level logging mechanism is responsible for saving container logs to a central log store with search/browsing interface.
 
 * The basic Kubernetes objects include:
-    - Pod
-    - Service
-    - Volume
-    - Namespace
+    - **Pod**
+    - **Service**
+    - **Volume**
+    - **Namespace**
 
 <h2>kubeadm</h2>
 

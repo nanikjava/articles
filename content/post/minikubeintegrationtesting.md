@@ -1,27 +1,30 @@
 ---
-date: "2019-09-01"
+date: "2019-12-01"
 title: "Minikube Integration Testing (Work in progress)"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 
 ---
+This article will outline few things that are helpful when running or modifying minikube testing code.
 
-* Make sure 'kubectl' is in the PATH
-* To help debugging disable parallel and enable all log output
+* Make sure **kubectl** is in the PATH
+* Following command is to disable parallel testing and enable all log output
 
-    -parallel 1  -test.v
+    > -parallel 1  -test.v
     
-  the test.v parameter instruct the testing framework to output non-failure messages. The output will not be realtime as it will only be outputted when
-  the test complete.
+    the **test.v** parameter instruct the testing framework to output non-failure messages. The output will not be realtime as it will only be outputted when the test complete.
   
 * To run the test use the following command
-    PATH=/home/nanik/Golang/go/bin:/home/nanik/Downloads:/home/nanik/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/var/lib/snapd/snap/bin:/home/nanik/Downloads/ go test   -test.v -tags integration
+    
+    > PATH=/home/nanik/Golang/go/bin:/home/nanik/Downloads:/home/nanik/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/var/lib/snapd/snap/bin:/home/nanik/Downloads/ go test   -test.v -tags integration
 
-  The /home/nanik/Downloads is added to the PATH because that's the location for kubectl and the test cases uses kubectl. DO NOT USE -parralel 1 when running ALL the test
-  cases as for some reson it throws an error.
+    The **/home/nanik/Downloads** is added to the PATH because that's the location for kubectl and the test cases uses kubectl. 
+
+    DO NOT USE _**-parrallel 1**_ when running ALL the test cases as for some reason it throws an error.
 
 
-* make integration 
-----------------
+* Running **make integration** command will yield output similar to the following 
+
+{{< highlight text >}}
 GOOS="linux" GOARCH="amd64" go build -tags "container_image_ostree_stub containers_image_openpgp go_getter_nos3 go_getter_nogcs" -ldflags="-X k8s.io/minikube/pkg/version.version=v1.5.2 -X k8s.io/minikube/pkg/version.isoVersion=v1.5.1 -X k8s.io/minikube/pkg/version.isoPath=minikube/iso -X k8s.io/minikube/pkg/version.gitCommitID="3322c50ceb4abf795ebb8505f99bbb269a144e21-dirty"" -a -o out/minikube-linux-amd64 k8s.io/minikube/cmd/minikube
 
 cp out/minikube-linux-amd64 out/minikube
@@ -591,4 +594,5 @@ go test -v -test.timeout=60m ./test/integration --tags="integration container_im
             helpers.go:167: (dbg) Run:  out/minikube delete -p crio-20191104T082722.304206154-18873
 PASS
 ok  	k8s.io/minikube/test/integration	866.327s
+{{< /highlight >}}
 
