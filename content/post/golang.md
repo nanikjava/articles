@@ -282,12 +282,13 @@ func main(){
     
 <h2>Goroutine</h2>
 
-* When you spawn goroutines, make it clear when - or whether - they exit.
+* When you spawn goroutines, make it clear when or whether - they exit.
 * Goroutines can leak by blocking on channel sends or receives: the garbage collector will not terminate a goroutine even if the channels it is blocked on are unreachable.
 * Even when goroutines do not leak, leaving them in-flight when they are no longer needed can cause other subtle and hard-to-diagnose problems. 
 * Try to keep concurrent code simple enough that goroutine lifetimes are obvious. If that just isn't feasible, document when and why the goroutines exit.
-
-* Do not use package math/rand to generate keys, instead, use crypto/rand's Reader.
+* _DO NOT_ use package **math/rand** to generate keys, instead, use **crypto/rand's Reader**.
+* Every time running a goroutine(..) we must think how it will finish. What will be the trigger to return or exit from the gorotine
+* At any time we want to to send data into a channel make sure the channel variable is send as parameter to the called method
 
 -------------------
 <h1>Design Patterns</h1>
@@ -299,9 +300,8 @@ func main(){
 * Resources 
  * https://github.com/golang/go/wiki/LearnConcurrency
  * https://golang.org/ref/spec#Send_statements
-* Both the channel and the value expression are evaluated before communication begins. Communication blocks until the send can proceed. A send on an unbuffered channel can proceed if a receiver is ready. A send on a buffered channel can proceed if there is room in the buffer. A send on a closed channel proceeds by causing a run-time panic. Communication on nil channels can never proceed, a select with only nil channels and no default case blocks forever. 
-* Every time running a goroutine(..) we must think how it will finish. What will be the trigger to return or exit from the gorotine
-* At any time we want to to send data into a channel make sure the channel variable is send as parameter to the called method
+
+Both the channel and the value expression are evaluated before communication begins. Communication blocks until the send can proceed. A send on an unbuffered channel can proceed if a receiver is ready. A send on a buffered channel can proceed if there is room in the buffer. A send on a closed channel proceeds by causing a run-time panic. Communication on nil channels can never proceed, a select with only nil channels and no default case blocks forever. 
 {{< highlight go >}}
 repeatFn := func(
     done <-chan interface{},
@@ -324,8 +324,9 @@ repeatFn := func(
     return valueStream
 }
 {{< /highlight >}}
-one of repeatFn(..) argument is to receive 'done' variable that the repeatFn(..) will use as a flag to exit from the function
-* The value of the receive operation <-ch is the value received from the channel ch. The expression blocks until a value is available. Receiving from a nil channel blocks forever. A receive operation on a closed channel can always proceed immediately, yielding the element type's zero value after any previously sent values have been received.
+
+One of repeatFn(..) argument is to receive 'done' variable that the repeatFn(..) will use as a flag to exit from the function
+The value of the receive operation <-ch is the value received from the channel ch. The expression blocks until a value is available. Receiving from a nil channel blocks forever. A receive operation on a closed channel can always proceed immediately, yielding the element type's zero value after any previously sent values have been received.
 
 <h3>Pipeline</h3>
 
@@ -396,6 +397,8 @@ func main(){
 {{< /highlight >}}
     
 <h3>Tee-Channel</h3>
+
+Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed.
 
 <h3>Fan-in-Fan-out channel</h3> 
 

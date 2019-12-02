@@ -39,7 +39,7 @@ k8guard-action-configmap.yaml
 * File **k8guard-action-deployment.yaml** contains deployment information for the k8guard-action app. It uses docker image called **local/k8guard-action** which is build doing the above mentioned step.
 * The _env:_ section declared the env variables that will be populated in the EXPORT section of the bash. The value is obtained from the **k8guard-action-configmap.yaml**
 * The **k8guard-action-configmap.yaml** contains the config map for the different variables
-* The following environment variables are found inside the k8guard-action container. These values are populate via the .env file
+* The following environment variables are found inside the **k8guard-action** container. These values are populated via the .env file
 
 {{< highlight text >}}
 export HOME='/root'
