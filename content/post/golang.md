@@ -7,7 +7,9 @@ Following are some of the thing that need to be remembered when programming in G
 
 
 -------------------
-<p><h1>Variables</h1></p>
+<h1>
+Variables
+</h1>
 
 -------------------
 
