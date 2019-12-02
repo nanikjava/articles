@@ -88,10 +88,9 @@ t := []string{} (is non-nil but zero-length)
             * If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating, prefer a pointer receiver, as it will make the intention more clear to the reader.
             * Finally, when in doubt, use a pointer receiver.
 
--------------------
-<h1>Testing</h1>
-
--------------------
+-------
+Testing
+-------
 
 * Tests should fail with helpful messages saying what was wrong, with what inputs, what was actually got, and what was expected.
 {{< highlight go >}}  
@@ -100,10 +99,9 @@ if got != tt.want {
 }
 {{< /highlight >}}
 
--------------------
-<h1>Comments</h1>
-
--------------------
+--------
+Comments
+--------
 
 * For comments use // instead of /* */
 * Start comment with the name of the function 
@@ -148,21 +146,18 @@ package main
 package main
 {{< /highlight >}}
     
--------------------
-<h1>Functions</h1>
-
--------------------
-
+---------
+Functions
+---------
 * If a function returns two or three parameters of the same type, or if the meaning of a result isn't clear from context, adding names may be useful in some contexts. 
 * Don't name result parameters just to avoid declaring a var inside the function; that trades off a minor implementation brevity at the cost of unnecessary API verbosity.
 * Naked returns are okay if the function is a handful of lines. Once it's a medium sized function, be explicit with your return values. Corollary: it's not worth it to name result parameters just because it enables you to use naked returns. Clarity of docs is always more important than saving a line or two in your function.
 * Don't pass pointers as function arguments just to save a few bytes, however This advice does not apply to large structs, or even small structs that might grow.
     
        
--------------------         
-<h1>Error Handling</h1>
-
--------------------
+--------------         
+Error Handling
+--------------
 
 * Don't use panic for normal error handling. Use error and multiple return values.
 * Error strings should not be capitalized (unless beginning with proper nouns or acronyms) or end with punctuation
@@ -193,10 +188,9 @@ if err != nil {
 }
 {{< /highlight >}}
 
--------------------         
-<h1>Packages</h1>
-
--------------------
+--------
+Packages
+--------
 
 * Avoid renaming imports except to avoid a name collision; good package names should not require renaming. In the event of collision, prefer to rename the most local or project-specific import.
 * Packages that are imported only for their side effects (using the syntax import _ "pkg") should only be imported in the main package of a program, or in tests that require them.
@@ -204,10 +198,9 @@ if err != nil {
 * Avoid meaningless package names like util, common, misc, api, types, and interfaces
 
 
--------------------
-<h1>Multi-Threading</h1>
-
--------------------
+---------------
+Multi-Threading
+---------------
 
 * Send the channel that your function want to receive the data from    
 {{< highlight go >}}
@@ -290,10 +283,9 @@ func main(){
 * Every time running a goroutine(..) we must think how it will finish. What will be the trigger to return or exit from the gorotine
 * At any time we want to to send data into a channel make sure the channel variable is send as parameter to the called method
 
--------------------
-<h1>Design Patterns</h1>
-
--------------------
+---------------
+Design Patterns
+---------------
 
 <h3>Concurreny Design Pattern</h3>
 
