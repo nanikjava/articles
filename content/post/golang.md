@@ -7,7 +7,7 @@ Following are some of the thing that need to be remembered when programming in G
 
 
 -------------------
-<header class="post-header"><h1>Variables</h1></header>
+<header class="post-header">Variables</header>
 
 -------------------
 
