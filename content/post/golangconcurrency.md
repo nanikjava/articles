@@ -1,5 +1,5 @@
 ---
-date: "2019-12-03"
+date: "2019-12-02"
 title: "Golang Concurrency"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
