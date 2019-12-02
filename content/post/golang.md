@@ -5,12 +5,9 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 ---
 Following are some of the thing that need to be remembered when programming in Golang. This information is taken from variety of sources.
 
-
--------------------
-<header class="post-header">Variables</header>
-
--------------------
-
+--------
+Variables
+---------
 
 *  For variable naming, omit words that are obvious given a variable's type declaration or otherwise clear from the surrounding context. Following is not a good example
 {{< highlight go >}}
