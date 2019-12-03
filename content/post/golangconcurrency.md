@@ -1,93 +1,8 @@
 ---
 date: "2019-12-02"
-title: "Golang Concurrency"
+title: "Concurrency Design Pattern in Go"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
-
----------------
-Multi-Threading
----------------
-
-* Send the channel that your function want to receive the data from    
-{{< highlight go >}}
-    func First(query string,  c chan Result, replicas ...Search){
-        collating := make(chan Result)
-
-        searchReplica := func(i int, collating chan Result) { 
-            c <- replicas[i](query) 
-        }
-        for i := range replicas {
-            go searchReplica(i,collating)
-        }
-    }
-{{< /highlight >}}
-in the above example the First(..) method's param is a channel parameter 'c', it uses this channel to send data that will be read by the caller function.
-    
-* Use timeout as much as possible to avoid the app from 'hang' mode. Having timeout enable troubleshooting as function will automatically terminate after certain amount of time.
-{{< highlight go >}}
-    timeout := time.After(800 * time.Millisecond)
-
-    for {
-        select {
-        ...
-        ...
-        case <-timeout:
-            fmt.Println("timed out")
-            return
-        }
-    }
-{{< /highlight >}}
-
- 
-* If we close the channel and we try to read data (even AFTER reading the data) no exception thrown
-{{< highlight go >}}
-func main(){
-    // size chosen to ensure it never gets filled up completely.
-    threadChannel := make(chan string,1) 
-
-    go func() {
-        threadChannel <- "TESTING from function 1"
-        defer close(threadChannel)
-    }()
-
-    fmt.Println("Obtained  1" , <-threadChannel)
-    time.Sleep(1000 * time.Millisecond)
-    fmt.Println("----------------")
-    fmt.Println("Obtained  2" , <-threadChannel)
-}
-{{< /highlight >}}
-
-
-* If we DO NOT close the channel and try to read data (AFTER reading the data) deadlock exception will be thrown
-{{< highlight go >}}
-func main(){
-    threadChannel := make(chan string,1) // size chosen to ensure it never gets filled up completely.
-
-
-    go func() {
-        threadChannel <- "TESTING from function 1"
-        //defer close(threadChannel)
-    }()
-
-    fmt.Println("Obtained  1" , <-threadChannel)
-    time.Sleep(1000 * time.Millisecond)
-    fmt.Println("----------------")
-    fmt.Println("Obtained  2" , <-threadChannel)
-}
-{{< /highlight >}}
-* ALWAYS close(..) the channel to stop the go func(..) running and resides in memory. Without closing the channel possibility of memory leak and/or deadlock is high
-* Mechanism should always be in place to make sure that the parent can instruct the child goroutine to cancel it's operation. 
- 
-    
-<h2>Goroutine</h2>
-
-* When you spawn goroutines, make it clear when or whether - they exit.
-* Goroutines can leak by blocking on channel sends or receives: the garbage collector will not terminate a goroutine even if the channels it is blocked on are unreachable.
-* Even when goroutines do not leak, leaving them in-flight when they are no longer needed can cause other subtle and hard-to-diagnose problems. 
-* Try to keep concurrent code simple enough that goroutine lifetimes are obvious. If that just isn't feasible, document when and why the goroutines exit.
-* _DO NOT_ use package **math/rand** to generate keys, instead, use **crypto/rand's Reader**.
-* Every time running a goroutine(..) we must think how it will finish. What will be the trigger to return or exit from the gorotine
-* At any time we want to to send data into a channel make sure the channel variable is send as parameter to the called method
 
 ---------------
 Design Patterns
@@ -198,9 +113,12 @@ func main(){
 
 Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed.
 
+
+
 <h3>Fan-in-Fan-out channel</h3> 
 
-This pattern collate results from goroutines that have been spawned to do background processing
+This pattern collate results from goroutines that have been spawned to do background processing.
+
 {{< highlight go >}}
 package main
 

@@ -197,10 +197,146 @@ Packages
 * In this case, the test file cannot be in package foo because it uses bar/testutil, which imports foo. So we use the 'import .' form to let the file pretend to be part of package foo even though it is not. Except for this one case, do not use import . in your programs. It makes the programs much harder to read because it is unclear whether a name like Quux is a top-level identifier in the current package or in an imported package.
 * Avoid meaningless package names like util, common, misc, api, types, and interfaces
 
+---------------
+Multi-Threading
+---------------
+
+* Send the channel that your function want to receive the data from    
+{{< highlight go >}}
+    func First(query string,  c chan Result, replicas ...Search){
+        collating := make(chan Result)
+
+        searchReplica := func(i int, collating chan Result) { 
+            c <- replicas[i](query) 
+        }
+        for i := range replicas {
+            go searchReplica(i,collating)
+        }
+    }
+{{< /highlight >}}
+in the above example the First(..) method's param is a channel parameter 'c', it uses this channel to send data that will be read by the caller function.
+    
+* Use timeout as much as possible to avoid the app from 'hang' mode. Having timeout enable troubleshooting as function will automatically terminate after certain amount of time.
+{{< highlight go >}}
+    timeout := time.After(800 * time.Millisecond)
+
+    for {
+        select {
+        ...
+        ...
+        case <-timeout:
+            fmt.Println("timed out")
+            return
+        }
+    }
+{{< /highlight >}}
+
+ 
+* If we close the channel and we try to read data (even AFTER reading the data) no exception thrown
+{{< highlight go >}}
+func main(){
+    // size chosen to ensure it never gets filled up completely.
+    threadChannel := make(chan string,1) 
+
+    go func() {
+        threadChannel <- "TESTING from function 1"
+        defer close(threadChannel)
+    }()
+
+    fmt.Println("Obtained  1" , <-threadChannel)
+    time.Sleep(1000 * time.Millisecond)
+    fmt.Println("----------------")
+    fmt.Println("Obtained  2" , <-threadChannel)
+}
+{{< /highlight >}}
+
+
+* If we DO NOT close the channel and try to read data (AFTER reading the data) deadlock exception will be thrown
+{{< highlight go >}}
+func main(){
+    threadChannel := make(chan string,1) // size chosen to ensure it never gets filled up completely.
+
+
+    go func() {
+        threadChannel <- "TESTING from function 1"
+        //defer close(threadChannel)
+    }()
+
+    fmt.Println("Obtained  1" , <-threadChannel)
+    time.Sleep(1000 * time.Millisecond)
+    fmt.Println("----------------")
+    fmt.Println("Obtained  2" , <-threadChannel)
+}
+{{< /highlight >}}
+* ALWAYS close(..) the channel to stop the go func(..) running and resides in memory. Without closing the channel possibility of memory leak and/or deadlock is high
+* Mechanism should always be in place to make sure that the parent can instruct the child goroutine to cancel it's operation. 
+ 
+    
+<h2>Goroutine</h2>
+
+* When you spawn goroutines, make it clear when or whether - they exit.
+* Goroutines can leak by blocking on channel sends or receives: the garbage collector will not terminate a goroutine even if the channels it is blocked on are unreachable.
+* Even when goroutines do not leak, leaving them in-flight when they are no longer needed can cause other subtle and hard-to-diagnose problems. 
+* Try to keep concurrent code simple enough that goroutine lifetimes are obvious. If that just isn't feasible, document when and why the goroutines exit.
+* _DO NOT_ use package **math/rand** to generate keys, instead, use **crypto/rand's Reader**.
+* Every time running a goroutine(..) we must think how it will finish. What will be the trigger to return or exit from the gorotine
+* At any time we want to to send data into a channel make sure the channel variable is send as parameter to the called method
+
+<h2>Select packages</h2>
+
+Following is an example to use **SelectCase** in situation where there are multiple channels to process
+
+{{< highlight go >}}
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func produce(ch chan<- string, i int) {
+	for j := 0; j < 5; j++ {
+		ch <- fmt.Sprint(i*10 + j)
+	}
+	close(ch)
+}
+
+func main() {
+	numChans := 4
+
+	var chans = []chan string{}
+
+	for i := 0; i < numChans; i++ {
+		ch := make(chan string)
+		chans = append(chans, ch)
+		go produce(ch, i+1)
+	}
+
+	cases := make([]reflect.SelectCase, len(chans))
+	for i, ch := range chans {
+		cases[i] = reflect.SelectCase{Dir: reflect.SelectRecv, Chan: reflect.ValueOf(ch)}
+	}
+
+	remaining := len(cases)
+	for remaining > 0 {
+		chosen, value, ok := reflect.Select(cases)
+		if !ok {
+			// The chosen channel has been closed, so zero out the channel to disable the case
+			cases[chosen].Chan = reflect.ValueOf(nil)
+			remaining -= 1
+			continue
+		}
+
+		fmt.Printf("Read from channel %#v and received %s\n", chans[chosen], value.String())
+	}
+}
+{{< /highlight >}}
+
+
+
 <h1>References</h1>
 
-* Golang
-	* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
-    * Lesson learned from contributing minikube
-        * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
-            - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
+* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
+* Lesson learned from contributing minikube
+    * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
+        - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
