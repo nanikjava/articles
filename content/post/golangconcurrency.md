@@ -105,15 +105,53 @@ func main(){
     pipeline := multiply(done, add(done, multiply(done, intStream, 2), 1), 2)
     for v := range pipeline {
         fmt.Println(v)
-    }
+    } 
 }
 {{< /highlight >}}
+
+Resources:
+
+* https://blog.golang.org/pipelines
     
 <h3>Tee-Channel</h3>
 
-Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed.
+Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed. The [eapache](https://github.com/eapache) project provide this kind of pattern. Following code snippet is the implementation.
 
+{{< highlight go >}}
+func tee(input SimpleOutChannel, outputs []SimpleInChannel, closeWhenDone bool) {
+	cases := make([]reflect.SelectCase, len(outputs))
+	for i := range cases {
+		cases[i].Dir = reflect.SelectSend
+	}
+	for elem := range input.Out() {
+		for i := range cases {
+			cases[i].Chan = reflect.ValueOf(outputs[i].In())
+			cases[i].Send = reflect.ValueOf(elem)
+		}
+		for _ = range cases {
+			chosen, _, _ := reflect.Select(cases)
+			cases[chosen].Chan = reflect.ValueOf(nil)
+		}
+	}
+	if closeWhenDone {
+		for i := range outputs {
+			outputs[i].Close()
+		}
+	}
+}
+{{< /highlight >}}
 
+The library uses Golang's internal [SelectCase](https://golang.org/pkg/reflect/#SelectCase) package to process multiple channels.
+
+{{< highlight go >}}
+type SelectCase struct {
+    Dir  SelectDir // direction of case
+    Chan Value     // channel to use (for send or receive)
+    Send Value     // value to send (for send)
+}
+{{< /highlight >}}
+
+The SelectCase structure is like a container of channels depending on the direction specified (Dir).
 
 <h3>Fan-in-Fan-out channel</h3> 
 

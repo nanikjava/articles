@@ -201,6 +201,12 @@ Packages
 Multi-Threading
 ---------------
 
+* Following are some questions to answer to Have to understand how channel works. Things that need to understand
+    * How do we call goroutine inside a function ?
+    * What the code flow looks like when there is a goroutine ?
+    * How does the **for(..) range** loops works with channels ?
+    * How to use the **select{ case : }** operator with channels ?
+    * 
 * Send the channel that your function want to receive the data from    
 {{< highlight go >}}
     func First(query string,  c chan Result, replicas ...Search){
@@ -332,6 +338,23 @@ func main() {
 }
 {{< /highlight >}}
 
+**SelectCase** can be used to receive or send data. 
+
+To use it to receive data use the SelectRecv direction
+
+{{< highlight go >}}
+cases[i] = reflect.SelectCase{Dir: reflect.SelectRecv, Chan: reflect.ValueOf(ch)}
+{{< /highlight >}}
+
+the _Chan_ will point to the channel that will be used to receive the data.
+
+To read the data use the following
+
+{{< highlight go >}}
+chosen, value, ok := reflect.Select(cases)
+{{< /highlight >}}
+
+the _value_ variable will contain the data from the channel
 
 
 <h1>References</h1>
