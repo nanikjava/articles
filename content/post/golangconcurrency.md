@@ -4,9 +4,8 @@ title: "Concurrency Design Pattern in Go"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 ---
 
----------------
-Design Patterns
----------------
+<h1>Design Patterns</h1>
+
 
 <h3>Concurreny Design Pattern</h3>
 
@@ -194,8 +193,6 @@ func generator(msg string) <-chan string { // returns receive-only channel
             
 <h3>Bridge Channel</h3>
 
-<h3>Queuing</h3>
-
 <h3>Context</h3>
 
 Good for cancelling / terminating goroutine by propagation. In order for this to work effectively the context must be send as part of argument parameters to each of the goroutines. The Done() inside locale(..) method is called as the context.WithTimeout(..) got triggered after 1 second and it propagates all the way to the root context 
@@ -276,12 +273,129 @@ func locale(ctx context.Context) (string, error) {
 
 <h3>Error Propagation</h3>
 
+{{< highlight go >}}
+
+.........
+
+..........
+
+.......
+
+{{< /highlight >}}
 
 
-<h1>References</h1>
+<h1>Concurrency Project</h1>
 
-* Golang
-	* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
-    * Lesson learned from contributing minikube
-        * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
-            - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
+This section will discuss in detail about the [eapache project](https://github.com/eapache). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The article will talk in detail about the _**go-resilliency**_
+
+<h3>Blackhole</h3>
+
+The function of the class is to receive data and discard it and calculated the total number of data it received. This is useful in situation where we want to check if our app concurrency app is receiving the same amount of data as expected. 
+
+{{< highlight go >}}
+
+package channels
+
+// BlackHole implements the InChannel interface and provides an analogue for the "Discard" variable in
+// the ioutil package - it never blocks, and simply discards every value it reads. The number of items
+// discarded in this way is counted and returned from Len.
+type BlackHole struct {
+	input  chan interface{}
+	length chan int
+	count  int
+}
+
+func NewBlackHole() *BlackHole {
+	ch := &BlackHole{
+		input:  make(chan interface{}),
+		length: make(chan int),
+	}
+	go ch.discard()
+	return ch
+}
+
+func (ch *BlackHole) In() chan<- interface{} {
+	return ch.input
+}
+
+func (ch *BlackHole) Len() int {
+	val, open := <-ch.length
+	if open {
+		return val
+	} else {
+		return ch.count
+	}
+}
+
+func (ch *BlackHole) Cap() BufferCap {
+	return Infinity
+}
+
+func (ch *BlackHole) Close() {
+	close(ch.input)
+}
+
+func (ch *BlackHole) discard() {
+	for {
+		select {
+		case _, open := <-ch.input:
+			if !open {
+				close(ch.length)
+				return
+			}
+			ch.count++
+		case ch.length <- ch.count:
+		}
+	}
+}
+{{< /highlight >}}
+
+Following is a code sample on how to use Blackhole
+
+{{< highlight go >}}
+
+func TestBlackHole(t *testing.T) {
+	discard := NewBlackHole()
+
+	for i := 0; i < 1000; i++ {
+		discard.In() <- i
+	}
+
+	discard.Close()
+
+	if discard.Len() != 1000 {
+		t.Error("blackhole expected 1000 was", discard.Len())
+	}
+}
+{{< /highlight >}}
+
+
+<h3>Deadline</h3>
+
+There are instances where we want our application to do a background process but there is a time limit imposed on it. Following is a sample snippet on how to use this functionality 
+
+
+{{< highlight go >}}
+
+func ExampleDeadline() {
+	dl := New(1 * time.Second)
+
+	err := dl.Run(func(stopper <-chan struct{}) error {
+		// do something possibly slow
+		// check stopper function and give up if timed out
+		return nil
+	})
+
+	switch err {
+	case ErrTimedOut:
+		// execution took too long, oops
+	default:
+		// some other error
+	}
+}
+{{< /highlight >}}
+
+<h3>Circuit Breaker</h3>
+
+<h3>Batcher</h3>
+

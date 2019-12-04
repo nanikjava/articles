@@ -197,16 +197,16 @@ Packages
 * In this case, the test file cannot be in package foo because it uses bar/testutil, which imports foo. So we use the 'import .' form to let the file pretend to be part of package foo even though it is not. Except for this one case, do not use import . in your programs. It makes the programs much harder to read because it is unclear whether a name like Quux is a top-level identifier in the current package or in an imported package.
 * Avoid meaningless package names like util, common, misc, api, types, and interfaces
 
----------------
-Multi-Threading
----------------
+-----------
+Concurrency
+-----------
 
-* Following are some questions to answer to Have to understand how channel works. Things that need to understand
+* Following are questions to answer in order to have a better understanding how the whole multi-threading channel based works in Go. These are not an exhaustive list but a starting point that will help to stir in the right direction.
     * How do we call goroutine inside a function ?
-    * What the code flow looks like when there is a goroutine ?
-    * How does the **for(..) range** loops works with channels ?
-    * How to use the **select{ case : }** operator with channels ?
-    * 
+    * When using goroutine inside a function how will the code flow ?
+    * How does the **for(..) range** loops works with channels ? how does it differ than normal for(..) counter loop
+    * How to use the **select{ case : }** operator with channels ? 
+    * When closing channel is it closed AFTER operation is done ?
 * Send the channel that your function want to receive the data from    
 {{< highlight go >}}
     func First(query string,  c chan Result, replicas ...Search){
@@ -358,8 +358,7 @@ the _value_ variable will contain the data from the channel
 
 
 <h1>References</h1>
+* [Best practises in Golang](http://peter.bourgon.org/go-in-production/#testing-and-validation)
+* [Lesson learned from contributing minikube](https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904)
+* [Code Review Best Practises Golang](https://github.com/golang/go/wiki/CodeReviewComments)
 
-* http://peter.bourgon.org/go-in-production/#testing-and-validation --> best practises
-* Lesson learned from contributing minikube
-    * https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904
-        - "Generally isn't useful to repeat the type of an object in the object name."  See also https://github.com/golang/go/wiki/CodeReviewComments#variable-names
