@@ -6,9 +6,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 <h1>Design Patterns</h1>
 
-Concurrency in Golang is quite simple, and it's a powerful tool. Understanding concurrency basic is important before jumping any further. Once basic understanding has been established the next step is to deeper into it by looking at using different kind of concurrency pattern. Understanding the different concurrency pattern is important in order to know what pattern is suitable for the problem that we are trying to solve. 
-
-Once we understand the different patterns we can look at reducing boilerplate code reusing an existing framework that supports the pattern that we are interested in.
+Concurrency in Golang is quite simple, and it's a powerful tool. Understanding concurrency basic is important before jumping any further. Once basic understanding has been established the next step is to go deeper by looking at using different kind of concurrency patterns. Understanding different concurrency pattern is important to make it easier in picking up the right solution to a certain concurrency problem that we are trying to tackle. Also, it will reduce boilerplate code  .
 
 
 <h3>Pipeline</h3>
@@ -85,7 +83,7 @@ Resources:
     
 <h3>Tee-Channel</h3>
 
-Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed. The [eapache](https://github.com/eapache) project provide this kind of pattern. Following code snippet is the implementation.
+Takes a single input channel and an arbitrary number of output channels and duplicates each input into every output. When the input channel is closed, all outputs channels are closed. The [eapache channels](https://github.com/eapache/channels/blob/master/channels.go#L120) project provide this kind of pattern. Following code snippet is the implementation.
 
 {{< highlight go >}}
 func tee(input SimpleOutChannel, outputs []SimpleInChannel, closeWhenDone bool) {
@@ -267,9 +265,7 @@ func locale(ctx context.Context) (string, error) {
 
 <h1>Concurrency Project</h1>
 
-This section will discuss in detail about the [go-resiliency project](https://github.com/eapache/go-resiliency). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The other project that is useful to learn the different ways that concurrency works is the [channels project](https://github.com/eapache/channels)
-
-Disclaimer: There are a number of open source concurrency framework out there, this article just focuses on the eapache project.
+This section will discuss in detail about the [go-resiliency project](https://github.com/eapache/go-resiliency). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The other project that is useful to learn is the [channels project](https://github.com/eapache/channels), this project is useful to learn different ways using Golang __channels__.
 
 <h3>Blackhole</h3>
 
