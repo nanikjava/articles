@@ -267,7 +267,7 @@ func locale(ctx context.Context) (string, error) {
 
 <h1>Concurrency Project</h1>
 
-This section will discuss in detail about the [eapache project](https://github.com/eapache). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The article will talk in detail about the _**go-resilliency**_
+This section will discuss in detail about the [go-resiliency project](https://github.com/eapache/go-resiliency). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The other project that is useful to learn the different ways that concurrency works is the [channels project](https://github.com/eapache/channels)
 
 Disclaimer: There are a number of open source concurrency framework out there, this article just focuses on the eapache project.
 
