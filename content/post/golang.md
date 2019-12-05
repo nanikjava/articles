@@ -201,6 +201,42 @@ Packages
 Concurrency
 -----------
 
+* Following are excerpts from [this](https://github.com/golang/go/wiki/LearnConcurrency) and [this](https://golang.org/ref/spec#Send_statements)
+
+    * Both the channel and the value expression are evaluated before communication begins. 
+    * Communication blocks until the send can proceed. 
+    * A send on an unbuffered channel can proceed if a receiver is ready. 
+    * A send on a buffered channel can proceed if there is room in the buffer. 
+    * A send on a closed channel proceeds by causing a run-time panic. 
+    * Communication on nil channels can never proceed, a select with only nil channels and no default case blocks forever. 
+    
+{{< highlight go >}}
+repeatFn := func(
+    done <-chan interface{},
+    fn func() interface{},
+) <-chan interface{} {
+    valueStream := make(chan interface{})
+
+    go func() {
+        defer close(valueStream)
+
+        for {
+            select {
+            case <-done:
+                return
+            case valueStream <- fn():
+            }
+        }
+    }()
+
+    return valueStream
+}
+{{< /highlight >}}
+
+One of repeatFn(..) argument is to receive 'done' variable that the repeatFn(..) will use as a flag to exit from the function
+The value of the receive operation <-ch is the value received from the channel ch. The expression blocks until a value is available. Receiving from a nil channel blocks forever. A receive operation on a closed channel can always proceed immediately, yielding the element type's zero value after any previously sent values have been received.
+
+
 * Following are questions to answer in order to have a better understanding how the whole multi-threading channel based works in Go. These are not an exhaustive list but a starting point that will help to stir in the right direction.
     * How do we call goroutine inside a function ?
     * When using goroutine inside a function how will the code flow ?

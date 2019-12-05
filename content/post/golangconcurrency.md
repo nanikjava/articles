@@ -6,39 +6,10 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 <h1>Design Patterns</h1>
 
+Concurrency in Golang is quite simple, and it's a powerful tool. Understanding concurrency basic is important before jumping any further. Once basic understanding has been established the next step is to deeper into it by looking at using different kind of concurrency pattern. Understanding the different concurrency pattern is important in order to know what pattern is suitable for the problem that we are trying to solve. 
 
-<h3>Concurreny Design Pattern</h3>
+Once we understand the different patterns we can look at reducing boilerplate code reusing an existing framework that supports the pattern that we are interested in.
 
-* Resources 
- * https://github.com/golang/go/wiki/LearnConcurrency
- * https://golang.org/ref/spec#Send_statements
-
-Both the channel and the value expression are evaluated before communication begins. Communication blocks until the send can proceed. A send on an unbuffered channel can proceed if a receiver is ready. A send on a buffered channel can proceed if there is room in the buffer. A send on a closed channel proceeds by causing a run-time panic. Communication on nil channels can never proceed, a select with only nil channels and no default case blocks forever. 
-{{< highlight go >}}
-repeatFn := func(
-    done <-chan interface{},
-    fn func() interface{},
-) <-chan interface{} {
-    valueStream := make(chan interface{})
-
-    go func() {
-        defer close(valueStream)
-
-        for {
-            select {
-            case <-done:
-                return
-            case valueStream <- fn():
-            }
-        }
-    }()
-
-    return valueStream
-}
-{{< /highlight >}}
-
-One of repeatFn(..) argument is to receive 'done' variable that the repeatFn(..) will use as a flag to exit from the function
-The value of the receive operation <-ch is the value received from the channel ch. The expression blocks until a value is available. Receiving from a nil channel blocks forever. A receive operation on a closed channel can always proceed immediately, yielding the element type's zero value after any previously sent values have been received.
 
 <h3>Pipeline</h3>
 
@@ -191,7 +162,6 @@ func generator(msg string) <-chan string { // returns receive-only channel
 }    
 {{< /highlight >}}	
             
-<h3>Bridge Channel</h3>
 
 <h3>Context</h3>
 
@@ -270,6 +240,17 @@ func locale(ctx context.Context) (string, error) {
 }
 {{< /highlight >}}
 
+<h3>Bridge Channel</h3>
+
+{{< highlight go >}}
+
+.........
+
+..........
+
+.......
+
+{{< /highlight >}}
 
 <h3>Error Propagation</h3>
 
@@ -287,6 +268,8 @@ func locale(ctx context.Context) (string, error) {
 <h1>Concurrency Project</h1>
 
 This section will discuss in detail about the [eapache project](https://github.com/eapache). This project is a very useful project to learn more in-depth about concurrency. There are several different implementations and patterns it implemented that are useful to use in an application. The article will talk in detail about the _**go-resilliency**_
+
+Disclaimer: There are a number of open source concurrency framework out there, this article just focuses on the eapache project.
 
 <h3>Blackhole</h3>
 
@@ -397,5 +380,114 @@ func ExampleDeadline() {
 
 <h3>Circuit Breaker</h3>
 
+Implementation is a simple counter measurement of success and failure of a particular task. The only goroutine used is to run the timer to make sure that that there some time limit imposed.  The different states - **closed**, **half-open**  and **open**
+
+* **closed** -- close the circuit breaker as all are good
+* **half-open** -- transition to this state happens when the timeout timer has expired
+* **open** -- transition to this state is triggered when error happens, there could be 2 different scenarios - no of errors reached errors threshold or the current state is half-open (timeout occured)
+
+The function __processResult(..)__ is the main logic performing the transition to different states based on the success and errors threshold criteria.
+
+{{< highlight go >}}
+func (b *Breaker) processResult(result error, panicValue interface{}) {
+	b.lock.Lock()
+	defer b.lock.Unlock()
+
+	if result == nil && panicValue == nil {
+		if b.state == halfOpen {
+			b.successes++
+			if b.successes == b.successThreshold {
+				b.closeBreaker()
+			}
+		}
+	} else {
+		if b.errors > 0 {
+			expiry := b.lastError.Add(b.timeout)
+			if time.Now().After(expiry) {
+				b.errors = 0
+			}
+		}
+
+		switch b.state {
+		case closed:
+			b.errors++
+			if b.errors == b.errorThreshold {
+				b.openBreaker()
+			} else {
+				b.lastError = time.Now()
+			}
+		case halfOpen:
+			b.openBreaker()
+		}
+	}
+}
+{{< /highlight >}}
+
+The following diagram explains in detail how the logic works inside processResult. The diagram breaks down the logic into 2 different category - __success__ and __errors__. Each category have different logic to transition to different states.
+
+![batcherchannels](/media/golangdesignpattern/circuitbreaker.jpg)
+
+
 <h3>Batcher</h3>
+
+Below is a high level diagram on how the design pattern interact with the different pieces internally.
+
+![batcherchannels](/media/golangdesignpattern/batch.jpg)
+
+This pattern handle situation where we need to do a particular task but we need to wait X amount of time before running it. For example - we are waiting for all parameteres to be collected together in 1 minute before executing a particular function/task for processing the parameter.
+
+Code uses 2 different channels:
+
+* **future** -- for communication err value received from the executed task
+* **submit** -- this channel is used as part of the timeout feature. The channel will be pushed with
+    * parameter that need to be collected to be sent to the targeted task and
+    * future channels that will be used to send the error value
+
+
+The **submitWork** method is the method that is called when there is a duration specified for the timeout as the task need to be executed asynchronously.
+
+{{< highlight go >}}
+func (b *Batcher) submitWork(w *work) {
+	b.lock.Lock()
+	defer b.lock.Unlock()
+
+	if b.submit == nil {
+		b.submit = make(chan *work, 4)
+		go b.batch()
+	}
+
+	b.submit <- w
+}
+{{< /highlight >}}
+
+The batch() method is the crux of the whole process. The code will keep looping the _b.submit_ channel to extract the params interface{} and future channel.Code will exit the loop when the _b.submit_ channel is closed by the the _b.timer()_ function (as it expired)
+
+Once it's out of the loop it will execute the task by calling _b.doWork(..)_  and on completion of the task the error obtained (err) will be push to all the _future_ channels. 
+
+
+{{< highlight go >}}
+func (b *Batcher) batch() {
+	var params []interface{}
+	var futures []chan error
+	input := b.submit
+
+	go b.timer()
+
+	for work := range input {
+		params = append(params, work.param)   
+		futures = append(futures, work.future)
+	}
+
+	ret := b.doWork(params)
+
+	for _, future := range futures {
+		future <- ret
+		close(future)
+	}
+}
+{{< /highlight >}}
+
+Following diagram outlines the different channels used for this pattern
+
+![batcherchannels](/media/golangdesignpattern/batchchannels.jpg)
 
