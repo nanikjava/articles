@@ -32,7 +32,115 @@ and not
 t := []string{} (is non-nil but zero-length)            
 {{< /highlight >}}
 
+
+
 * Interfaces & Receivers
+    * The following snippets shows how to do 'force checking' of contact between **type interface** and **type struct**. 
+    {{< highlight go >}}
+    type ValueConverter interface {
+        ConvertValue(v interface{}) (Value, error)
+    }
+
+    type boolType struct{}
+
+    var Bool boolType
+
+    var _ ValueConverter = boolType{}  --> (a)
+
+    func (boolType) String() string { return "Bool" }
+
+    func (boolType) ConvertValue(src interface{}) (Value, error) {....}
+    {{< /highlight >}}
+
+    the above provides a static (compile time) check that boolType satisfies the ValueConverter interface. The _ used as a name of the variable tells the compiler to effectively discard the RHS value, but to type-check it and evaluate it if it has any side effects, but the anonymous variable per se doesn't take any process space.
+
+    It is a handy construct when developing and the method set of an interface and/or the methods implemented by a type are frequently changed. The construct serves as a guard against forgetting to match the method sets of a type and of an interface where the intent is to have them compatible. It effectively prevents to go install a broken (intermediate) version with such omission.
+
+    Another example (taken from __https://github.com/Kong/kuma/tree/master/pkg/core/discovery__) where the _sink.go_ enforce the contract inside the _interfaces.go_
+
+    **sink.go**
+    {{< highlight go >}}
+    package discovery
+
+    import (
+        mesh_core "github.com/Kong/kuma/pkg/core/resources/apis/mesh"
+        core_model "github.com/Kong/kuma/pkg/core/resources/model"
+    )
+
+    var _ DiscoverySource = &DiscoverySink{}
+    var _ DiscoveryConsumer = &DiscoverySink{}
+
+    // DiscoverySink is both a source and a consumer of discovery information.
+    type DiscoverySink struct {
+        DataplaneConsumer DataplaneDiscoveryConsumer
+    }
+
+    func (s *DiscoverySink) AddConsumer(consumer DiscoveryConsumer) {
+        s.DataplaneConsumer = consumer
+    }
+
+    func (s *DiscoverySink) OnDataplaneUpdate(dataplane *mesh_core.DataplaneResource) error {
+        if s.DataplaneConsumer != nil {
+            return s.DataplaneConsumer.OnDataplaneUpdate(dataplane)
+        }
+        return nil
+    }
+    func (s *DiscoverySink) OnDataplaneDelete(key core_model.ResourceKey) error {
+        if s.DataplaneConsumer != nil {
+            return s.DataplaneConsumer.OnDataplaneDelete(key)
+        }
+        return nil
+    }
+    {{< /highlight >}}
+
+
+    **interfaces.go**
+    {{< highlight go >}}
+    package discovery
+
+    import (
+        discovery_proto "github.com/Kong/kuma/api/discovery/v1alpha1"
+        mesh_core "github.com/Kong/kuma/pkg/core/resources/apis/mesh"
+        "github.com/Kong/kuma/pkg/core/resources/model"
+    )
+
+    // DiscoverySource is a source of discovery information, i.e. Services and Workloads.
+    type DiscoverySource interface {
+        AddConsumer(DiscoveryConsumer)
+    }
+
+    // ServiceInfo combines original proto object with auxiliary information.
+    type ServiceInfo struct {
+        Service *discovery_proto.Service
+    }
+
+    // WorkloadInfo combines original proto object with auxiliary information.
+    type WorkloadInfo struct {
+        Workload *discovery_proto.Workload
+        Desc     *WorkloadDescription
+    }
+
+    // WorkloadDescription represents auxiliary information about a Workload.
+    type WorkloadDescription struct {
+        Version   string
+        Endpoints []WorkloadEndpoint
+    }
+
+    type WorkloadEndpoint struct {
+        Address string
+        Port    uint32
+    }
+
+    // DiscoveryConsumer is a consumer of discovery information, i.e. Services and Workloads.
+    type DiscoveryConsumer interface {
+        DataplaneDiscoveryConsumer
+    }
+
+    type DataplaneDiscoveryConsumer interface {
+        OnDataplaneUpdate(*mesh_core.DataplaneResource) error
+        OnDataplaneDelete(model.ResourceKey) error
+    }
+    {{< /highlight >}}
     * Go interfaces generally belong in the package that uses values of the interface type, not the package that implements those values. The implementing package should return concrete (usually pointer or struct) types: that way, new methods can be added to implementations without requiring extensive refactoring.
     * Design the API so that it can be tested using the public API of the real implementation.
     * Do not define interfaces before they are used: without a realistic example of usage, it is too difficult to see whether an interface is even necessary, let alone what methods it ought to contain.
@@ -200,6 +308,30 @@ Packages
 -----------
 Concurrency
 -----------
+
+* [This article](https://blog.gopheracademy.com/advent-2019/directional-channels/) explain in simple ways on how the directional nature of the channel works. The article details the different direction that a channel can have.
+
+    {{< highlight go >}}
+    // SliceIterChan returns each element of a slice on a channel for concurrent
+    // consumption, closing the channel on completion
+    func SliceIterChan(s []int) <-chan int {
+        outChan := make(chan int)
+        go func() {
+            for i := range s {
+                outChan <- s[i]
+            }
+            close(outChan)
+        }()
+        return outChan
+    }
+    {{< /highlight >}}
+
+    The article explains
+
+    > Diving into the implementation, the function creates a bidirectional channel for its own use, and then all it needs to do to ensure that it has full control over writing to and closing the channel is to return it, whereupon it will be converted into a read-only channel automatically.
+
+
+
 
 * Following are excerpts from [this](https://github.com/golang/go/wiki/LearnConcurrency) and [this](https://golang.org/ref/spec#Send_statements)
 
@@ -397,4 +529,4 @@ the _value_ variable will contain the data from the channel
 * [Best practises in Golang](http://peter.bourgon.org/go-in-production/#testing-and-validation)
 * [Lesson learned from contributing minikube](https://github.com/kubernetes/minikube/pull/5718#discussion_r339308904)
 * [Code Review Best Practises Golang](https://github.com/golang/go/wiki/CodeReviewComments)
-
+* [Go Advices](https://github.com/cristaloleg/go-advices)
