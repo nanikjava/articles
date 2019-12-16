@@ -166,6 +166,96 @@ The output will be as follows
 * Following are resources that gives detail explanation on working with Istio
     * https://openliberty.io/guides/istio-intro.html#deploying-version-2-of-the-system-microservice
 
+<h1> Kuma </h1>
 
+[Kuma](https://kuma.io) is an open source service mesh project that provides both control and data plane functionality. The interesting part about this project is the ability to use it for both Kubernetes and non-Kubernetes environment (bare metal and VM).
 
+Following are the steps to run the sample app in kuma:
 
+* Run kuma-echo sample app
+
+* Run the kuma-cp run 
+
+* Generate Dataplane data
+
+{{< highlight text >}}
+echo "type: Dataplane                                                         
+mesh: default
+name: dp-echo-1
+networking:
+  inbound:
+  - interface: 127.0.0.1:10000:9000
+    tags:
+      service: echo" | ./kumactl apply -f -
+{{< /highlight  >}}
+
+* Generate the data token using the following
+
+> ./kumactl generate dataplane-token --dataplane=dp-echo-1 > /tmp/kuma-dp-echo-1
+
+* Run kuma-dp using the generated token as follows
+
+> ./kuma-dp run   --name=dp-echo-1   --mesh=default   --cp-address=http://127.0.0.1:5681   --dataplane-token-file=/tmp/kuma-dp-echo-1
+
+* Debugging through kuma-dp following is the generated configuration used for envoy
+
+{{< highlight text >}}
+dynamicResources:
+  adsConfig:
+    apiType: GRPC
+    grpcServices:
+    - envoyGrpc:
+        clusterName: ads_cluster
+  cdsConfig:
+    ads: {}
+  ldsConfig:
+    ads: {}
+node:
+  cluster: echo
+  id: default.dp-echo-1
+  metadata:
+    dataplaneTokenPath: /tmp/kuma-dp-echo-1
+staticResources:
+  clusters:
+  - connectTimeout: 1s
+    http2ProtocolOptions: {}
+    loadAssignment:
+      clusterName: ads_cluster
+      endpoints:
+      - lbEndpoints:
+        - endpoint:
+            address:
+              socketAddress:
+                address: localhost
+                portValue: 5678
+    name: ads_cluster
+    type: STRICT_DNS
+    upstreamConnectionOptions:
+      tcpKeepalive: {}
+  - connectTimeout: 1s
+    http2ProtocolOptions: {}
+    loadAssignment:
+      clusterName: access_log_sink
+      endpoints:
+      - lbEndpoints:
+        - endpoint:
+            address:
+              pipe:
+                path: /tmp/kuma-access-logs-dp-echo-1-default.sock
+    name: access_log_sink
+    type: STATIC
+    upstreamConnectionOptions:
+      tcpKeepalive: {}
+{{< /highlight  >}}
+
+and following is the configuration used to run envoy
+
+{{< highlight text >}}
+ 0 = {string} "-c"
+ 1 = {string} "/tmp/kuma-dp-443537827/bootstrap.yaml"
+ 2 = {string} "--drain-time-s"
+ 3 = {string} "30"
+ 4 = {string} "--disable-hot-restart"
+{{< /highlight  >}}
+
+![kumahighlevel](/media/servicemesh/kumahighlevel.jpg)
