@@ -198,3 +198,4 @@ Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluste
 - https://medium.com/@vikram.fugro/container-networking-interface-aka-cni-bdfe23f865cf --> show how the CNI works using the containetworking github.com account
 - https://www.cncf.io/blog/2017/05/23/cncf-hosts-container-networking-interface-cni/ --> specification and implementation of CNI
 - https://www.weave.works/docs/net/latest/kubernetes/kube-addon/ --> weavenet is network plugin for docker for variety of things (service discovery, etc), this website outlined how to use it as inside kubernetes 
+- [Good explanation about how the different parts of Kubernetes works](https://github.com/darshanime/notes/blob/master/kubernetes.org)

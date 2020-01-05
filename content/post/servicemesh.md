@@ -15,6 +15,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 ![ServiceMeshBasic](/media/servicemesh/service-mesh-with-side-car.png)
 
+![servicemeshdiagram](/media/servicemesh/servicemeshdiagram.png)
 
 * A service mesh has two key components
     * **Control Plane** --  The control plane holds the state of the system and plays a coordination role. It provides a centralized registry of where services are running, and the policies that restrict traffic. It must scale to handle tens of thousands of service instances, and efficiently update the data plane in real time. 
@@ -40,6 +41,13 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
     
         ![ServiceMeshBasic](/media/servicemesh/Service-Mesh-API-Gateway.png)
 
+* Remember that even thought we are using container orchestration this will not take care of what microservices will need. Container orchestration does not provide what microservice application need that are specificly relevant for the application such as - finding other microservice application, app-to-app communication (gRPC), app-to-app security (session, token, etc).  Following table outlined the difference
+
+![containerorchestraionvsservicemesh](/media/servicemesh/containerorchestraionvsservicemesh.png)
+
+* In service mesh architecture we need resiliency features such as circuit breaking, timeouts,  deadlines, etc.
+* Don't think service mesh as a technology, think of it as an abstract concept that bring services together and mesh them together as a single entity.
+
 <h1> Consul </h1>
 
 * Following is a high level diagram showing how consul works as a __control plane__ capacity
@@ -55,6 +63,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
     * [Cloud patterns](https://docs.microsoft.com/en-us/azure/architecture/patterns/)
     * Using kiali.io with Istio [presentation](https://events19.linuxfoundation.org/wp-content/uploads/2018/07/Introduction-to-Service-Mesh-with-Istio-and-Kiali-OSS-Japan-July-2019.pdf)
 * Istio provides _<u>automatic injection</u>_ of sidecar proxy in Kubernetes
+* Istio control plane consist of - Mixer, Pilot and Citadel.
 * In simple terms, sidecar injection is adding the configuration of additional containers to the pod template. The added containers needed for the Istio service mesh are:
 
     * istio-init This init container is used to setup the iptables rules so that inbound/outbound traffic will go through the sidecar proxy. An init container is different than an app container in following ways:
