@@ -620,6 +620,79 @@ dockerd is sent a POST Containers Start
         ↳ The shim / containerd continue to monitor the container until completion
 {{< /highlight >}}
 
+<h1>Running container with runc</h1>
+
+This following is step-by-step example on how to run OCI compliant image using runc. We going to use docker in this example.
+
+* Checkout the **runc** project from https://github.com/opencontainers/runc and build it by running **make** 
+* Download **exportrootfs.sh** from https://github.com/estesp/utils/blob/master/exportrootfs.sh and add it to your PATH. Make sure follow the instruction inside the script to compile uidmapshift.c and include that too in the PATH
+* Make sure you have pull ubuntu:latest image using docker
+* Run the image using the docker run command:
+{{< highlight text >}}
+docker run -it ubuntu:latest /bin/bash
+{{< /highlight >}}    
+* Get the container id using **docker ps**
+{{< highlight text >}}
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+ebfbbecaf715        ubuntu:latest       "/bin/bash"         38 minutes ago      Up 38 minutes                           zen_kirch
+{{< /highlight >}}    
+* Create another separate directory and cd into that directory. Run the following command
+{{< highlight text >}}
+sudo env "PATH=$PATH" exportrootfs.sh -u 0 -r 65536 ebf
+{{< /highlight >}}
+ebf is the container id shown in the output of **docker ps**
+* You will have a **roootfs** directory in your current directory and it will look like the following
+{{< highlight text >}}
+rootfs
+├── bin
+├── boot
+├── dev
+├── etc
+├── home
+├── lib
+├── lib64
+├── media
+├── mnt
+├── opt
+├── proc
+├── root
+├── run
+├── sbin
+├── srv
+├── sys
+├── tmp
+├── usr
+└── var
+{{< /highlight >}}       
+* Run the container using the following command
+
+* Create the runtime spec using the command
+{{< highlight text >}}
+runc spec
+{{< /highlight  >}}    
+You will see a new file called **config.json**  
+* Open config.json and modify the **args** to the following
+{{< highlight text >}}    
+"args": [
+    "/bin/bash"
+],
+{{< /highlight  >}}            
+
+* Execute the image using the following
+{{< highlight text >}}    
+sudo env "PATH=$PATH" runc run anycontainername
+{{< /highlight  >}}
+* You will see bash running
+{{< highlight text >}}    
+root@runc:/# cat /etc/lsb-release 
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.3 LTS"
+root@runc:/# 
+{{< /highlight  >}}
+
+As can be seen the runc does not know how to pull, prepare, etc the image. It just knows that there is a root fileysystem with the config.json that it needs to run. The ubuntu container ran by the above example does not have network as this will be taken care by some other project and not by runc.
 
 <h1>References</h1>
 
