@@ -664,8 +664,6 @@ rootfs
 ├── usr
 └── var
 {{< /highlight >}}       
-* Run the container using the following command
-
 * Create the runtime spec using the command
 {{< highlight text >}}
 runc spec
