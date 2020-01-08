@@ -1,6 +1,6 @@
 ---
 date: "2020-01-05"
-title: "containerd & runc"
+title: "First look at the internals of containerd and runc"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
 
 ---
