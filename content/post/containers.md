@@ -13,6 +13,10 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 ![WhatIsContainerD](/media/containerd/what_is_containerd.png)
 
+* Understand what is and isn't provide inside containerd. This [document](https://containerd.io/scope/) provide the full scope of the project
+
+* History [background](https://github.com/containerd/containerd/issues/362) on the reason why networking was left out from containerd 
+
 * **containerd-shim** -- After runc runs the container, it exits (allowing us to not have any long-running processes responsible for our containers). The shim is the component which sits between containerd and runc to facilitate this. Containers does not died when dockerd orcontainerd died as it is 'attached' to the containerd-shim process. The containerd-shim process job is to monitor stdin(out) and report back the error code returned from exiting the container
 
 * Some of containerd Makefile task:
@@ -690,7 +694,32 @@ DISTRIB_DESCRIPTION="Ubuntu 18.04.3 LTS"
 root@runc:/# 
 {{< /highlight  >}}
 
-As can be seen the runc does not know how to pull, prepare, etc the image. It just knows that there is a root fileysystem with the config.json that it needs to run. The ubuntu container ran by the above example does not have network as this will be taken care by some other project and not by runc.
+As can be seen the runc does not know how to pull, prepare, etc the image. It just knows that there is a root fileysystem with the config.json that it needs to run. The ubuntu container ran by the above example does not have network as this will be taken care by some other project and not by runc. 
+
+runc utilize prestart hooks to run some other application required as part of the setup of the containers, as shown in [here](https://stackoverflow.com/questions/55064917/network-setup-for-rootless-runc-containers). The config.json 
+
+{{< highlight text >}}
+   .
+   .
+   .
+   "hooks": {
+        "prestart" : [
+            {
+                "path" : "/path/to/netns",
+                "args" : [
+                    "",
+                    "--state-dir", "/path/to/netns/netns-state"
+                ]
+
+            }
+        ]
+    },
+    .
+    .
+    .    
+{{< /highlight  >}}
+    
+shows the prestart hook that will be executed to setup the networking state using the netns executable. The netns tool is part of the [genuinetools](http://github.com/genuinetools) project
 
 <h1>References</h1>
 
