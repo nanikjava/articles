@@ -33,33 +33,34 @@ t := []string{} (is non-nil but zero-length)
 {{< /highlight >}}
 
 
+--------
+Interfaces & Receivers
+--------
+* The following snippets shows how to do 'force checking' of contact between **type interface** and **type struct**. 
+{{< highlight go >}}
+type ValueConverter interface {
+ConvertValue(v interface{}) (Value, error)
+}
 
-* Interfaces & Receivers
-    * The following snippets shows how to do 'force checking' of contact between **type interface** and **type struct**. 
-    {{< highlight go >}}
-    type ValueConverter interface {
-        ConvertValue(v interface{}) (Value, error)
-    }
+type boolType struct{}
 
-    type boolType struct{}
+var Bool boolType
 
-    var Bool boolType
+var _ ValueConverter = boolType{}  --> (a)
 
-    var _ ValueConverter = boolType{}  --> (a)
+func (boolType) String() string { return "Bool" }
 
-    func (boolType) String() string { return "Bool" }
+func (boolType) ConvertValue(src interface{}) (Value, error) {....}
+{{< /highlight >}}
 
-    func (boolType) ConvertValue(src interface{}) (Value, error) {....}
-    {{< /highlight >}}
+the above provides a static (compile time) check that boolType satisfies the ValueConverter interface. The _ used as a name of the variable tells the compiler to effectively discard the RHS value, but to type-check it and evaluate it if it has any side effects, but the anonymous variable per se doesn't take any process space.
 
-    the above provides a static (compile time) check that boolType satisfies the ValueConverter interface. The _ used as a name of the variable tells the compiler to effectively discard the RHS value, but to type-check it and evaluate it if it has any side effects, but the anonymous variable per se doesn't take any process space.
+It is a handy construct when developing and the method set of an interface and/or the methods implemented by a type are frequently changed. The construct serves as a guard against forgetting to match the method sets of a type and of an interface where the intent is to have them compatible. It effectively prevents to go install a broken (intermediate) version with such omission.
 
-    It is a handy construct when developing and the method set of an interface and/or the methods implemented by a type are frequently changed. The construct serves as a guard against forgetting to match the method sets of a type and of an interface where the intent is to have them compatible. It effectively prevents to go install a broken (intermediate) version with such omission.
+Another example (taken from __https://github.com/Kong/kuma/tree/master/pkg/core/discovery__) where the _sink.go_ enforce the contract inside the _interfaces.go_
 
-    Another example (taken from __https://github.com/Kong/kuma/tree/master/pkg/core/discovery__) where the _sink.go_ enforce the contract inside the _interfaces.go_
-
-    **sink.go**
-    {{< highlight go >}}
+**sink.go**
+{{< highlight go >}}
     package discovery
 
     import (
@@ -91,11 +92,11 @@ t := []string{} (is non-nil but zero-length)
         }
         return nil
     }
-    {{< /highlight >}}
+{{< /highlight >}}
 
 
-    **interfaces.go**
-    {{< highlight go >}}
+**interfaces.go**
+{{< highlight go >}}
     package discovery
 
     import (
@@ -140,11 +141,12 @@ t := []string{} (is non-nil but zero-length)
         OnDataplaneUpdate(*mesh_core.DataplaneResource) error
         OnDataplaneDelete(model.ResourceKey) error
     }
-    {{< /highlight >}}
-    * Go interfaces generally belong in the package that uses values of the interface type, not the package that implements those values. The implementing package should return concrete (usually pointer or struct) types: that way, new methods can be added to implementations without requiring extensive refactoring.
-    * Design the API so that it can be tested using the public API of the real implementation.
-    * Do not define interfaces before they are used: without a realistic example of usage, it is too difficult to see whether an interface is even necessary, let alone what methods it ought to contain.
-    * Go interfaces generally belong in the package that uses values of the interface type, not the package that implements those values. 
+{{< /highlight >}}
+
+* Go interfaces generally belong in the package that uses values of the interface type, not the package that implements those values. The implementing package should return concrete (usually pointer or struct) types: that way, new methods can be added to implementations without requiring extensive refactoring.
+* Design the API so that it can be tested using the public API of the real implementation.
+* Do not define interfaces before they are used: without a realistic example of usage, it is too difficult to see whether an interface is even necessary, let alone what methods it ought to contain.
+* Go interfaces generally belong in the package that uses values of the interface type, not the package that implements those values. 
 {{< highlight go >}}
     package consumer  // consumer.go
 
@@ -172,8 +174,7 @@ t := []string{} (is non-nil but zero-length)
 
     func NewThinger() Thinger { return defaultThinger{ … } }
 {{< /highlight >}}
-
-        ...better do this
+	...better do this
 {{< highlight go >}}  
     package producer
 
@@ -183,7 +184,7 @@ t := []string{} (is non-nil but zero-length)
     func NewThinger() Thinger { return Thinger{ … } }
 {{< /highlight >}}
 
-    * In Go, the receiver of a method is just another parameter and therefore, should be named accordingly. The name need not be as descriptive as that of a method argument, as its role is obvious and serves no documentary purpose. It can be very short as it will appear on almost every line of every method of the type; familiarity admits brevity. Be consistent, too: if you call the receiver "c" in one method, don't call it "cl" in another.
+* In Go, the receiver of a method is just another parameter and therefore, should be named accordingly. The name need not be as descriptive as that of a method argument, as its role is obvious and serves no documentary purpose. It can be very short as it will appear on almost every line of every method of the type; familiarity admits brevity. Be consistent, too: if you call the receiver "c" in one method, don't call it "cl" in another.
     * If in doubt, use a pointer, but there are times when a value receiver makes sense, usually for reasons of efficiency, such as for small unchanging structs or values of basic type. Some useful guidelines:
         * _**NO POINTER**_ for the following:
             - If the receiver is a map, func or chan, don't use a pointer to them. If the receiver is a slice and the method doesn't reslice or reallocate the slice, don't use a pointer to it.
@@ -195,6 +196,94 @@ t := []string{} (is non-nil but zero-length)
             * Can function or methods, either concurrently or when called from this method, be mutating the receiver? A value type creates a copy of the receiver when the method is invoked, so outside updates will not be applied to this receiver. If changes must be visible in the original receiver, the receiver must be a pointer.
             * If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating, prefer a pointer receiver, as it will make the intention more clear to the reader.
             * Finally, when in doubt, use a pointer receiver.
+
+
+* Compile-time checking
+{{< highlight go >}}  
+// Compile-time check to assert this config matches requirements.
+var _ setup.KeyManagerProvider = (*Config)(nil)
+var _ setup.BlobStorageConfigProvider = (*Config)(nil)
+var _ setup.DBConfigProvider = (*Config)(nil)
+{{< /highlight >}}
+the above is to check whether the Config object implement the function defined in KeyManagerProvider, BlobStorageConfigProvider and DBConfigProvider.
+
+	The (*Config)(nil) is to do the verification between the interface and struct WITHOUT allocating any memory. See below for more examples
+
+* Compile-time checking examples
+{{< highlight go >}}  
+package main
+
+type I interface{ M() }
+type T struct{}
+
+func (T) M() {}
+
+//func (*T) M() {} //var _ I = T{}: T does not implement I (M method has pointer receiver)
+
+func main() {
+  //avoids allocation of memory
+  var _ I = T{}       // Verify that T implements I.
+  var _ I = (*T)(nil) // Verify that *T implements I.
+  //allocation of memory
+  var _ I = &T{}      // Verify that &T implements I.
+  var _ I = new(T)    // Verify that new(T) implements I.
+}
+{{< /highlight >}}
+
+* Compile-time checking examples
+{{< highlight go >}}  
+var (
+        _ blobref.StreamingFetcher = (*CachingFetcher)(nil)
+        _ blobref.SeekFetcher      = (*CachingFetcher)(nil)
+        _ blobref.StreamingFetcher = (*DiskCache)(nil)
+        _ blobref.SeekFetcher      = (*DiskCache)(nil)
+)
+{{< /highlight >}}
+Ensure compiler checks:
+	* That CachingFether implements public functions of StreamingFetcher and SeekFetcher. 
+	* RHS portion uses a pointer constructor syntax with a nil parameter. What does this syntax mean in Go language ?
+
+* Type Casting for checking. The following is based on the example from **github.com/google/exposure-notifications-server**. The **KeyManagerProvider** is an interface as follows (found inside **setup.go**)
+{{< highlight go >}}  
+	type KeyManagerProvider interface {
+		KeyManager() bool
+	}
+	{{< /highlight >}}
+**Config** object is defined as follows (found inside **config.go**)
+{{< highlight go >}}  
+	type Config struct {
+		Database          *database.Config
+		...
+		...
+		WorkerTimeout     time.Duration `envconfig:"WORKER_TIMEOUT" default:"5m"`
+		...
+	}
+
+	func (c *Config) KeyManager() bool {
+		return false
+	}
+{{< /highlight >}}
+the struct implement the **KeyManager()** function. The **setup.Setup(..)** function is defined as follows
+{{< highlight go >}}  
+	func Setup(ctx context.Context, config DBConfigProvider) (*serverenv.ServerEnv, Defer, error) {
+		...
+		...
+	}
+{{< /highlight >}}
+it is called as follows from export/main.go
+{{< highlight go >}}  
+	var config export.Config
+	env, closer, err := setup.Setup(ctx, &config)
+{{< /highlight >}}
+the following code inside Setup(..) will be analysed (found inside setup.go)
+{{< highlight go >}}  
+	...
+	if _, ok := config.(KeyManagerProvider); ok {
+		...
+	}
+	...
+{{< /highlight >}}
+is actually a way to check whether the passed config parameter implemented the function **'KeyManager()'**. 
 
 -------
 Testing
