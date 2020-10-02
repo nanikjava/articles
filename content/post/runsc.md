@@ -554,13 +554,13 @@ Read this nice article for more details.
 * https://research.cs.wisc.edu/multifacet/papers/vee20_blending.pdf
 * https://blog.loof.fr/2018/06/gvisor-in-depth.html
 * [User Mode Linux is a good book](https://www.oreilly.com/library/view/user-mode-linux/0131865056/) and gvisor application kernel works the same like that.
-* https://wenboshen.org/posts/2018-12-01-sectainer.html - internal explanation of gvisor
-	```
-	This is straight forward, sentry process acts as tracer while application process is the tracee. Application process system call will stop by PTRACE and wait for sentry to handle. 		Sentry can emulate the system call, replace the real system with getpid(), and return.
-	```
+* https://wenboshen.org/posts/2018-12-01-sectainer.html
+{{< highlight text>}}
+This is straight forward, sentry process acts as tracer while application process is the tracee. Application process system call will stop by PTRACE and wait for sentry to handle. Sentry can emulate the system call, replace the real system with getpid(), and return.
+{{< /highlight >}}
 * https://archive.fosdem.org/2020/schedule/event/containers_k8s_runtimes/attachments/slides/3751/export/events/attachments/containers_k8s_runtimes/slides/3751/below_kubernetes.pdf 
-* Understanding about Ring and Sentry - https://groups.google.com/g/gvisor-users/c/15FfcCilupo/m/9ARSLnH3BQAJ
-* inside gvisor - https://wenboshen.org/posts/2018-12-25-gvisor-inside.html#sentry
+* [Understanding about Ring and Sentry](https://groups.google.com/g/gvisor-users/c/15FfcCilupo/m/9ARSLnH3BQAJ)
+* [Inside gvisor](https://wenboshen.org/posts/2018-12-25-gvisor-inside.html#sentry)
 
 #### __Seccomp__
 
@@ -568,16 +568,16 @@ Read this nice article for more details.
 * https://eigenstate.org/notes/seccomp
 
 #### __ptrace__
-* Excellent sample from Liz Rice - https://github.com/FuzzyLogic/gotrace/tree/master
-* Another good example - https://github.com/lunixbochs/ghostrace
+* [Excellent sample from Liz Rice](https://github.com/FuzzyLogic/gotrace/tree/master)
+* [Another good example](https://github.com/lunixbochs/ghostrace)
 
 #### __user mode Linux & Linux in general__
 * https://christine.website/blog/howto-usermode-linux-2019-07-07
 * https://github.com/firecracker-microvm/firecracker/blob/master/docs/rootfs-and-kernel-setup.md
 * https://david942j.blogspot.com/2018/10/note-learning-kvm-implement-your-own.html
-* This explains what the different rings means in OS context - https://stackoverflow.com/questions/18717016/what-are-ring-0-and-ring-3-in-the-context-of-operating-systems
+* [This explains what the different rings means in OS context](https://stackoverflow.com/questions/18717016/what-are-ring-0-and-ring-3-in-the-context-of-operating-systems)
 	- Linux uses Ring 0 (Kernel mode) and 3 (user mode)
-* Article on how to run program without an operating system - https://stackoverflow.com/questions/22054578/how-to-run-a-program-without-an-operating-system/32483545#32483545
-* Very good resource to learn bare metal OS --> https://github.com/cirosantilli/x86-bare-metal-examples
-* Searchable Linux Syscall Table for x86 and x86_64 - https://filippo.io/linux-syscall-table/
-* ELF internal for dynamic and static - https://www.gabriel.urdhr.fr/2015/01/22/elf-linking/
+* [Article on how to run program without an operating system](https://stackoverflow.com/questions/22054578/how-to-run-a-program-without-an-operating-system/32483545#32483545)
+* [Very good resource to learn bare metal OS](https://github.com/cirosantilli/x86-bare-metal-examples)
+* [Searchable Linux Syscall Table for x86 and x86_64](https://filippo.io/linux-syscall-table/)
+* [ELF internal for dynamic and static](https://www.gabriel.urdhr.fr/2015/01/22/elf-linking/)
