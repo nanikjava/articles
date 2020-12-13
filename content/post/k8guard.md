@@ -9,21 +9,24 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 * Make sure **minikube** and **kubectl** is in PATH
 * Use the following command to start  (v1.11.10  is the lowest version possible that will work with minikube master branch)
+{{< highlight bash >}}
+minikube start --memory 4096 --kubernetes-version v1.11.10 
+{{< /highlight >}}
+{{< highlight bash >}}
+eval $(minikube docker-env)
+{{< /highlight >}}
+{{< highlight bash >}}
+make build-deploy-minikube
+{{< /highlight >}}
 
-    > minikube start --memory 4096 --kubernetes-version v1.11.10 
-     
-    > eval $(minikube docker-env)
-
-    > make build-deploy-minikube
-    
 * Deploy using the following commands
-
-	> kubectl apply -f ./minikube/report/k8guard-report-secrets.yaml.EXAMPLE 
-    
-	> kubectl apply -f ./minikube/action/k8guard-action-secrets.yaml.EXAMPLE
-
-<h1>k8guard-action</h1>
-
+{{< highlight bash >}}
+kubectl apply -f ./minikube/report/k8guard-report-secrets.yaml.EXAMPLE 
+{{< /highlight >}}
+{{< highlight bash >}}
+kubectl apply -f ./minikube/action/k8guard-action-secrets.yaml.EXAMPLE
+{{< /highlight >}}
+* **k8guard-action**
 {{< highlight text >}}
 k8guard-action-configmap.yaml
          |
@@ -40,8 +43,7 @@ k8guard-action-configmap.yaml
 * The _env:_ section declared the env variables that will be populated in the EXPORT section of the bash. The value is obtained from the **k8guard-action-configmap.yaml**
 * The **k8guard-action-configmap.yaml** contains the config map for the different variables
 * The following environment variables are found inside the **k8guard-action** container. These values are populated via the .env file
-
-{{< highlight text >}}
+{{< highlight bash >}}
 export HOME='/root'
 export HOSTNAME='k8guard-action-deployment-67c4db498-j4hvd'
 export K8GUARD_ACTION_CASSANDRA_CAPATH=''
