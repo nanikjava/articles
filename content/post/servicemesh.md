@@ -1,4 +1,5 @@
 ---
+---
 date: "2019-11-30"
 title: "Service Mesh Brain Dump (ALWAYS WIP)"
 author : "Nanik Tolaram (nanikjava@gmail.com)" 
@@ -72,9 +73,9 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
   So, you can see how this type of container is perfect for a set-up or initialization job which does not need to be a part of the actual application container. In this case, istio-init does just that and sets up the iptables rules. istio-proxy This is the actual sidecar proxy (based on Envoy).
 * This is done by labelling the namespace where you are deploying the app with __istio-injection=enabled__
-
-> $ kubectl get namespaces --show-labels
-
+{{< highlight bash >}}
+kubectl get namespaces --show-labels
+{{< /highlight >}}
 {{< highlight text >}}
 NAME           STATUS    AGE       LABELS
 default        Active    40d       <none>
@@ -85,9 +86,9 @@ kube-system    Active    40d       <none>
 {{< /highlight  >}}
 
 * For automatic sidecar injection, Istio relies on **Mutating Admission Webhook**. Following is the instruction used to get the webhook info
-
-> kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml
-
+{{< highlight bash >}}
+kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml
+{{< /highlight >}}
 {{< highlight html >}}
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
@@ -127,10 +128,12 @@ webhooks:
 
 * Can see the webhook **namespaceSelector** label that is matched for sidecar injection with the label **istio-injection: enabled**.
 * The 'app' that is intercepting this request is as follows
-
->  kubectl get svc --namespace=istio-system | grep sidecar-injector
-
-> istio-sidecar-injector   ClusterIP   10.102.70.184   <none>        443/TCP             24d
+{{< highlight bash >}}
+kubectl get svc --namespace=istio-system | grep sidecar-injector
+{{< /highlight >}}
+{{< highlight bash >}}
+istio-sidecar-injector   ClusterIP   10.102.70.184   <none>        443/TCP             24d
+{{< /highlight >}}
 
 * Now that we are clear about how a sidecar container and an init container are injected into an application manifest, how does the sidecar proxy grab the inbound and outbound traffic to and from the container? We did briefly mention that it is done by setting up the **iptable** rules within the pod namespace, which in turn is done by the istio-init container. Now, it is time to verify what actually gets updated within the namespace.
 
@@ -138,11 +141,15 @@ Let’s get into the application pod namespace we deployed in the previous secti
 
 Get the pid of the container that has the sidecar proxy running (normally this is our app container)
 
-> docker inspect b8de099d3510 --format '{{ .State.Pid }}'
+{{< highlight bash >}}
+docker inspect b8de099d3510 --format '{{ .State.Pid }}'
+{{< /highlight >}}
 
 enter into the container and execute the command
 
-> nsenter -t 4215 -n iptables -t nat -S
+{{< highlight bash >}}
+nsenter -t 4215 -n iptables -t nat -S
+{{< /highlight >}}
 
 The output will be as follows
 
@@ -186,7 +193,6 @@ Following are the steps to run the sample app in kuma:
 * Run the kuma-cp run 
 
 * Generate Dataplane data
-
 {{< highlight text >}}
 echo "type: Dataplane                                                         
 mesh: default
@@ -199,15 +205,16 @@ networking:
 {{< /highlight  >}}
 
 * Generate the data token using the following
-
-> ./kumactl generate dataplane-token --dataplane=dp-echo-1 > /tmp/kuma-dp-echo-1
+{{< highlight bash >}}
+./kumactl generate dataplane-token --dataplane=dp-echo-1 > /tmp/kuma-dp-echo-1
+{{< /highlight >}}
 
 * Run kuma-dp using the generated token as follows
-
-> ./kuma-dp run   --name=dp-echo-1   --mesh=default   --cp-address=http://127.0.0.1:5681   --dataplane-token-file=/tmp/kuma-dp-echo-1
+{{< highlight bash >}}
+./kuma-dp run   --name=dp-echo-1   --mesh=default   --cp-address=http://127.0.0.1:5681   --dataplane-token-file=/tmp/kuma-dp-echo-1
+{{< /highlight >}}
 
 * Debugging through kuma-dp following is the generated configuration used for envoy
-
 {{< highlight text >}}
 dynamicResources:
   adsConfig:
@@ -256,9 +263,7 @@ staticResources:
     upstreamConnectionOptions:
       tcpKeepalive: {}
 {{< /highlight  >}}
-
 and following is the configuration used to run envoy
-
 {{< highlight text >}}
  0 = {string} "-c"
  1 = {string} "/tmp/kuma-dp-443537827/bootstrap.yaml"
@@ -266,5 +271,4 @@ and following is the configuration used to run envoy
  3 = {string} "30"
  4 = {string} "--disable-hot-restart"
 {{< /highlight  >}}
-
 ![kumahighlevel](/media/servicemesh/kumahighlevel.jpg)

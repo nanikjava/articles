@@ -88,46 +88,47 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 		* Init containers do not support readiness probes because they must run to completion before the Pod can be ready.
 		* If you specify multiple init containers for a Pod, Kubelet runs each init container sequentially. Each init container must succeed before the next can run. When all of the init containers have run to completion, Kubelet initializes the application containers for the Pod and runs them as usual.
 		* Example of defining init containers for a pod. The init containers will keep
-			```
-			apiVersion: v1
-			kind: Pod
-			metadata:
-			  name: myapp-pod
-			  labels:
-			    app: myapp
-			spec:
-			  containers:
-			  - name: myapp-container
-			    image: busybox:1.28
-			    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
-			  initContainers:
-			  - name: init-myservice
-			    image: busybox:1.28
-			    command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
-			  - name: init-mydb
-			    image: busybox:1.28
-			    command: ['sh', '-c', "until nslookup mydb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done"]
-			---
-			apiVersion: v1
-			kind: Service
-			metadata:
-			  name: myservice
-			spec:
-			  ports:
-			  - protocol: TCP
-			    port: 80
-			    targetPort: 9376
-			---
-			apiVersion: v1
-			kind: Service
-			metadata:
-			  name: mydb
-			spec:
-			  ports:
-			  - protocol: TCP
-			    port: 80
-			    targetPort: 9377
-			 ```
+			{{< highlight yaml >}}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28
+    command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+  - name: init-mydb
+    image: busybox:1.28
+    command: ['sh', '-c', "until nslookup mydb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myservice
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9376
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mydb
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9377
+			 {{< /highlight >}}
+
 	- Pod Preset
 		* Kubernetes provides an admission controller (PodPreset) which, when enabled, applies Pod Presets to incoming pod creation requests. 
 		* When a pod creation request occurs, the system does the following:
@@ -147,29 +148,30 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 	  * A ReplicaSet then fulfills its purpose by creating and deleting Pods as needed to reach the desired number. When a ReplicaSet needs to create new Pods, it uses its Pod template.
 	  * A ReplicaSet identifies new Pods to acquire by using its selector.
 	  * Example:
-			```
-			apiVersion: apps/v1
-			kind: ReplicaSet
-			metadata:
-			  name: frontend
-			  labels:
-			    app: guestbook
-			    tier: frontend
-			spec:
-			  # modify replicas according to your case
-			  replicas: 3
-			  selector:
-			    matchLabels:
-			      tier: frontend
-			  template:
-			    metadata:
-			      labels:
-				tier: frontend
-			    spec:
-			      containers:
-			      - name: php-redis
-				image: gcr.io/google_samples/gb-frontend:v3
-			```
+{{< highlight yaml >}}
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+    tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+    image: gcr.io/google_samples/gb-frontend:v3
+{{< /highlight >}}
+
 	* Make sure when declaring **Pod** kind: the metadata.labels.tier does not match the one in the ReplicaSet selector.matchLabels.tier field. If it does match the Pod will be obtained as part of the ReplicaSet. Look under [Non-Template Pod acquisitions](https://v1-17.docs.kubernetes.io/docs/concepts/workloads/controllers/replicaset) in  for more info.
 
 - ReplicationController
@@ -177,55 +179,57 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 	* A ReplicationController is similar to a process supervisor, but instead of supervising individual processes on a single node, the ReplicationController supervises multiple pods across multiple nodes.
 	* A simple case is to create one ReplicationController object to reliably run one instance of a Pod indefinitely. A more complex use case is to run several identical replicas of a replicated service, such as web servers.
 	* Example:
-		```
-		apiVersion: v1
-		kind: ReplicationController
-		metadata:
-		  name: nginx
-		spec:
-		  replicas: 3
-		  selector:
-		    app: nginx
-		  template:
-		    metadata:
-		      name: nginx
-		      labels:
-			app: nginx
-		    spec:
-		      containers:
-		      - name: nginx
-			image: nginx
-			ports:
-			- containerPort: 80
-		```
+{{< highlight yaml >}}
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+    app: nginx
+    spec:
+      containers:
+      - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+{{< /highlight >}}
+
 
 - Deployments
 	* A Deployment provides declarative updates for Pods and ReplicaSets. The Deployment Controller changes the actual state to the desired state at a controlled rate. 
 	* You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
 	* Example:
-		```
-		apiVersion: apps/v1
-		kind: Deployment
-		metadata:
-		  name: nginx-deployment
-		  labels:
-		    app: nginx
-		spec:
-		  replicas: 3
-		  selector:
-		    matchLabels:
-		      app: nginx
-		  template:
-		    metadata:
-		      labels:
-			app: nginx
-		    spec:
-		      containers:
-		      - name: nginx
-			image: nginx:1.14.2
-			ports:
-			- containerPort: 80
-		```
+{{< highlight yaml >}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+    app: nginx
+    spec:
+      containers:
+      - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+{{< /highlight >}}
+
 	* Following are the explanation of the meaning of the above example:
 		* A Deployment named nginx-deployment is created, indicated by the .metadata.name field.
 		* The Deployment creates three replicated Pods, indicated by the replicas field.
@@ -235,66 +239,80 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 			* The Pod template’s specification, or .template.spec field, indicates that the Pods run one container, nginx, which runs the nginx Docker Hub image at version 1.14.2.
 			* Create one container and name it nginx using the name field.
 	* To see the Deployment rollout status, run
-
-		> kubectl rollout status deployment.v1.apps/nginx-deployment.
+{{< highlight bash >}}
+kubectl rollout status deployment.v1.apps/nginx-deployment.
+{{< /highlight >}}
 
 	* To see the ReplicaSet (rs) created by the Deployment, run 
-
-		> kubectl get rs
+{{< highlight bash >}}
+kubectl get rs
+{{< /highlight >}}
 
 	* Updating deployment:
 		* Update the nginx Pods to use the nginx:1.16.1 image instead of the nginx:1.14.2 image.
-
-			> kubectl --record deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+{{< highlight bash >}}
+kubectl --record deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+{{< /highlight >}}
 
 		  	 or simply use the following command
-
-			> kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --record
+{{< highlight bash >}}
+kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --record
+{{< /highlight >}}
 
 			Alternatively, you can edit the Deployment and change .spec.template.spec.containers[0].image from nginx:1.14.2 to nginx:1.16.1
-
-			> kubectl edit deployment.v1.apps/nginx-deployment
+{{< highlight bash >}}
+kubectl edit deployment.v1.apps/nginx-deployment
+{{< /highlight >}}
 
 	* Get details of your Deployment:
-
-		> kubectl describe deployments
+{{< highlight bash >}}
+kubectl describe deployments
+{{< /highlight >}}
 
 	* For example, suppose you create a Deployment to create 5 replicas of **nginx:1.14.2**, but then update the Deployment to create 5 replicas of **nginx:1.16.1**, when only 3 replicas of **nginx:1.14.2** had been created. In that case, the Deployment immediately starts killing the 3 **nginx:1.14.2** Pods that it had created, and starts creating **nginx:1.16.1** Pods. It does not wait for the 5 replicas of **nginx:1.14.2** to be created before changing course
 
 	* Rolling Back a Deployment
 		* Suppose that you made a typo while updating the Deployment, by putting the image name as nginx:1.161 instead of nginx:1.16.1:
-		
-			> kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.161 --record=true
+{{< highlight bash >}}
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.161 --record=true
+{{< /highlight >}}
 
 		* The rollout gets stuck. You can verify it by checking the rollout status:
+{{< highlight bash >}}
+kubectl rollout status deployment.v1.apps/nginx-deployment
+{{< /highlight >}}
 
-			> kubectl rollout status deployment.v1.apps/nginx-deployment
-		
 		* Rolling Back to a Previous Revision
-		
-			> kubectl rollout undo deployment.v1.apps/nginx-deployment
+{{< highlight bash >}}
+ kubectl rollout undo deployment.v1.apps/nginx-deployment
+{{< /highlight >}}
 
 	* Scaling a Deployment
 		* You can scale a Deployment by using the following command:
-
-			> kubectl scale deployment.v1.apps/nginx-deployment --replicas=10
+{{< highlight bash >}}
+kubectl scale deployment.v1.apps/nginx-deployment --replicas=10
+{{< /highlight >}}
 
 		* Assuming horizontal Pod autoscaling is enabled in your cluster, you can setup an autoscaler for your Deployment and choose the minimum and maximum number of Pods you want to run based on the CPU utilization of your existing Pods.
-
-			> kubectl autoscale deployment.v1.apps/nginx-deployment --min=10 --max=15 --cpu-percent=80
+{{< highlight bash >}}
+kubectl autoscale deployment.v1.apps/nginx-deployment --min=10 --max=15 --cpu-percent=80
+{{< /highlight >}}
 
 	* Pausing and Resuming a Deployment
 		* Pause by running the following command:
-			
-			> kubectl rollout pause deployment.v1.apps/nginx-deployment
+{{< highlight bash >}}
+kubectl rollout pause deployment.v1.apps/nginx-deployment
+{{< /highlight >}}
 
 		* You can make as many updates as you wish, for example, update the resources that will be used:
-
-			> kubectl set resources deployment.v1.apps/nginx-deployment -c=nginx --limits=cpu=200m,memory=512Mi
+{{< highlight bash >}}
+kubectl set resources deployment.v1.apps/nginx-deployment -c=nginx --limits=cpu=200m,memory=512Mi
+{{< /highlight >}}
 
 		* Eventually, resume the Deployment and observe a new ReplicaSet coming up with all the new updates:
-
-			> kubectl rollout resume deployment.v1.apps/nginx-deployment
+{{< highlight bash >}}
+ kubectl rollout resume deployment.v1.apps/nginx-deployment
+{{< /highlight >}}
 
 - StatefulSets
 	* StatefulSet is the workload API object used to manage stateful applications. Manages the deployment and scaling of a set of Pods , and provides guarantees about the ordering and uniqueness of these Pods. Like a Deployment , a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.
@@ -308,56 +326,57 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 	  	Stable is synonymous with persistence across Pod (re)scheduling. If an application doesn’t require any stable identifiers or ordered deployment, deletion, or scaling, you should deploy your application using a workload object that provides a set of stateless replicas. Deployment or ReplicaSet may be better suited to your stateless needs
 
 	* Example:
-		```
-		apiVersion: v1
-		kind: Service
-		metadata:
-		  name: nginx
-		  labels:
-		    app: nginx
-		spec:
-		  ports:
-		  - port: 80
-		    name: web
-		  clusterIP: None
-		  selector:
-		    app: nginx
-		---
-		apiVersion: apps/v1
-		kind: StatefulSet
-		metadata:
-		  name: web
-		spec:
-		  selector:
-		    matchLabels:
-		      app: nginx # has to match .spec.template.metadata.labels
-		  serviceName: "nginx"
-		  replicas: 3 # by default is 1
-		  template:
-		    metadata:
-		      labels:
-			app: nginx # has to match .spec.selector.matchLabels
-		    spec:
-		      terminationGracePeriodSeconds: 10
-		      containers:
-		      - name: nginx
-			image: k8s.gcr.io/nginx-slim:0.8
-			ports:
-			- containerPort: 80
-			  name: web
-			volumeMounts:
-			- name: www
-			  mountPath: /usr/share/nginx/html
-		  volumeClaimTemplates:
-		  - metadata:
-		      name: www
-		    spec:
-		      accessModes: [ "ReadWriteOnce" ]
-		      storageClassName: "my-storage-class"
-		      resources:
-			requests:
-			  storage: 1Gi
-		```
+{{< highlight yaml >}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx # has to match .spec.template.metadata.labels
+  serviceName: "nginx"
+  replicas: 3 # by default is 1
+  template:
+    metadata:
+      labels:
+    app: nginx # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx
+    image: k8s.gcr.io/nginx-slim:0.8
+    ports:
+    - containerPort: 80
+      name: web
+    volumeMounts:
+    - name: www
+      mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "my-storage-class"
+      resources:
+    requests:
+      storage: 1Gi
+{{< /highlight >}}
+
 		Explanation about the above example:
 		- A Headless Service, named **nginx**, is used to control the network domain.
 		- The StatefulSet, named **web**, has a Spec that indicates that 3 replicas of the nginx container will be launched in unique Pods.
@@ -388,52 +407,52 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 		* running a node monitoring daemon on every node, such as Prometheus Node Exporter, Flowmill, Sysdig Agent, collectd, Dynatrace OneAgent, AppDynamics Agent, Datadog agent, New Relic agent, Ganglia gmond, Instana Agent or Elastic Metricbeat.
 	* In a simple case, one DaemonSet, covering all nodes, would be used for each type of daemon. A more complex setup might use multiple DaemonSets for a single type of daemon, but with different flags and/or different memory and cpu requests for different hardware types.
 	* Example:
-		```
-		apiVersion: apps/v1
-		kind: DaemonSet
-		metadata:
-		  name: fluentd-elasticsearch
-		  namespace: kube-system
-		  labels:
-		    k8s-app: fluentd-logging
-		spec:
-		  selector:
-		    matchLabels:
-		      name: fluentd-elasticsearch
-		  template:
-		    metadata:
-		      labels:
-			name: fluentd-elasticsearch
-		    spec:
-		      tolerations:
-		      # this toleration is to have the daemonset runnable on master nodes
-		      # remove it if your masters can't run pods
-		      - key: node-role.kubernetes.io/master
-			effect: NoSchedule
-		      containers:
-		      - name: fluentd-elasticsearch
-			image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
-			resources:
-			  limits:
-			    memory: 200Mi
-			  requests:
-			    cpu: 100m
-			    memory: 200Mi
-			volumeMounts:
-			- name: varlog
-			  mountPath: /var/log
-			- name: varlibdockercontainers
-			  mountPath: /var/lib/docker/containers
-			  readOnly: true
-		      terminationGracePeriodSeconds: 30
-		      volumes:
-		      - name: varlog
-			hostPath:
-			  path: /var/log
-		      - name: varlibdockercontainers
-			hostPath:
-			  path: /var/lib/docker/containers
-		```
+{{< highlight yaml >}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+name: fluentd-elasticsearch
+namespace: kube-system
+labels:
+k8s-app: fluentd-logging
+spec:
+selector:
+matchLabels:
+  name: fluentd-elasticsearch
+template:
+metadata:
+  labels:
+name: fluentd-elasticsearch
+spec:
+  tolerations:
+  # this toleration is to have the daemonset runnable on master nodes
+  # remove it if your masters can't run pods
+  - key: node-role.kubernetes.io/master
+effect: NoSchedule
+  containers:
+  - name: fluentd-elasticsearch
+image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+resources:
+  limits:
+    memory: 200Mi
+  requests:
+    cpu: 100m
+    memory: 200Mi
+volumeMounts:
+- name: varlog
+  mountPath: /var/log
+- name: varlibdockercontainers
+  mountPath: /var/lib/docker/containers
+  readOnly: true
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: varlog
+hostPath:
+  path: /var/log
+  - name: varlibdockercontainers
+hostPath:
+  path: /var/lib/docker/containers
+{{< /highlight >}}
 	* How Daemon Pods are Scheduled
 		* Scheduled by default scheduler
 			- A DaemonSet ensures that all eligible nodes run a copy of a Pod. Normally, the node that a Pod runs on is selected by the Kubernetes scheduler. 
@@ -442,16 +461,17 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 				* Pod preemption is handled by default scheduler. When preemption is enabled, the DaemonSet controller will make scheduling decisions without considering pod priority and preemption.
 			- **ScheduleDaemonSetPods** allows you to schedule DaemonSets using the default scheduler instead of the DaemonSet controller, by adding the NodeAffinity term to the DaemonSet pods, instead of the .spec.nodeName term. 
 			- The default scheduler is then used to bind the pod to the target host. If node affinity of the DaemonSet pod already exists, it is replaced. The DaemonSet controller only performs these operations when creating or modifying DaemonSet pods, and no changes are made to the spec.template of the DaemonSet.
-				```
-				nodeAffinity:
-				  requiredDuringSchedulingIgnoredDuringExecution:
-				    nodeSelectorTerms:
-				    - matchFields:
-				      - key: metadata.name
-					operator: In
-					values:
-					- target-host-name
-				```
+{{< highlight yaml >}}
+nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+    - matchFields:
+      - key: metadata.name
+    operator: In
+    values:
+    - target-host-name
+{{< /highlight >}}
+
 		* Taints and Tolerations
 
    			![TaintsTolerations](/media/kubernetesbraindump/taints_tolerations.png)
@@ -500,7 +520,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
     * **kube-controller-manager** - Component on the master that runs controllers.
         
-          ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/e298a92e2454520dddefc3b4df28ad68f9b91c6f/70d52/images/docs/pre-ccm-arch.png)
+        ![KubernetesControllerManager](https://d33wubrfki0l68.cloudfront.net/e298a92e2454520dddefc3b4df28ad68f9b91c6f/70d52/images/docs/pre-ccm-arch.png)
       
     
     * Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process. These controllers include:
@@ -563,7 +583,7 @@ Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluste
         * **package_validator** -- package manager validator
 
 
-<h2>CSI (Container Storage Interface)</h2> 
+## CSI (Container Storage Interface)
 
 * Interfacing K8 with storage implementation		
     * **Node** --  A host where a workload (such as Pods in Kubernetes) will be running.
@@ -578,37 +598,34 @@ Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluste
   These two entities can live in a single binary or you can separate them.
      ![CSIPicture](https://arslan.io/images/how-to-write-a-container-storage-interface-%28csi%29-plugin-3.jpg) 
 
-<h2>References</h2>
+## References
 
-* Good example and explanation on how to implement CSI -- https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/
+* [Good example and explanation on how to implement CSI](https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/)
 * https://www.youtube.com/watch?v=_qfSzrPn9Cs
+* https://blogs.igalia.com/dpino/2016/04/10/network-namespaces/
+* https://github.com/containernetworking/cni/blob/master/SPEC.md
+* https://github.com/containernetworking/plugins
+* [show how the CNI works using the containetworking github.com account](https://medium.com/@vikram.fugro/container-networking-interface-aka-cni-bdfe23f865cf)
+* [specification and implementation of CNI](https://www.cncf.io/blog/2017/05/23/cncf-hosts-container-networking-interface-cni/)
+* [weavenet is network plugin for docker for variety of things (service discovery, etc), this website outlined how to use it as inside kubernetes](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/)
+* [Good explanation about how the different parts of Kubernetes works](https://github.com/darshanime/notes/blob/master/kubernetes.org)
 
 
 
-<h2>Experimenting with Kubernetes</h2>
+## Experimenting with Kubernetes
 
-* A good guide on cloud provider 					        -- https://github.com/hobby-kube/guide
-* Kubernetes on ARM (ODROID, RPi, Upboard combo) 			-- https://github.com/luxas/kubernetes-on-arm
-* Kubernetes on ODROID N2 						            -- https://www.trion.de/news/2019/05/06/kubernetes-odroid-n2.html
-* Setting up a Multi-Arch, Multi OS cluster 			    -- https://gist.github.com/PatrickLang/28a05cfd6cf4322d519d04cff0996585
-* Kubernetes on Raspberry Pi: Challenges & Advantages 		-- https://www.weave.works/blog/kubernetes-raspberry-pi/
-* Intalling kubernetes using kubeadm 				        -- https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
-* Kubernetes HA control plane 					            -- https://octetz.com/posts/ha-control-plane-k8s-kubeadm
+* [A good guide on cloud provider](https://github.com/hobby-kube/guide)
+* [Kubernetes on ARM (ODROID, RPi, Upboard combo)](https://github.com/luxas/kubernetes-on-arm)
+* [Kubernetes on ODROID N2](https://www.trion.de/news/2019/05/06/kubernetes-odroid-n2.html)
+* [Setting up a Multi-Arch, Multi OS cluster](https://gist.github.com/PatrickLang/28a05cfd6cf4322d519d04cff0996585)
+* [Kubernetes on Raspberry Pi: Challenges & Advantages](https://www.weave.works/blog/kubernetes-raspberry-pi/)
+* [Intalling kubernetes using kubeadm](https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/)
+* [Kubernetes HA control plane](https://octetz.com/posts/ha-control-plane-k8s-kubeadm)
 
 
-<h2>Books</h2>
+## Books 
 
 * Programming Kubernetes - OReilly
 * Kubernetes Patterns    - OReilly
 * Managing Kubernetes    - OReilly
 
-
-<h2>References</h2>
-
-- https://blogs.igalia.com/dpino/2016/04/10/network-namespaces/
-- https://github.com/containernetworking/cni/blob/master/SPEC.md
-- https://github.com/containernetworking/plugins
-- https://medium.com/@vikram.fugro/container-networking-interface-aka-cni-bdfe23f865cf --> show how the CNI works using the containetworking github.com account
-- https://www.cncf.io/blog/2017/05/23/cncf-hosts-container-networking-interface-cni/ --> specification and implementation of CNI
-- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/ --> weavenet is network plugin for docker for variety of things (service discovery, etc), this website outlined how to use it as inside kubernetes 
-- [Good explanation about how the different parts of Kubernetes works](https://github.com/darshanime/notes/blob/master/kubernetes.org)
