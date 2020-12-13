@@ -1,3 +1,3 @@
-theme = "beautifulhugo"
+theme = "hugo-kiera"
 baseurl = "/"
 relativeURLs = true
