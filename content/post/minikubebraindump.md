@@ -14,8 +14,9 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 * Without specifying the _--vm-driver_ parameter by default minikube uses the kvm driver.
 
 * To specify specific container runtime to use inside the VM use the following command:
-
-    > start --vm-driver=kvm2 --container-runtime=cri-o --v=8
+{{< highlight bash >}}
+start --vm-driver=kvm2 --container-runtime=cri-o --v=8
+{{< /highlight >}}
 
     we can take a look at the kvm running by using **virt-manager**. Entering into the machine and executing _**systemctl status**_  will yield the following output 
     {{< highlight bash >}}
@@ -148,31 +149,30 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
     {{< /highlight >}}
 
 * When running _cri-o_ container use the following command to view images
-   
-        > crictl images
-
-    {{< highlight bash >}}
-    IMAGE                                     TAG                 IMAGE ID            SIZE
-    gcr.io/k8s-minikube/storage-provisioner   v1.8.1              4689081edb103       80.8MB
-    k8s.gcr.io/coredns                        1.6.2               bf261d1579144       44.2MB
-    k8s.gcr.io/etcd                           3.3.15-0            b2756210eeabf       248MB
-    k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64    1.14.13             6dc8ef8287d38       41.6MB
-    k8s.gcr.io/k8s-dns-kube-dns-amd64         1.14.13             55a3c5209c5ea       51.4MB
-    k8s.gcr.io/k8s-dns-sidecar-amd64          1.14.13             4b2e93f0133d3       43.1MB
-    k8s.gcr.io/kube-addon-manager             v9.0                119701e77cbc4       84.7MB
-    k8s.gcr.io/kube-addon-manager             v9.0.2              bd12a212f9dcb       84.7MB
-    k8s.gcr.io/kube-apiserver                 v1.16.2             c2c9a0406787c       219MB
-    k8s.gcr.io/kube-controller-manager        v1.16.2             6e4bffa46d70b       165MB
-    k8s.gcr.io/kube-proxy                     v1.16.2             8454cbe08dc9f       87.9MB
-    k8s.gcr.io/kube-scheduler                 v1.16.2             ebac1ae204a2c       88.8MB
-    k8s.gcr.io/kubernetes-dashboard-amd64     v1.10.1             f9aed6605b814       122MB
-    k8s.gcr.io/pause                          3.1                 da86e6ba6ca19       747kB
-    {{< /highlight >}}
-
-
-    and to view running container use the following command:
-
-        > crictl  ps
+{{< highlight bash >}}
+crictl images
+{{< /highlight >}}
+{{< highlight bash >}}
+IMAGE                                     TAG                 IMAGE ID            SIZE
+gcr.io/k8s-minikube/storage-provisioner   v1.8.1              4689081edb103       80.8MB
+k8s.gcr.io/coredns                        1.6.2               bf261d1579144       44.2MB
+k8s.gcr.io/etcd                           3.3.15-0            b2756210eeabf       248MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64    1.14.13             6dc8ef8287d38       41.6MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64         1.14.13             55a3c5209c5ea       51.4MB
+k8s.gcr.io/k8s-dns-sidecar-amd64          1.14.13             4b2e93f0133d3       43.1MB
+k8s.gcr.io/kube-addon-manager             v9.0                119701e77cbc4       84.7MB
+k8s.gcr.io/kube-addon-manager             v9.0.2              bd12a212f9dcb       84.7MB
+k8s.gcr.io/kube-apiserver                 v1.16.2             c2c9a0406787c       219MB
+k8s.gcr.io/kube-controller-manager        v1.16.2             6e4bffa46d70b       165MB
+k8s.gcr.io/kube-proxy                     v1.16.2             8454cbe08dc9f       87.9MB
+k8s.gcr.io/kube-scheduler                 v1.16.2             ebac1ae204a2c       88.8MB
+k8s.gcr.io/kubernetes-dashboard-amd64     v1.10.1             f9aed6605b814       122MB
+k8s.gcr.io/pause                          3.1                 da86e6ba6ca19       747kB
+{{< /highlight >}}
+and to view running container use the following command:
+{{< highlight bash >}}
+crictl  ps
+{{< /highlight >}}
 {{< highlight bash >}}
 CONTAINER           IMAGE                                                                                                   CREATED             STATE               NAME                      ATTEMPT             POD ID
 892f3d3545ee2       bf261d157914477ee1a5969d28ec687f3fbfc9fb5a664b22df78e57023b0e03b                                        7 minutes ago       Running             coredns                   0                   1759f8374de60
@@ -194,15 +194,17 @@ f25ed7b9fb318       8454cbe08dc9ff820283939d1e509af7746256a3fc0511999c7e29ed8f29
     * Test cases uses a lot of 'fake' classes that are made available inside **k8s.io/client-go/kubernetes/typed/core/v1/fake** folder
     
 * For example to access a pod's log use the following command
-    
-    > curl -k --cert ~/.minikube/apiserver.crt --key ~/.minikube/apiserver.key  -v -XGET https://192.168.99.223:8443/api/v1/namespaces/default/pods/demo-788cf8d6f5-6d6qz/log
+{{< highlight bash >}}
+curl -k --cert ~/.minikube/apiserver.crt --key ~/.minikube/apiserver.key  -v -XGET https://192.168.99.223:8443/api/v1/namespaces/default/pods/demo-788cf8d6f5-6d6qz/log
+{{< /highlight >}}
+
     
 * **pkg/minikube/service/service.go**  --  contains code to connect to kubernetes 
-{{< highlight gp >}}
-    type K8sClient interface {
-        GetCoreClient() (typed_core.CoreV1Interface, error)
-        GetClientset(timeout time.Duration) (*kubernetes.Clientset, error)
-    }
+{{< highlight go >}}
+type K8sClient interface {
+    GetCoreClient() (typed_core.CoreV1Interface, error)
+    GetClientset(timeout time.Duration) (*kubernetes.Clientset, error)
+}
 {{< /highlight >}}
 
 * To communicate with etcd that is running inside minikube we need to ssh to minikube
@@ -222,13 +224,14 @@ ETCDCTL_API=3  /hosthome/nanik/Downloads/temp/packages/src/go.etcd.io/etcd/etcdc
     will get all the keys stored inside
 
     **/hostname** -- is the default mount volume created by minikube to access host directory.
+{{< highlight bash >}}
+>/registry/apiregistration.k8s.io/apiservices/v1
 
-        >/registry/apiregistration.k8s.io/apiservices/v1
-        
-        >/apiregistration.k8s.io/apiservices/v1.admissionregistration.k8s.io
-        
-        >/apiregistration.k8s.io/apiservices/v1.apiextensions.k8s.io
-        
-        >/apiregistration.k8s.io/apiservices/v1.apps
-        
-        >/apiregistration.k8s.io/apiservices/v1.authentication.k8s.io
+>/apiregistration.k8s.io/apiservices/v1.admissionregistration.k8s.io
+
+>/apiregistration.k8s.io/apiservices/v1.apiextensions.k8s.io
+
+>/apiregistration.k8s.io/apiservices/v1.apps
+
+>/apiregistration.k8s.io/apiservices/v1.authentication.k8s.io
+{{< /highlight >}}

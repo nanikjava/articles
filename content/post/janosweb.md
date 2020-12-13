@@ -51,7 +51,7 @@ Samples
 * servers/http
 	* http.go - code that takes care of http related functionality - servers, request, handlers, etc
 
-{{< highlight text >}}    
+{{< highlight go >}}    
 
 package main
 
