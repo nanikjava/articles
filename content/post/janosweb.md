@@ -7,7 +7,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 Reference: https://github.com/janos/web
 
-```
+{{< highlight text >}}    
 ├── client
 │   ├── api
 │   └── http
@@ -25,7 +25,9 @@ Reference: https://github.com/janos/web
 │   ├── http
 │   └── quic
 └── templates
-```
+{{< /highlight >}}    
+
+
 Framework revolves around Handlers
 
 
@@ -49,7 +51,8 @@ Samples
 * servers/http
 	* http.go - code that takes care of http related functionality - servers, request, handlers, etc
 
-```
+{{< highlight text >}}    
+
 package main
 
 import (
@@ -107,7 +110,8 @@ func main() {
 
     select {}
 }
-````
+{{< /highlight >}}    
+
 
 
 
