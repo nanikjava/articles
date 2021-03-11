@@ -16,6 +16,29 @@ time {
   font-family: "Ruda", sans-serif;
 }
 
+a:link{
+color: rgb(6,69,173);
+text-decoration: none;
+}
+a:visited {
+color: rgb(11,0,128)
+}
+
+a:hover {
+text-decoration: underline
+}
+
+a:active {
+color: rgb(250,167,0)
+}
+
+.boxtextoverflow {
+  padding: 10px;
+  border: 1px solid #000;
+  margin: 0 20px 0 0;
+  background-color: #ebedeb;
+}
+
 #container {
   margin: 0;
   padding: 0;
@@ -166,7 +189,7 @@ time {
 
 #container main article p code {
   padding: 0.2em;
-  background-color: #ffcccc;
+  background-color: #fff033 ;
   font-size: 0.9em;
 }
 
