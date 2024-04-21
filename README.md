@@ -1,3 +1,5 @@
-The content of this project are documents/articles specifically about Minikube https://github.com/kubernetes/minikube. This project was born out of the frustration to find detail explanation about what's going on inside Minikube. The topics discussed are not in any particular sequence.
+The content of this project are articles that I've written. Most of the articles revolves around open source projects. 
 
-**Content of the documentation changes as it is based on discussion using Minikube's master branch**
+This project was born out of the frustration to find detail explanation about how certain projects works internally. The topics discussed are not of any particular sequence.
+
+**Contente of the article keep on evolving**
