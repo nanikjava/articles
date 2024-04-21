@@ -21,7 +21,7 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 
 ## Ollama
 
-The project is a Go project that has gained a lot of traction with 52,000 stars and forked more than 3600 times. The project can be used as a standalone application to interact with different large language models.. Not only that but the project makes it easy to interface for using the LLM functionality (eg: chat) by exposing REST API.
+The [Ollama project](https://github.com/ollama/ollama) is a Go project that has gained a lot of traction with 52,000 stars and forked more than 3600 times. The project can be used as a standalone application to interact with different large language models.. Not only that but the project makes it easy to interface for using the LLM functionality (eg: chat) by exposing REST API.
 
 ![figure1](/static/media/ollama/figure1.png)
 
