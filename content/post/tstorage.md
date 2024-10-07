@@ -5,15 +5,20 @@ author : "Nanik Tolaram (nanikjava@gmail.com)"
 ---
 # Table of Contents  
 - [Project Info](#project-info)
+- [Example](#example)
 - [Internal Document](#internal-document)
-
 
 ## Project Info
 
 Embedded [time series database](https://github.com/nakabonne/tstorage) for usage in a Go application.
 
 
-## InteInternal Documentrnals
+## Example
+
+Example on how to use the `tstorage` project can be found [here](https://github.com/nanikjava/timeseriesdb)
+
+
+## Internal Document
 
 Complete diagram and explanation can be found inside [here](https://docs.google.com/presentation/d/1di6S73kUc1Q65hMpZy8CSnGXTAqrJQBM6bq59qm5tl4/edit?usp=sharing).
 
